@@ -1,0 +1,18 @@
+.channel-container {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.channel-titlebar {
+    height: 50px;
+    width: 100%;
+    background-color: blueviolet;
+}
+
+.channel-content {
+    flex-grow: 1;
+    width: 100%;
+    background-color: blue;
+}
