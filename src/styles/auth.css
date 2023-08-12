@@ -1,0 +1,125 @@
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c;
+    height: 100%;
+    width: 100%;
+}
+
+.login-form-container {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    border-radius: 15px;
+    background-color: #343434;
+    padding: 25px;
+}
+
+.login-form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 5px;
+    color: #d3d3d3;
+}
+
+.login-form-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #e5e5e5;
+    gap: 10px;
+}
+
+.login-form-header > * {
+    margin-block-end: 0;
+    margin-block-start: 0;
+}
+
+.input-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    color: #d3d3d3;
+}
+
+.required-asterisk {
+    color: red;
+}
+
+.form-link {
+    text-decoration: none;
+    color: #156bff;
+}
+
+.form-link:hover {
+    text-decoration: underline;
+}
+
+.login-form > *, .register-form > * {
+    margin-block-end: 0;
+    margin-block-start: 0;
+}
+
+.remote-auth-form {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.remote-auth-form > * {
+    margin-block-end: 0;
+    margin-block-start: 0;
+    color: #e5e5e5;
+    margin-left: 30px;
+    text-align: center;
+}
+
+.remote-auth-qr {
+    width: 50%;
+}
+
+.register-form-container {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    border-radius: 15px;
+    background-color: #343434;
+    padding: 25px;
+}
+
+.register-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 5px;
+    color: #d3d3d3;
+}
+
+.register-form > h2 {
+    text-align: center;
+    margin-block-end: 0;
+    margin-block-start: 0;
+}
+
+.date-of-birth-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.date-of-birth-container > select {
+    flex-grow: 1;
+    color: #d3d3d3;
+}

@@ -1,4 +1,4 @@
-import '../styles/channel-panel.css';
+import '../../styles/channel-panel.css';
 import {Divider} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Tooltip from "@mui/material/Tooltip";
@@ -6,21 +6,21 @@ import DmButton from "./DmButton";
 import GroupIcon from "@mui/icons-material/Group";
 import DmChannel from "./DmChannel";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store";
+import {RootState} from "../../store";
 import {useEffect} from "react";
-import {addChannels} from "../reducers/channelSlice";
+import {addChannels} from "../../states/channels";
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
     const dispatch = useDispatch();
 
-    /*useEffect(() => {
+    useEffect(() => {
         fetch("http://127.0.0.1:8989/channels")
             .then(resp => resp.json())
             .then(json => {
                 dispatch(addChannels(json));
             })
-    }, []);*/
+    }, [dispatch]);
 
     return <>{
         Object.values(state).map(item => {

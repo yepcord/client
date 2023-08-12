@@ -1,0 +1,28 @@
+.btn-primary-wide {
+    width: 100%;
+    background-color: #156bff;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    transition: all .1s ease-out;
+}
+
+.btn-primary-wide:hover {
+    background-color: #0261ff;
+}
+
+.btn-primary-wide:active {
+    background-color: #004ed7;
+}
+
+.input-primary {
+    background-color: #1e1e1e;
+    color: #e8e8e8;
+    height: 35px;
+    border-radius: 7px;
+    font-size: 16px;
+    border: none;
+    padding-left: 10px;
+}

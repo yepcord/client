@@ -1,4 +1,4 @@
-import '../styles/channel-container.css';
+import '../../styles/channel-container.css';
 
 export default function ChannelTitleBar() {
     return (

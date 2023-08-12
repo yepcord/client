@@ -1,10 +1,10 @@
-import '../styles/servers.css';
+import '../../styles/servers.css';
 import ServerIcon from "./ServerIcon";
 import {Divider} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../store";
+import {RootState} from "../../store";
 import {useEffect} from "react";
-import {addServers} from "../reducers/serverSlice";
+import {addServers} from "../../states/servers";
 import AddIcon from '@mui/icons-material/Add';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
@@ -13,13 +13,13 @@ function ServerList() {
     const state = useSelector((state: RootState) => state.server.servers);
     const dispatch = useDispatch();
 
-    /*useEffect(() => {
+    useEffect(() => {
         fetch("http://127.0.0.1:8989/guilds")
             .then(resp => resp.json())
             .then(json => {
                 dispatch(addServers(json));
             })
-    }, []);*/
+    }, [dispatch]);
 
     return <>{
         Object.values(state).map(item => {

@@ -1,15 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {serverSlice, ServerState} from "./reducers/serverSlice";
-import {channelSlice, ChannelState} from "./reducers/channelSlice";
+import {serverState, ServersState} from "./states/servers";
+import {channelState, ChannelsState} from "./states/channels";
+import {appState, AppState} from "./states/app";
 
 export interface RootState {
-    server: ServerState,
-    channel: ChannelState,
+    server: ServersState,
+    channel: ChannelsState,
+    app: AppState,
 }
 
 export default configureStore({
     reducer: {
-        server: serverSlice.reducer,
-        channel: channelSlice.reducer,
+        server: serverState.reducer,
+        channel: channelState.reducer,
+        app: appState.reducer,
     },
 })

@@ -91,6 +91,7 @@
     height: 50px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -101,6 +102,27 @@
     align-items: center;
     width: 32px;
     height: 32px;
+}
+
+.dm-channel-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dm-channel-item > svg {
+    display: none;
+    margin-right: 10px;
+}
+
+.dm-channel-item:hover > svg {
+    display: block;
+    fill: #949494;
+}
+
+.dm-channel-item:hover > svg:hover {
+    fill: #c0bfbf;
+    cursor: pointer;
 }
 
 .dm-channel-icon > img {
