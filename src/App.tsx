@@ -4,7 +4,9 @@ import ChannelPanel from "./components/channels/ChannelPanel";
 import ChannelContainer from "./components/channels/ChannelContainer";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import AuthPage from "./components/auth/AuthPage";
+import {LoginPage, RegisterPage} from "./components/auth/AuthPage";
+import CheckAuthenticated from "./components/CheckAuthenticated";
+import CheckUnathenticated from "./components/CheckUnauthenticated";
 
 const theme = createTheme({
     components: {
@@ -36,11 +38,11 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index path="/" element={<AppPage/>}/>
-                <Route path="/app" element={<AppPage/>}/>
+                <Route index path="/" element={ <CheckAuthenticated component={AppPage}/> }/>
+                <Route path="/app" element={ <CheckAuthenticated component={AppPage}/> }/>
 
-                <Route path="/login" element={<AuthPage page="login"/>}/>
-                <Route path="/register" element={<AuthPage page="register"/>}/>
+                <Route path="/login" element={ <CheckUnathenticated component={LoginPage}/> }/>
+                <Route path="/register" element={ <CheckUnathenticated component={RegisterPage}/> }/>
             </Routes>
         </BrowserRouter>
     );

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Channel} from "../types";
+import Channel from "../types/channel";
 
 export interface ChannelsState {
     dmChannels: {

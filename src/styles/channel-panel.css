@@ -2,11 +2,8 @@
     height: 100%;
     width: 250px;
     background-color: #3b3b3b;
-    overflow-y: scroll;
-}
-
-.channel-panel::-webkit-scrollbar {
-    display: none;
+    display: flex;
+    flex-direction: column;
 }
 
 .find-or-start-conversation-container {
@@ -87,12 +84,15 @@
 }
 
 .dm-channel-item {
-    margin: 7px;
+    margin-left: 7px;
+    margin-right: 7px;
     height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
 }
 
 .dm-channel-icon {
@@ -137,4 +137,51 @@
 .dm-channel-name {
     margin-left: 5px;
     color: #a1a1a1;
+}
+
+.dm-channel-list {
+    height: 0;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow-y: scroll;
+    gap: 10px;
+}
+
+.dm-channel-list::-webkit-scrollbar {
+    display: none;
+}
+
+.profile-panel {
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #343434;
+}
+
+.profile-panel-user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile-panel-username {
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.profile-panel-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.profile-panel-buttons > * {
+    fill: #b2b2b2 !important;
+    cursor: pointer;
 }

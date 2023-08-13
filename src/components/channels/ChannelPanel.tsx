@@ -9,6 +9,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {useEffect} from "react";
 import {addChannels} from "../../states/channels";
+import Avatar from "./Avatar";
+import {setCurrentUser} from "../../states/app";
+import MicRoundedIcon from '@mui/icons-material/MicRounded';
+import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
@@ -22,11 +27,44 @@ function DmChannelList() {
             })
     }, [dispatch]);
 
-    return <>{
+    return <div className="dm-channel-list">{
         Object.values(state).map(item => {
             return <DmChannel channel={item}/>;
         })
-    }</>;
+    }</div>;
+}
+
+function ProfilePanel() {
+    const user = useSelector((state: RootState) => state.app.me);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:8989/me")
+            .then(resp => resp.json())
+            .then(json => {
+                dispatch(setCurrentUser(json));
+            })
+    }, [dispatch]);
+
+    return (
+        <div className="profile-panel">
+            <div className="profile-panel-user">
+                <Avatar user={user!} status="online"/>
+                <Tooltip title="Click to copy username">
+                    <div className="profile-panel-username"
+                         onClick={() => navigator.clipboard.writeText(`${user!.username}#${user!.discriminator}`)}>
+                        <span style={{color: "#c9c9c9"}}>{user!.username}</span>
+                        <span style={{color: "#a1a1a1"}}>#{user!.discriminator}</span>
+                    </div>
+                </Tooltip>
+            </div>
+            <div className="profile-panel-buttons">
+                <MicRoundedIcon/>
+                <HeadphonesRoundedIcon/>
+                <SettingsRoundedIcon/>
+            </div>
+        </div>
+    );
 }
 
 export default function ChannelPanel() {
@@ -50,6 +88,8 @@ export default function ChannelPanel() {
             </div>
 
             <DmChannelList/>
+
+            <ProfilePanel/>
         </div>
     );
 }
