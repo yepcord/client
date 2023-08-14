@@ -4,15 +4,22 @@ import {RootState} from "../store";
 import {Navigate} from "react-router-dom";
 
 interface Props {
-    component: React.FC,
+    component?: React.FC,
+    element?: JSX.Element,
 }
 
-export default function CheckAuthenticated({component}: Props) {
+export default function CheckAuthenticated({component, element}: Props) {
     const token = useSelector((state: RootState) => state.app.token);
 
     if(!token)
         return <Navigate to="/login" replace />
 
-    const Component = component;
-    return <Component/>
+    if(component) {
+        const Component = component;
+        return <Component/>
+    }
+    if(element)
+        return element;
+
+    return <></>;
 }

@@ -14,10 +14,17 @@ import {setCurrentUser} from "../../states/app";
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import {useNavigate} from "react-router-dom";
+
+interface ChannelPanelProps {
+    guild: string,
+    channel: string | null,
+}
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://127.0.0.1:8989/channels")
@@ -53,7 +60,7 @@ function ProfilePanel() {
                 <Tooltip title="Click to copy username">
                     <div className="profile-panel-username"
                          onClick={() => navigator.clipboard.writeText(`${user!.username}#${user!.discriminator}`)}>
-                        <span style={{color: "#c9c9c9"}}>{user!.username}</span>
+                        <span style={{color: "#ffffff"}}><b>{user!.username}</b></span>
                         <span style={{color: "#a1a1a1"}}>#{user!.discriminator}</span>
                     </div>
                 </Tooltip>
@@ -67,7 +74,9 @@ function ProfilePanel() {
     );
 }
 
-export default function ChannelPanel() {
+function DmChannelPanel({guild, channel}: ChannelPanelProps) {
+    const navigate = useNavigate();
+
     return (
         <div className="channel-panel">
             <div className="find-or-start-conversation-container">
@@ -78,7 +87,7 @@ export default function ChannelPanel() {
 
             <Divider flexItem sx={{borderBottomWidth: "2px"}}/>
 
-            <DmButton icon={<GroupIcon/>} text="Friends"/>
+            <DmButton icon={<GroupIcon/>} text="Friends" onClick={() => navigate("/channels/@me")}/>
 
             <div className="dm-divider">
                 <div className="dm-divider-text">DIRECT MESSAGES</div>
@@ -92,4 +101,23 @@ export default function ChannelPanel() {
             <ProfilePanel/>
         </div>
     );
+}
+
+function GuildChannelPanel({guild, channel}: ChannelPanelProps) {
+    return (
+        <div className="channel-panel">
+            Guild channel panel
+
+            <ProfilePanel/>
+        </div>
+    );
+}
+
+export default function ChannelPanel({guild, channel}: ChannelPanelProps) {
+    const navigate = useNavigate();
+
+    if(guild === "@me")
+        return <DmChannelPanel guild={guild} channel={channel}/>;
+    else
+        return <GuildChannelPanel guild={guild} channel={channel}/>;
 }

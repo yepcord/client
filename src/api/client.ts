@@ -1,4 +1,5 @@
 import {API_ENDPOINT} from "./constants";
+import store from "../store";
 
 interface MakeRequestProps {
     method: string,
@@ -28,11 +29,6 @@ export interface ErrorResponse {
     message: string,
 }
 
-interface LoginProps {
-    email: string,
-    password: string,
-}
-
 function isJson(obj: any) {
     return Array.isArray(obj) || (obj != null && typeof obj == 'object');
 }
@@ -46,7 +42,7 @@ export default class ApiClient {
                           authRequired = true
                       }: MakeRequestProps): Promise<Response> {
         const headers: { [key: string]: string } = {};
-        const token = localStorage.getItem("token");
+        const token = store.getState().app.token;
         if (authRequired && token !== null) {
             headers["Authorization"] = token;
         }

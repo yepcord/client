@@ -1,0 +1,59 @@
+.friends-list-container {
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.friends-list-container > p {
+    color: #c5c5c5;
+    font-size: 12px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.friends-list {
+    flex-grow: 1;
+    overflow-y: scroll;
+}
+
+.friends-list::-webkit-scrollbar {
+    display: none;
+}
+
+.friends-list > .profile-panel > .profile-panel-buttons {
+    gap: 10px;
+}
+
+.friends-list > .profile-panel > .profile-panel-buttons > svg {
+    background-color: #2f2f2f;
+    height: 36px;
+    width: 36px;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.friends-list > .profile-panel > .profile-panel-buttons > svg:hover {
+    background-color: #1f1f1f;
+}
+
+.friends-list > .profile-panel:hover {
+    background-color: #4f4f4f;
+    transition: all .15s ease-in;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.friend-discriminator {
+    display: none;
+}
+
+.friend-username {
+    display: flex;
+    flex-direction: row;
+}
+
+.friends-list > .profile-panel:hover .friend-discriminator {
+    display: block;
+}

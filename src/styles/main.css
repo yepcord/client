@@ -26,3 +26,11 @@
     border: none;
     padding-left: 10px;
 }
+
+.w-100 {
+    width: 100%;
+}
+
+.bg-transparent {
+    background-color: transparent;
+}

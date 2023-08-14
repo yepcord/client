@@ -1,9 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import User from "../types/user";
 
+type SelFriendsTab = "online" | "all" | "pending" | "blocked" | "add";
+
 export interface AppState {
     token: string | null,
     me: User | null,
+    selectedFriendsTab: SelFriendsTab,
 }
 
 export const appState = createSlice({
@@ -18,7 +21,8 @@ export const appState = createSlice({
             banner: null,
             bio: null,
             bot: false,
-        }
+        },
+        selectedFriendsTab: "online",
     } as AppState,
     reducers: {
         setToken: (state: AppState, action: PayloadAction<string>) => {
@@ -28,7 +32,10 @@ export const appState = createSlice({
         setCurrentUser: (state: AppState, action: PayloadAction<User>) => {
             state.me = action.payload;
         },
+        setFriendsTab: (state: AppState, action: PayloadAction<SelFriendsTab>) => {
+            state.selectedFriendsTab = action.payload;
+        },
     }
 });
 
-export const {setToken, setCurrentUser} = appState.actions;
+export const {setToken, setCurrentUser, setFriendsTab} = appState.actions;

@@ -28,6 +28,21 @@
     border-radius: 25%;
 }
 
+.server-icon-selected {
+    position: relative;
+}
+
+.server-icon-selected:after {
+    content: "";
+    background-color: white;
+    position: absolute;
+    left: 25%;
+    bottom: -10%;
+    height: 3px;
+    width: 50%;
+    border-radius: 2px;
+}
+
 .icons-divider {
     border-bottom-width: 2px;
     border-radius: 2px;
