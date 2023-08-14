@@ -7,6 +7,9 @@ import {BrowserRouter, Navigate, Route, Routes, useLocation, useParams} from "re
 import {LoginPage, RegisterPage} from "./components/auth/AuthPage";
 import CheckAuthenticated from "./components/CheckAuthenticated";
 import CheckUnathenticated from "./components/CheckUnauthenticated";
+import {useDispatch} from "react-redux";
+import {setSelectedGuild} from "./states/guilds";
+import {selectChannel} from "./utils";
 
 const theme = createTheme({
     components: {
@@ -23,17 +26,24 @@ const theme = createTheme({
 function AppPage() {
     const location = useLocation();
     const params = useParams();
+    const dispatch = useDispatch();
     let guild = params.guild ? params.guild : null;
     let channel = params.channel ? params.channel : null;
     if(location.pathname === "/channels/@me")
         guild = "@me";
 
+    dispatch(setSelectedGuild(guild));
+    const channelAction = selectChannel(channel);
+    channelAction && dispatch(channelAction);
+
+    console.log(guild)
+
     return (
         <div className="main-container">
             <ThemeProvider theme={theme}>
-                <NavBar guild={guild!}/>
-                <ChannelPanel guild={guild!} channel={channel}/>
-                <ChannelContainer guild={guild!} channel={channel}/>
+                <NavBar/>
+                <ChannelPanel/>
+                <ChannelContainer/>
 
                 <CssBaseline/>
             </ThemeProvider>

@@ -9,10 +9,6 @@ import Tooltip from "@mui/material/Tooltip";
 import ChatBubbleRoundedIcon from '@mui/icons-material/ChatBubbleRounded';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-interface ChannelContentProps {
-    guild: string,
-    channel: string | null,
-}
 
 function FriendsList() {
     const user = useSelector((state: RootState) => state.app.me)
@@ -71,19 +67,16 @@ function FriendsContent() {
     )
 }
 
-export default function ChannelContent({guild, channel}: ChannelContentProps) {
-    if (guild === "@me" && channel === null) {
+export default function ChannelContent() {
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
+    const selectedChannel = useSelector((state: RootState) => state.channel.selectedChannel);
+
+    if (selectedGuild === null && selectedChannel === null) {
         return <FriendsContent/>;
-    } else if (guild === "@me" && channel !== null) {
-        return (
-            <div className="channel-content">
-                <p><b>DM channel content</b></p>
-            </div>
-        );
     } else {
         return (
             <div className="channel-content">
-                <p><b>Guild channel content</b></p>
+                <p><b>Guild or DM channel content</b></p>
             </div>
         );
     }

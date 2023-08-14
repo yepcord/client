@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {serverState, ServersState} from "./states/servers";
+import {guildState, GuildsState} from "./states/guilds";
 import {channelState, ChannelsState} from "./states/channels";
 import {appState, AppState} from "./states/app";
 import {usersState, UsersState} from "./states/users";
 
 export interface RootState {
-    server: ServersState,
+    guild: GuildsState,
     channel: ChannelsState,
     app: AppState,
     users: UsersState
@@ -13,7 +13,7 @@ export interface RootState {
 
 export default configureStore({
     reducer: {
-        server: serverState.reducer,
+        guild: guildState.reducer,
         channel: channelState.reducer,
         app: appState.reducer,
         users: usersState.reducer,

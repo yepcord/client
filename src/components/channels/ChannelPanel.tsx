@@ -15,16 +15,16 @@ import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {useNavigate} from "react-router-dom";
+import Guild from "../../types/guild";
 
-interface ChannelPanelProps {
-    guild: string,
-    channel: string | null,
+interface GuildProps {
+    guild: Guild,
 }
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("http://127.0.0.1:8989/channels")
@@ -74,7 +74,7 @@ function ProfilePanel() {
     );
 }
 
-function DmChannelPanel({guild, channel}: ChannelPanelProps) {
+function DmChannelPanel() {
     const navigate = useNavigate();
 
     return (
@@ -103,7 +103,9 @@ function DmChannelPanel({guild, channel}: ChannelPanelProps) {
     );
 }
 
-function GuildChannelPanel({guild, channel}: ChannelPanelProps) {
+function GuildChannelPanel({guild}: GuildProps) {
+    const selectedChannel = useSelector((state: RootState) => state.channel.selectedChannel);
+
     return (
         <div className="channel-panel">
             Guild channel panel
@@ -113,11 +115,11 @@ function GuildChannelPanel({guild, channel}: ChannelPanelProps) {
     );
 }
 
-export default function ChannelPanel({guild, channel}: ChannelPanelProps) {
-    const navigate = useNavigate();
+export default function ChannelPanel() {
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
 
-    if(guild === "@me")
-        return <DmChannelPanel guild={guild} channel={channel}/>;
+    if(selectedGuild === null)
+        return <DmChannelPanel/>;
     else
-        return <GuildChannelPanel guild={guild} channel={channel}/>;
+        return <GuildChannelPanel guild={selectedGuild}/>;
 }

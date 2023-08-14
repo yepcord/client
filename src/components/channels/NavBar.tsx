@@ -1,21 +1,18 @@
 import '../../styles/servers.css';
-import ServerIcon from "./ServerIcon";
+import GuildIcon from "./GuildIcon";
 import {Divider} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {useEffect} from "react";
-import {addServers} from "../../states/servers";
+import {addGuilds} from "../../states/guilds";
 import AddIcon from '@mui/icons-material/Add';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import {useNavigate} from "react-router-dom";
 
-interface NavBarProps {
-    guild: string
-}
-
-function ServerList({guild}: NavBarProps) {
-    const state = useSelector((state: RootState) => state.server.servers);
+function GuildList() {
+    const state = useSelector((state: RootState) => state.guild.guilds);
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -23,40 +20,41 @@ function ServerList({guild}: NavBarProps) {
         fetch("http://127.0.0.1:8989/guilds")
             .then(resp => resp.json())
             .then(json => {
-                dispatch(addServers(json));
+                dispatch(addGuilds(json));
             })
     }, [dispatch]);
 
     return <>{
         Object.values(state).map(item => {
-            return <ServerIcon title={item.name} selected={item.id === guild} onClick={() => navigate(`/channels/${item.id}/0`)}
+            return <GuildIcon title={item.name} selected={item.id === selectedGuild?.id} onClick={() => navigate(`/channels/${item.id}/0`)}
                                image_url={`https://127.0.0.1:8000/media/icons/202461713512075264/${item.icon}.webp?size=96`}/>;
         })
     }</>;
 }
 
-export default function NavBar({guild}: NavBarProps) {
+export default function NavBar() {
     const navigate = useNavigate();
-    const serversState = useSelector((state: RootState) => state.server.servers);
+    const guildsState = useSelector((state: RootState) => state.guild.guilds);
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
 
     return (
         <div className="servers-list">
             <div/>
 
-            <ServerIcon title="Direct Messages" image_url="/logo192.png" selected={guild === "@me"} onClick={() => navigate("/channels/@me")}/>
+            <GuildIcon title="Direct Messages" image_url="/logo192.png" selected={selectedGuild === null} onClick={() => navigate("/channels/@me")}/>
 
             <Divider className={"icons-divider"}/>
 
-            <ServerList guild={guild}/>
+            <GuildList/>
 
-            {Object.keys(serversState).length > 0 && <Divider className={"icons-divider"}/>}
+            {Object.keys(guildsState).length > 0 && <Divider className={"icons-divider"}/>}
 
-            <ServerIcon title="Add a Server" button={true} svg={<AddIcon/>}/>
-            <ServerIcon title="Explore public servers" button={true} svg={<ExploreOutlinedIcon/>}/>
+            <GuildIcon title="Add a Guild" button={true} svg={<AddIcon/>}/>
+            <GuildIcon title="Explore public guilds" button={true} svg={<ExploreOutlinedIcon/>}/>
 
             <Divider className={"icons-divider"}/>
 
-            <ServerIcon title="Download Apps" button={true} svg={<FileDownloadOutlinedIcon/>}/>
+            <GuildIcon title="Download Apps" button={true} svg={<FileDownloadOutlinedIcon/>}/>
 
             <div/>
         </div>

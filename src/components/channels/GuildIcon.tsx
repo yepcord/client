@@ -1,7 +1,7 @@
 import React from "react";
 import Tooltip from '@mui/material/Tooltip';
 
-interface ServerIconProps {
+interface GuildIconProps {
     button?: boolean,
     title?: string,
     image_url?: string,
@@ -10,7 +10,7 @@ interface ServerIconProps {
     selected?: boolean,
 }
 
-export default function ServerIcon({button = false, title, image_url, svg, onClick, selected}: ServerIconProps) {
+export default function GuildIcon({button = false, title, image_url, svg, onClick, selected}: GuildIconProps) {
     return (
         <Tooltip title={title} placement="right" arrow>
             <div

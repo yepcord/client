@@ -27,8 +27,11 @@ export const channelState = createSlice({
             for (let channel of action.payload as Channel[]) {
                 state.dmChannels[channel.id] = channel;
             }
-        }
+        },
+        setSelectedChannel: (state: ChannelsState, action: PayloadAction<Channel | null>) => {
+            state.selectedChannel = action.payload;
+        },
     }
 });
 
-export const {addChannel, removeChannel, addChannels} = channelState.actions;
+export const {addChannel, removeChannel, addChannels, setSelectedChannel} = channelState.actions;

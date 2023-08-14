@@ -8,16 +8,13 @@ import {RootState} from "../../store";
 import {setFriendsTab} from "../../states/app";
 import Tooltip from "@mui/material/Tooltip";
 
-interface TitleBarProps {
-    guild: string,
-    channel: string | null,
-}
-
-export default function ChannelTitleBar({guild, channel}: TitleBarProps) {
+export default function ChannelTitleBar() {
     const selectedTab = useSelector((state: RootState) => state.app.selectedFriendsTab);
+    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
+    const selectedChannel = useSelector((state: RootState) => state.channel.selectedChannel);
     const dispatch = useDispatch();
 
-    if (guild === "@me" && channel === null) {
+    if (selectedGuild === null && selectedChannel === null) {
         return (
             <div className="channel-titlebar">
                 <GroupIcon/>
@@ -58,7 +55,7 @@ export default function ChannelTitleBar({guild, channel}: TitleBarProps) {
                 </Tooltip>
             </div>
         )
-    } else if (guild === "@me" && channel !== null) {
+    } else if (selectedGuild === null && selectedChannel !== null) {
         return (
             <div className="channel-titlebar">
                 <TagRoundedIcon/>
