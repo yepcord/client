@@ -7,7 +7,7 @@ import {GatewayOp} from "../types/gateway";
 import store from "../store";
 import Snowflake from "../types/snowflake";
 import {addGuilds} from "../states/guilds";
-import {addRelationships, addUsers} from "../states/users";
+import {addPresence, addPresences, addRelationships, addUser, addUsers} from "../states/users";
 import {addChannels} from "../states/channels";
 
 function replaceSnowflakeArrWithObj(arr: Snowflake[]) {
@@ -19,6 +19,8 @@ function replaceSnowflakeArrWithObj(arr: Snowflake[]) {
 }
 
 function handleDispatchMessage(type: string, data: any) {
+    console.log(type);
+    console.log(data);
     switch (type) {
         case "READY": {
             store.dispatch(setCurrentUser(data.user));
@@ -39,9 +41,26 @@ function handleDispatchMessage(type: string, data: any) {
             }
             store.dispatch(addChannels(data.private_channels));
             store.dispatch(addRelationships(data.relationships));
+
+            const self_presence = {
+                "user_id": data.user.id,
+                "status": data.user_settings.status,
+            } // TODO: add custom status
+            store.dispatch(addPresence(self_presence))
             break;
         }
-
+        case "READY_SUPPLEMENTAL": {
+            store.dispatch(addPresences(data.merged_presences.friends))
+            store.dispatch(addPresences(data.merged_presences.guilds))
+            break;
+        }
+        case "PRESENCE_UPDATE": {
+            store.dispatch(addUser(data.user));
+            data.user_id = data.user.id;
+            delete data.user;
+            store.dispatch(addPresence(data))
+            break;
+        }
     }
 }
 

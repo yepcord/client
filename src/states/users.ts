@@ -42,7 +42,16 @@ export const usersState = createSlice({
         removeFriend: (state: UsersState, action: PayloadAction<string>) => {
             delete state.relationships[action.payload];
         },
+        addPresence: (state: UsersState, action: PayloadAction<Presence>) => {
+            const presence = action.payload;
+            presence.user_id in state.presences ? Object.assign(state.presences[presence.user_id], presence) : state.presences[presence.user_id] = presence;
+        },
+        addPresences: (state: UsersState, action: PayloadAction<Presence[]>) => {
+            for(let presence of action.payload) {
+                presence.user_id in state.presences ? Object.assign(state.presences[presence.user_id], presence) : state.presences[presence.user_id] = presence;
+            }
+        },
     }
 });
 
-export const {addUser, addUsers, addRelationships} = usersState.actions;
+export const {addUser, addUsers, addRelationships, addPresence, addPresences} = usersState.actions;

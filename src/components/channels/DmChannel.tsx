@@ -18,7 +18,7 @@ export default function DmChannel({channel}: DmChannelProps) {
         <div className="dm-channel-item" onClick={() => navigate(`/channels/@me/${channel.id}`)}>
             <div className="dm-channel-info">
                 {channel.type === ChannelType.DM
-                    ? <Avatar user={channel.recipients![0]} status="online"/>
+                    ? <Avatar user={channel.recipients![0]}/>
                     : <ChannelIcon channel={channel}/>
                 }
                 <div className="dm-channel-name">

@@ -5,10 +5,8 @@ import Tooltip from "@mui/material/Tooltip";
 import DmButton from "./DmButton";
 import GroupIcon from "@mui/icons-material/Group";
 import DmChannel from "./DmChannel";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../store";
-import {useEffect} from "react";
-import {addChannels} from "../../states/channels";
 import Avatar from "./Avatar";
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
@@ -22,7 +20,6 @@ interface GuildProps {
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
-    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
 
     return <div className="dm-channel-list">{
         Object.values(state).map(item => {
@@ -37,7 +34,7 @@ function ProfilePanel() {
     return (
         <div className="profile-panel">
             <div className="profile-panel-user">
-                <Avatar user={user!} status="online"/>
+                <Avatar user={user!}/>
                 <Tooltip title="Click to copy username">
                     <div className="profile-panel-username"
                          onClick={() => navigator.clipboard.writeText(`${user!.username}#${user!.discriminator}`)}>
@@ -85,8 +82,6 @@ function DmChannelPanel() {
 }
 
 function GuildChannelPanel({guild}: GuildProps) {
-    const selectedChannel = useSelector((state: RootState) => state.channel.selectedChannel);
-
     return (
         <div className="channel-panel">
             Guild channel panel

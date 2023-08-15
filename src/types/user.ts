@@ -25,10 +25,17 @@ interface PresenceActivity {
     } | null
 }
 
+export type UserStatus = "online" | "offline" | "idle" | "dnd";
+
 export interface Presence {
-    userId: string,
-    status: "online" | "offline" | "idle" | "dnd",
-    activities: PresenceActivity[]
+    user_id: string,
+    status: UserStatus,
+    activities?: PresenceActivity[],
+    client_status?: {
+        desktop?: UserStatus,
+        mobile?: UserStatus,
+    },
+    last_modified?: number,
 }
 
 export interface UserMe extends User {

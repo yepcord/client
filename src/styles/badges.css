@@ -1,0 +1,22 @@
+.badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.online-badge {
+    background-color: #24be24;
+}
+
+.offline-badge {
+    background-color: #545454;
+    border: 3px solid #8f8f8f;
+}
+
+.idle-badge {
+    background-color: #ffac2e;
+}
+
+.dnd-badge {
+    background-color: #ff4f4f;
+}
