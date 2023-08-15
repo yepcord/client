@@ -1,5 +1,5 @@
 import Channel from "../../types/channel";
-import {MEDIA_ENDPOINT} from "../../api/constants";
+import {MEDIA_ENDPOINT} from "../../constants";
 
 interface IconProps {
     channel: Channel,

@@ -10,7 +10,6 @@ import {RootState} from "../../store";
 import {useEffect} from "react";
 import {addChannels} from "../../states/channels";
 import Avatar from "./Avatar";
-import {setCurrentUser} from "../../states/app";
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
@@ -24,15 +23,6 @@ interface GuildProps {
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8989/channels")
-            .then(resp => resp.json())
-            .then(json => {
-                dispatch(addChannels(json));
-            })
-    }, [dispatch]);
 
     return <div className="dm-channel-list">{
         Object.values(state).map(item => {
@@ -43,15 +33,6 @@ function DmChannelList() {
 
 function ProfilePanel() {
     const user = useSelector((state: RootState) => state.app.me);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8989/me")
-            .then(resp => resp.json())
-            .then(json => {
-                dispatch(setCurrentUser(json));
-            })
-    }, [dispatch]);
 
     return (
         <div className="profile-panel">

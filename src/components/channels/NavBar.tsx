@@ -13,16 +13,7 @@ import {useNavigate} from "react-router-dom";
 function GuildList() {
     const state = useSelector((state: RootState) => state.guild.guilds);
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        fetch("http://127.0.0.1:8989/guilds")
-            .then(resp => resp.json())
-            .then(json => {
-                dispatch(addGuilds(json));
-            })
-    }, [dispatch]);
 
     return <>{
         Object.values(state).map(item => {

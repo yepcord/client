@@ -17,7 +17,8 @@ export enum ChannelType {
 export default interface Channel {
     id: string,
     type: number,
-    name?: string | null,
-    icon?: string | null,
-    recipients?: User[] | null,
+    name: string | null,
+    icon: string | null,
+    recipients: User[] | null,
+    last_message_id: string | null,
 }

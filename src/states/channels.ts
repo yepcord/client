@@ -17,7 +17,7 @@ export const channelState = createSlice({
     reducers: {
         addChannel: (state: ChannelsState, action: PayloadAction<Channel>) => {
             const channel: Channel = action.payload;
-            state.dmChannels[channel.id] = channel;
+            channel.id in state.dmChannels ? Object.assign(state.dmChannels[channel.id], channel) : state.dmChannels[channel.id] = channel;
         },
         removeChannel: (state: ChannelsState, action: PayloadAction<string>) => {
             if (action.payload in state.dmChannels)
@@ -25,7 +25,7 @@ export const channelState = createSlice({
         },
         addChannels: (state: ChannelsState, action: PayloadAction<Channel[]>) => {
             for (let channel of action.payload as Channel[]) {
-                state.dmChannels[channel.id] = channel;
+                channel.id in state.dmChannels ? Object.assign(state.dmChannels[channel.id], channel) : state.dmChannels[channel.id] = channel;
             }
         },
         setSelectedChannel: (state: ChannelsState, action: PayloadAction<Channel | null>) => {

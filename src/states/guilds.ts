@@ -17,7 +17,7 @@ export const guildState = createSlice({
     reducers: {
         addGuild: (state: GuildsState, action: PayloadAction<Guild>) => {
             const guild: Guild = action.payload;
-            state.guilds[guild.id] = guild;
+            guild.id in state.guilds ? state.guilds[guild.id] = guild : Object.assign(state.guilds[guild.id], guild);
         },
         removeGuild: (state: GuildsState, action: PayloadAction<string>) => {
             if (action.payload in state.guilds)
@@ -25,7 +25,7 @@ export const guildState = createSlice({
         },
         addGuilds: (state: GuildsState, action: PayloadAction<Guild[]>) => {
             for (let guild of action.payload as Guild[]) {
-                state.guilds[guild.id] = guild;
+                guild.id in state.guilds ? Object.assign(state.guilds[guild.id], guild) : state.guilds[guild.id] = guild;
             }
         },
         setSelectedGuild: (state: GuildsState, action: PayloadAction<string|null>) => {

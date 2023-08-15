@@ -1,5 +1,5 @@
 import User from "../../types/user";
-import {MEDIA_ENDPOINT} from "../../api/constants";
+import {MEDIA_ENDPOINT} from "../../constants";
 
 interface AvatarProps {
     user: User,

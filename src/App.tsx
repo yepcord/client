@@ -6,10 +6,11 @@ import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes, useLocation, useParams} from "react-router-dom";
 import {LoginPage, RegisterPage} from "./components/auth/AuthPage";
 import CheckAuthenticated from "./components/CheckAuthenticated";
-import CheckUnathenticated from "./components/CheckUnauthenticated";
+import CheckUnauthenticated from "./components/CheckUnauthenticated";
 import {useDispatch} from "react-redux";
 import {setSelectedGuild} from "./states/guilds";
 import {selectChannel} from "./utils";
+import GatewayWebsocket from "./ws/GatewayWebsocket";
 
 const theme = createTheme({
     components: {
@@ -36,8 +37,6 @@ function AppPage() {
     const channelAction = selectChannel(channel);
     channelAction && dispatch(channelAction);
 
-    console.log(guild)
-
     return (
         <div className="main-container">
             <ThemeProvider theme={theme}>
@@ -47,6 +46,7 @@ function AppPage() {
 
                 <CssBaseline/>
             </ThemeProvider>
+            <GatewayWebsocket/>
         </div>
     );
 }
@@ -60,8 +60,8 @@ function App() {
                 <Route path="/channels/@me" element={ <CheckAuthenticated component={AppPage}/> }/>
                 <Route path="/channels/:guild/:channel" element={ <CheckAuthenticated component={AppPage}/> }/>
 
-                <Route path="/login" element={ <CheckUnathenticated component={LoginPage}/> }/>
-                <Route path="/register" element={ <CheckUnathenticated component={RegisterPage}/> }/>
+                <Route path="/login" element={ <CheckUnauthenticated component={LoginPage}/> }/>
+                <Route path="/register" element={ <CheckUnauthenticated component={RegisterPage}/> }/>
             </Routes>
         </BrowserRouter>
     );

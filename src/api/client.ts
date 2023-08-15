@@ -1,4 +1,4 @@
-import {API_ENDPOINT} from "./constants";
+import {API_ENDPOINT} from "../constants";
 import store from "../store";
 
 interface MakeRequestProps {
@@ -55,8 +55,6 @@ export default class ApiClient {
         };
         if (isJson(body))
             options["body"] = JSON.stringify(body);
-
-        console.log(options)
 
         let query = Object.keys(params).map(
             item => `${encodeURIComponent(item)}=${encodeURIComponent(params[item])}`
