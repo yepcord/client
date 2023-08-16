@@ -34,3 +34,24 @@
 .bg-transparent {
     background-color: transparent;
 }
+
+.btn-secondary-transparent {
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    color: #b2b2b2;
+    background-color: transparent;
+    transition: all .1s ease-out;
+    font-size: 16px;
+}
+
+.btn-secondary-transparent:hover {
+    background-color: #545454;
+}
+
+.btn-secondary-transparent:active, .btn-secondary-transparent-selected {
+    background-color: #6b6b6b;
+    color: white;
+}

@@ -1,91 +1,18 @@
 import {useDispatch} from "react-redux";
 import useWebSocket from "react-use-websocket";
 import {GATEWAY_ENDPOINT, VERSION_NUMBER} from "../constants";
-import {setCurrentUser, setWsReady} from "../states/app";
+import {setWsReady} from "../states/app";
 import {SendJsonMessage} from "react-use-websocket/src/lib/types";
 import {GatewayOp} from "../types/gateway";
 import store from "../store";
-import Snowflake from "../types/snowflake";
-import {addGuilds} from "../states/guilds";
-import {addPresence, addPresences, addRelationships, addUser, addUsers} from "../states/users";
-import {addChannels} from "../states/channels";
+import handleGatewayMessage from "./handlers";
 
-function replaceSnowflakeArrWithObj(arr: Snowflake[]) {
-    const obj: {[key:string]: any} = {};
-    for(let sf of arr) {
-        obj[sf.id] = sf;
-    }
-    return obj;
-}
 
-function handleDispatchMessage(type: string, data: any) {
-    console.log(type);
-    console.log(data);
-    switch (type) {
-        case "READY": {
-            store.dispatch(setCurrentUser(data.user));
-            for(let guild of data.guilds) {
-                Object.assign(guild, guild.properties);
-                delete guild.properties;
-                guild.channels = replaceSnowflakeArrWithObj(guild.channels);
-                guild.roles = replaceSnowflakeArrWithObj(guild.roles);
-                guild.emojis = replaceSnowflakeArrWithObj(guild.emojis);
-                guild.stickers = replaceSnowflakeArrWithObj(guild.stickers);
-                guild.threads = replaceSnowflakeArrWithObj(guild.threads);
-            }
-            store.dispatch(addGuilds(data.guilds));
-            store.dispatch(addUsers(data.users));
-            for(let dm of data.private_channels) {
-                dm.recipients = dm.recipient_ids.map((userId: string) => store.getState().users.users[userId]);
-                delete dm.recipient_ids;
-            }
-            store.dispatch(addChannels(data.private_channels));
-            store.dispatch(addRelationships(data.relationships));
-
-            const self_presence = {
-                "user_id": data.user.id,
-                "status": data.user_settings.status,
-            } // TODO: add custom status
-            store.dispatch(addPresence(self_presence))
-            break;
-        }
-        case "READY_SUPPLEMENTAL": {
-            store.dispatch(addPresences(data.merged_presences.friends))
-            store.dispatch(addPresences(data.merged_presences.guilds))
-            break;
-        }
-        case "PRESENCE_UPDATE": {
-            store.dispatch(addUser(data.user));
-            data.user_id = data.user.id;
-            delete data.user;
-            store.dispatch(addPresence(data))
-            break;
-        }
-    }
-}
 
 function handleGwMessage(event: WebSocketEventMap['message']) {
     websocketState.sequenceNumber++;
     const data = JSON.parse(event.data);
-    switch (data.op) {
-        case GatewayOp.HELLO.valueOf(): {
-            sendHeartbeat();
-            websocketState.heartbeatInterval = window.setInterval(() => {
-                sendHeartbeat();
-            }, data.d.heartbeat_interval);
-            break;
-        }
-        case GatewayOp.DISPATCH: {
-            handleDispatchMessage(data.t, data.d);
-            break;
-        }
-    }
-}
-
-function sendHeartbeat() {
-    if (websocketState.sendWebsocketMessage) {
-        websocketState.sendWebsocketMessage({"op": GatewayOp.HEARTBEAT, "d": websocketState.sequenceNumber})
-    }
+    handleGatewayMessage(data);
 }
 
 interface WebsocketState {
@@ -130,7 +57,7 @@ function getIdentifyProperties() {
 export default function GatewayWebsocket() {
     const token = store.getState().app.token;
     const dispatch = useDispatch();
-    const {sendJsonMessage} = useWebSocket(GATEWAY_ENDPOINT+"?encoding=json&v=9", {
+    const {sendJsonMessage} = useWebSocket(GATEWAY_ENDPOINT + "?encoding=json&v=9", {
         onOpen: () => {
             websocketState.sendWebsocketMessage = sendJsonMessage;
             websocketState.sequenceNumber = 0;

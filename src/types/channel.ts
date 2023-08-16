@@ -1,4 +1,5 @@
 import User from "../types/user";
+import Snowflake from "./snowflake";
 
 export enum ChannelType {
     GUILD_TEXT = 0,
@@ -14,7 +15,7 @@ export enum ChannelType {
     GUILD_DIRECTORY = 14,
 }
 
-export default interface Channel {
+export default interface Channel extends Snowflake {
     id: string,
     type: number,
     name: string | null,

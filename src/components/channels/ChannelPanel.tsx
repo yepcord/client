@@ -5,7 +5,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DmButton from "./DmButton";
 import GroupIcon from "@mui/icons-material/Group";
 import DmChannel from "./DmChannel";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import Avatar from "./Avatar";
 import MicRoundedIcon from '@mui/icons-material/MicRounded';
@@ -13,6 +13,7 @@ import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {useNavigate} from "react-router-dom";
 import Guild from "../../types/guild";
+import {closeSettings, openSettings} from "../../states/app";
 
 interface GuildProps {
     guild: Guild,
@@ -30,6 +31,7 @@ function DmChannelList() {
 
 function ProfilePanel() {
     const user = useSelector((state: RootState) => state.app.me);
+    const dispatch = useDispatch();
 
     return (
         <div className="profile-panel">
@@ -46,7 +48,7 @@ function ProfilePanel() {
             <div className="profile-panel-buttons">
                 <MicRoundedIcon/>
                 <HeadphonesRoundedIcon/>
-                <SettingsRoundedIcon/>
+                <SettingsRoundedIcon onClick={() => dispatch(openSettings())}/>
             </div>
         </div>
     );

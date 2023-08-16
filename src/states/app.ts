@@ -1,13 +1,15 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {UserMe} from "../types/user";
+import {UserMe, UserSettings} from "../types/user";
 
 export type SelFriendsTab = "online" | "all" | "pending" | "blocked" | "add";
 
 export interface AppState {
     token: string | null,
     me: UserMe | null,
+    settings: UserSettings,
     selectedFriendsTab: SelFriendsTab,
     websocketReady: boolean,
+    settingsDialogOpen: boolean,
 }
 
 export const appState = createSlice({
@@ -24,8 +26,10 @@ export const appState = createSlice({
             bio: "",
             bot: false,
         },
+        settings: {},
         selectedFriendsTab: "online",
         websocketReady: false,
+        settingsDialogOpen: false,
     } as AppState,
     reducers: {
         setToken: (state: AppState, action: PayloadAction<string>) => {
@@ -41,7 +45,16 @@ export const appState = createSlice({
         setWsReady: (state: AppState, action: PayloadAction<boolean>) => {
             state.websocketReady = action.payload;
         },
+        setSettings: (state: AppState, action: PayloadAction<UserSettings>) => {
+            Object.assign(state.settings, action.payload);
+        },
+        openSettings: (state: AppState) => {
+            state.settingsDialogOpen = true;
+        },
+        closeSettings: (state: AppState) => {
+            state.settingsDialogOpen = false;
+        },
     }
 });
 
-export const {setToken, setCurrentUser, setFriendsTab, setWsReady} = appState.actions;
+export const {setToken, setCurrentUser, setFriendsTab, setWsReady, setSettings, openSettings, closeSettings} = appState.actions;
