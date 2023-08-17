@@ -12,12 +12,13 @@ import MicRoundedIcon from '@mui/icons-material/MicRounded';
 import HeadphonesRoundedIcon from '@mui/icons-material/HeadphonesRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import {useNavigate} from "react-router-dom";
-import Guild from "../../types/guild";
-import {closeSettings, openSettings} from "../../states/app";
-
-interface GuildProps {
-    guild: Guild,
-}
+import {openSettings} from "../../states/app";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import Channel, {ChannelType} from "../../types/channel";
+import {useState} from "react";
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import TagIcon from '@mui/icons-material/Tag';
 
 function DmChannelList() {
     const state = useSelector((state: RootState) => state.channel.dmChannels);
@@ -83,10 +84,91 @@ function DmChannelPanel() {
     );
 }
 
-function GuildChannelPanel({guild}: GuildProps) {
+interface ChannelsH {
+    [key: string]: {
+        channel: Channel,
+        channels: Channel[],
+    }
+}
+
+type ChannelsHValues = {
+    channel: Channel,
+    channels: Channel[],
+};
+
+function CategoryChannel(props: ChannelsHValues) {
+    const [open, setOpen] = useState(true);
+
+    props.channels.sort((a, b) => (a.position ? a.position : 0) - (b.position ? b.position : 0));
+
+    return (
+        <div>
+            <div className="category-channel" onClick={() => setOpen(!open)}>
+                <span>{open ? <ArrowDropDownIcon/> : <ArrowDropUpIcon/>}{props.channel.name!.toUpperCase()}</span>
+                <Tooltip title="Create channel">
+                    <AddIcon/>
+                </Tooltip>
+            </div>
+            <div className={`channel-panel-guild-items ${!open && "d-none"}`}>
+                {props.channels.map(channel => {
+                    return (
+                        <div className="channel-panel-item-container">
+                            <button className="btn-secondary-transparent margin-tb-10px channel-panel-item">
+                                <div className="channel-panel-item-name">
+                                    {channel.type === ChannelType.GUILD_VOICE ? <VolumeUpIcon/> : <TagIcon/>}
+                                    {channel.name}
+                                </div>
+                            </button>
+                        </div>
+                    )
+                })}
+            </div>
+        </div>
+    );
+}
+
+function GuildChannelList() {
+    const guild_channels = useSelector((state: RootState) => state.guild.selectedGuild?.channels);
+
+    const buildChannelsHierarchy = (guild_channels: { [key: string]: Channel }): ChannelsHValues[] => {
+        let channels: ChannelsH = {};
+        for (let channel of Object.values(guild_channels!) as Channel[]) {
+            if (channel.type === ChannelType.GUILD_CATEGORY)
+                channels[channel.id] = {channel: channel, channels: []};
+        }
+        for (let channel of Object.values(guild_channels!) as Channel[]) {
+            if (channel.parent_id && channel.parent_id in channels)
+                channels[channel.parent_id].channels.push(channel);
+            else
+                channels[channel.id] = {channel: channel, channels: []};
+        }
+        let result = Object.values(channels) as ChannelsHValues[];
+        result.sort((a, b) => (a.channel.position ? a.channel.position : 0) - (b.channel.position ? b.channel.position : 0));
+        return result;
+    }
+
+    return (
+        <div className="guild-channel-list">
+            {buildChannelsHierarchy(guild_channels!).map(item => {
+                return <CategoryChannel {...item}/>
+            })}
+        </div>
+    );
+}
+
+function GuildChannelPanel() {
+    const guild = useSelector((state: RootState) => state.guild.selectedGuild);
+
     return (
         <div className="channel-panel">
-            Guild channel panel
+            <div className="channel-guild-title">
+                <span>{guild!.name}</span>
+                <ArrowDropDownIcon/>
+            </div>
+
+            <Divider flexItem sx={{borderBottomWidth: "2px"}}/>
+
+            <GuildChannelList/>
 
             <ProfilePanel/>
         </div>
@@ -96,8 +178,8 @@ function GuildChannelPanel({guild}: GuildProps) {
 export default function ChannelPanel() {
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
 
-    if(selectedGuild === null)
+    if (selectedGuild === null)
         return <DmChannelPanel/>;
     else
-        return <GuildChannelPanel guild={selectedGuild}/>;
+        return <GuildChannelPanel/>;
 }

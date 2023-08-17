@@ -35,6 +35,18 @@
     background-color: transparent;
 }
 
+.space-between {
+    justify-content: space-between;
+}
+
+.margin-tb-10px {
+    margin: 0 10px;
+}
+
+.d-none {
+    display: none!important;
+}
+
 .btn-secondary-transparent {
     display: flex;
     flex-direction: row;

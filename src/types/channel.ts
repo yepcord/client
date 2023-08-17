@@ -22,4 +22,11 @@ export default interface Channel extends Snowflake {
     icon: string | null,
     recipients: User[] | null,
     last_message_id: string | null,
+    parent_id: string | null,
+    position: number | null,
+    guild_id: string | null,
+    nsfw: boolean,
+    permission_overwrites: unknown[],
+    topic: string | null,
+    rate_limit_per_user: number | null,
 }

@@ -1,24 +1,28 @@
 import '../../styles/servers.css';
 import GuildIcon from "./GuildIcon";
 import {Divider} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../store";
-import {useEffect} from "react";
-import {addGuilds} from "../../states/guilds";
 import AddIcon from '@mui/icons-material/Add';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import {useNavigate} from "react-router-dom";
+import {MEDIA_ENDPOINT} from "../../constants";
+import Guild from "../../types/guild";
 
 function GuildList() {
     const state = useSelector((state: RootState) => state.guild.guilds);
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
     const navigate = useNavigate();
 
+    const getGuildIconUrl = (guild: Guild) => {
+        return guild.icon === null ? "/empty-guild-icon.png" : `${MEDIA_ENDPOINT}/icons/${guild.id}/${guild.icon}.webp?size=96`;
+    }
+
     return <>{
         Object.values(state).map(item => {
             return <GuildIcon title={item.name} selected={item.id === selectedGuild?.id} onClick={() => navigate(`/channels/${item.id}/0`)}
-                               image_url={`https://127.0.0.1:8000/media/icons/202461713512075264/${item.icon}.webp?size=96`}/>;
+                               image_url={getGuildIconUrl(item)}/>;
         })
     }</>;
 }

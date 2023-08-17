@@ -188,3 +188,70 @@
     fill: #b2b2b2 !important;
     cursor: pointer;
 }
+
+.channel-guild-title {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: all .2s ease;
+    font-weight: bold;
+}
+
+.channel-guild-title:hover {
+    background-color: #6c6c6c80;
+}
+
+.guild-channel-list {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.category-channel {
+    display: flex;
+    margin: 0 10px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: #b2b2b2;
+    transition: all .1s ease;
+}
+
+.category-channel > span {
+    display: flex;
+    align-items: center;
+}
+
+.category-channel:hover {
+    color: #ffffff;
+}
+
+.channel-panel-item-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.channel-panel-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1
+}
+
+.channel-panel-item-name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.channel-panel-guild-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
