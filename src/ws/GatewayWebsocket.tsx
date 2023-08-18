@@ -87,10 +87,11 @@ export default function GatewayWebsocket() {
             })
         },
         onClose: () => dispatch(setWsReady(false)),
+        shouldReconnect: () => true,
         onMessage: handleGwMessage,
         retryOnError: true,
         reconnectAttempts: Number.MAX_VALUE,
-        reconnectInterval: (attemptNumber) => Math.min(Math.pow(attemptNumber, 2) * 1000, 32000),
+        reconnectInterval: (attemptNumber) => Math.min(Math.pow(attemptNumber, 2) * 1000, 16000),
     });
 
     return <></>;
