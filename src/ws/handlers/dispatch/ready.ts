@@ -1,5 +1,5 @@
 import store from "../../../store";
-import {setCurrentUser, setSettings} from "../../../states/app";
+import {setCurrentUser, setSettings, setWsReady} from "../../../states/app";
 import {addGuilds} from "../../../states/guilds";
 import {addPresence, addRelationships, addUsers} from "../../../states/users";
 import {addChannels} from "../../../states/channels";
@@ -143,4 +143,6 @@ export default function readyHandler(data: ReadyHandlerData) {
         "status": data.user_settings.status,
     } // TODO: add custom status
     store.dispatch(addPresence(self_presence));
+
+    store.dispatch(setWsReady(true));
 }
