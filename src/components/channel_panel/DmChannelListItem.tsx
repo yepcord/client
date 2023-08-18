@@ -1,14 +1,14 @@
 import Channel, {ChannelType} from "../../types/channel";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import Avatar from "./Avatar";
-import ChannelIcon from "./ChannelIcon";
+import Avatar from "../channels/Avatar";
+import ChannelIcon from "../channels/ChannelIcon";
 import {useNavigate} from "react-router-dom";
 
 interface DmChannelProps {
     channel: Channel,
 }
 
-export default function DmChannel({channel}: DmChannelProps) {
+export default function DmChannelListItem({channel}: DmChannelProps) {
     const navigate = useNavigate();
     const handleDmChannelDeleteClick = () => {
         //

@@ -4,7 +4,7 @@ interface DmButtonProps {
     onClick: () => void,
 }
 
-export default function DmButton({icon, text, onClick}: DmButtonProps) {
+export default function DmChannelPanelButton({icon, text, onClick}: DmButtonProps) {
     return (
         <div className="dm-btn" onClick={onClick}>
             <div className="dm-btn-icon">{icon}</div>

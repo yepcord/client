@@ -9,3 +9,7 @@ body, html, #root {
   flex-direction: row;
   height: 100%;
 }
+
+button {
+  cursor: pointer;
+}

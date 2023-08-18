@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import NavBar from "./components/channels/NavBar";
-import ChannelPanel from "./components/channels/ChannelPanel";
+import React from 'react';
+import NavBar from "./components/navbar/NavBar";
+import ChannelPanel from "./components/channel_panel/ChannelPanel";
 import ChannelContainer from "./components/channels/ChannelContainer";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes, useLocation, useParams} from "react-router-dom";
@@ -11,7 +11,7 @@ import {useDispatch} from "react-redux";
 import {setSelectedGuild} from "./states/guilds";
 import {selectChannel} from "./utils";
 import GatewayWebsocket from "./ws/GatewayWebsocket";
-import SettingsDialog from "./components/channels/SettingsDialog";
+import SettingsDialog from "./components/dialogs/SettingsDialog";
 
 const theme = createTheme({
     components: {

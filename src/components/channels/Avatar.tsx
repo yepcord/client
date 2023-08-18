@@ -6,9 +6,10 @@ import {RootState} from "../../store";
 
 interface AvatarProps {
     user: User,
+    withBadge?: boolean,
 }
 
-export default function Avatar({user}: AvatarProps) {
+export default function Avatar({user, withBadge = true}: AvatarProps) {
     const presence = useSelector((state: RootState) => state.users.presences[user.id]);
     let status = presence ? presence.status : "offline";
 
@@ -16,11 +17,19 @@ export default function Avatar({user}: AvatarProps) {
         return user.avatar ? `${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.webp?size=32` : "/empty-avatar.png";
     }
 
-    return (
-        <div className="dm-channel-icon">
-            <StatusBadge status={status}>
-                <img className="dm-channel-icon-img" src={getAvatarUrl(user)} alt={`${user.username}#${user.discriminator}`}/>
-            </StatusBadge>
-        </div>
-    );
+    return withBadge
+        ? (
+            <div className="dm-channel-icon">
+                <StatusBadge status={status}>
+                    <img className="dm-channel-icon-img" src={getAvatarUrl(user)}
+                         alt={`${user.username}#${user.discriminator}`}/>
+                </StatusBadge>
+            </div>
+        )
+        : (
+            <div className="dm-channel-icon">
+                <img className="dm-channel-icon-img" src={getAvatarUrl(user)}
+                     alt={`${user.username}#${user.discriminator}`}/>
+            </div>
+        );
 }

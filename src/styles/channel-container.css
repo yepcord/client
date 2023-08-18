@@ -12,6 +12,14 @@
     align-items: center;
     margin: 0 15px;
     color: #d2d2d2;
+    justify-content: space-between;
+}
+
+.channel-titlebar-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
 }
 
 .channel-titlebar > svg {
@@ -26,10 +34,6 @@
 .titlebar-icon-button:hover {
     fill: #e5e5e5;
     transition: all .1s ease-in;
-}
-
-.channel-titlebar > p {
-    margin-left: 10px;
 }
 
 .channel-content {
@@ -98,4 +102,8 @@
 .titlebar-friends-button-green-selected {
     color: #24be24;
     background-color: transparent;
+}
+
+.channel-titlebar-title {
+    font-weight: bold;
 }

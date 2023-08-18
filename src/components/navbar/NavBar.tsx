@@ -7,25 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import {useNavigate} from "react-router-dom";
-import {MEDIA_ENDPOINT} from "../../constants";
-import Guild from "../../types/guild";
-
-function GuildList() {
-    const state = useSelector((state: RootState) => state.guild.guilds);
-    const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
-    const navigate = useNavigate();
-
-    const getGuildIconUrl = (guild: Guild) => {
-        return guild.icon === null ? "/empty-guild-icon.png" : `${MEDIA_ENDPOINT}/icons/${guild.id}/${guild.icon}.webp?size=96`;
-    }
-
-    return <>{
-        Object.values(state).map(item => {
-            return <GuildIcon title={item.name} selected={item.id === selectedGuild?.id} onClick={() => navigate(`/channels/${item.id}/0`)}
-                               image_url={getGuildIconUrl(item)}/>;
-        })
-    }</>;
-}
+import GuildList from "./GuildList";
 
 export default function NavBar() {
     const navigate = useNavigate();
@@ -36,7 +18,8 @@ export default function NavBar() {
         <div className="servers-list">
             <div/>
 
-            <GuildIcon title="Direct Messages" image_url="/logo192.png" selected={selectedGuild === null} onClick={() => navigate("/channels/@me")}/>
+            <GuildIcon title="Direct Messages" image_url="/logo192.png" selected={selectedGuild === null}
+                       onClick={() => navigate("/channels/@me")}/>
 
             <Divider className={"icons-divider"}/>
 

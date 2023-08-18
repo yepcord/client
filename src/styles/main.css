@@ -17,6 +17,20 @@
     background-color: #004ed7;
 }
 
+.btn-color-primary {
+    color: #156bff;
+}
+
+.btn-color-primary:hover {
+    background-color: #0261ff;
+    color: #ffffff;
+}
+
+.btn-color-primary:active {
+    background-color: #004ed7;
+    color: #ffffff;
+}
+
 .input-primary {
     background-color: #1e1e1e;
     color: #e8e8e8;
@@ -36,7 +50,13 @@
 }
 
 .space-between {
+    display: flex;
     justify-content: space-between;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
 }
 
 .margin-tb-10px {

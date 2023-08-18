@@ -1,5 +1,5 @@
 import '../../styles/channel-container.css';
-import ChannelTitleBar from "./ChannelTitleBar";
+import ChannelTitleBar from "../channel_titlebar/ChannelTitleBar";
 import ChannelContent from "./ChannelContent";
 import {Divider} from "@mui/material";
 
