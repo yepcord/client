@@ -1,7 +1,7 @@
 import Channel, {ChannelType} from "../../types/channel";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import Avatar from "../channels/Avatar";
-import ChannelIcon from "../channels/ChannelIcon";
+import Avatar from "../user/Avatar";
+import ChannelIcon from "./ChannelIcon";
 import {useNavigate} from "react-router-dom";
 
 interface DmChannelProps {

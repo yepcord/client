@@ -12,7 +12,7 @@ export default function GuildList() {
     const navigate = useNavigate();
 
     const getGuildIconUrl = (guild: Guild) => {
-        return guild.icon === null ? "/empty-guild-icon.png" : `${MEDIA_ENDPOINT}/icons/${guild.id}/${guild.icon}.webp?size=96`;
+        return guild.icon === null ? "/no-image.png" : `${MEDIA_ENDPOINT}/icons/${guild.id}/${guild.icon}.webp?size=96`;
     }
 
     const getFirstTextChannel = (guild: Guild) => {

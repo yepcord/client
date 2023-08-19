@@ -18,7 +18,7 @@ export default function GuildIcon({button = false, title, image_url, svg, onClic
                 onClick={onClick}>
                 {button
                     ? <div className={"server-icon-button-wr"}>{svg}</div>
-                    : <img src={image_url} alt={"Server icon"}></img>
+                    : <img width={48} height={48} src={image_url} alt={"Server icon"}></img>
                 }
             </div>
         </Tooltip>

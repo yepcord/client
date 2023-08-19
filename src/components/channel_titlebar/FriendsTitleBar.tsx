@@ -19,24 +19,29 @@ export default function FriendsTitleBar() {
             <div className="friends-buttons">
                 <button
                     className={`titlebar-friends-button ${selectedTab === "online" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("online"))}>Online
+                    onClick={() => dispatch(setFriendsTab("online"))}>
+                    Online
                 </button>
                 <button
                     className={`titlebar-friends-button ${selectedTab === "all" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("all"))}>All
+                    onClick={() => dispatch(setFriendsTab("all"))}>
+                    All
                 </button>
                 <button
                     className={`titlebar-friends-button ${selectedTab === "pending" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("pending"))}>Pending
+                    onClick={() => dispatch(setFriendsTab("pending"))}>
+                    Pending
                 </button>
                 <button
                     className={`titlebar-friends-button ${selectedTab === "blocked" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("blocked"))}>Blocked
+                    onClick={() => dispatch(setFriendsTab("blocked"))}>
+                    Blocked
                 </button>
 
                 <button
                     className={`titlebar-friends-button-green ${selectedTab === "add" ? "titlebar-friends-button-green-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("add"))}>Add Friend
+                    onClick={() => dispatch(setFriendsTab("add"))}>
+                    Add Friend
                 </button>
             </div>
             <Tooltip title="New Group DM" placement="bottom" arrow>

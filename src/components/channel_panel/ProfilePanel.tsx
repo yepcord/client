@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
-import Avatar from "../channels/Avatar";
+import Avatar from "../user/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import HeadphonesRoundedIcon from "@mui/icons-material/HeadphonesRounded";

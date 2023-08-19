@@ -1,5 +1,5 @@
 import TagRoundedIcon from "@mui/icons-material/TagRounded";
-import {StatusIcon} from "../channels/Badges";
+import {StatusIcon} from "../user/Badges";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {ChannelType} from "../../types/channel";

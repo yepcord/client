@@ -8,7 +8,6 @@ import store from "../store";
 import handleGatewayMessage from "./handlers";
 
 
-
 function handleGwMessage(event: WebSocketEventMap['message']) {
     websocketState.sequenceNumber++;
     const data = JSON.parse(event.data);

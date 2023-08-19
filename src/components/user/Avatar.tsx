@@ -14,21 +14,21 @@ export default function Avatar({user, withBadge = true}: AvatarProps) {
     let status = presence ? presence.status : "offline";
 
     const getAvatarUrl = (user: User) => {
-        return user.avatar ? `${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.webp?size=32` : "/empty-avatar.png";
+        return user.avatar ? `${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.webp?size=32` : "/no-image.png";
     }
 
     return withBadge
         ? (
             <div className="dm-channel-icon">
                 <StatusBadge status={status}>
-                    <img className="dm-channel-icon-img" src={getAvatarUrl(user)}
+                    <img width={32} height={32} className="dm-channel-icon-img" src={getAvatarUrl(user)}
                          alt={`${user.username}#${user.discriminator}`}/>
                 </StatusBadge>
             </div>
         )
         : (
             <div className="dm-channel-icon">
-                <img className="dm-channel-icon-img" src={getAvatarUrl(user)}
+                <img width={32} height={32} className="dm-channel-icon-img" src={getAvatarUrl(user)}
                      alt={`${user.username}#${user.discriminator}`}/>
             </div>
         );

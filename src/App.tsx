@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from "./components/navbar/NavBar";
 import ChannelPanel from "./components/channel_panel/ChannelPanel";
-import ChannelContainer from "./components/channels/ChannelContainer";
+import ChannelContainer from "./components/channel/ChannelContainer";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes, useLocation, useParams} from "react-router-dom";
 import {LoginPage, RegisterPage} from "./components/auth/AuthPage";
@@ -34,7 +34,7 @@ function AppPage() {
     const dispatch = useDispatch();
     let guild = params.guild ? params.guild : null;
     let channel = params.channel ? params.channel : null;
-    if (location.pathname === "/channels/@me")
+    if (location.pathname === "/channel/@me")
         guild = "@me";
 
     dispatch(setSelectedGuild(guild));

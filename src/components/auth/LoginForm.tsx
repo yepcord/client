@@ -85,7 +85,7 @@ export default function LoginForm() {
                 </p>
             </div>
             <div className="remote-auth-form">
-                <img className="remote-auth-qr" src="/logo192.png"/>
+                <img className="remote-auth-qr" src="/no-image.png"/>
                 <h3>Log in with QR Code</h3>
                 <p>Scan this with mobile app to log in instantly.</p>
             </div>
