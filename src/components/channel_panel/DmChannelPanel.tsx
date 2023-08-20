@@ -20,7 +20,7 @@ export default function DmChannelPanel() {
 
             <Divider flexItem sx={{borderBottomWidth: "2px"}}/>
 
-            <DmChannelPanelButton icon={<GroupIcon/>} text="Friends" onClick={() => navigate("/channel/@me")}/>
+            <DmChannelPanelButton icon={<GroupIcon/>} text="Friends" onClick={() => navigate("/channels/@me")}/>
 
             <div className="dm-divider">
                 <div className="dm-divider-text">DIRECT MESSAGES</div>

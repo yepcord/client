@@ -1,7 +1,7 @@
-import store from "../../../store";
-import Channel from "../../../types/channel";
-import {removeGuildChannel} from "../../../states/guilds";
-import {removeChannel} from "../../../states/channels";
+import store from "../../../../store";
+import Channel from "../../../../types/channel";
+import {removeGuildChannel} from "../../../../states/guilds";
+import {removeChannel} from "../../../../states/channels";
 
 export interface ChannelDeleteHandlerData extends Channel {
 }

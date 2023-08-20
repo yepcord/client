@@ -55,7 +55,7 @@
 
 .form-link {
     text-decoration: none;
-    color: #156bff;
+    color: #156bff!important;
 }
 
 .form-link:hover {
@@ -74,18 +74,29 @@
     gap: 20px;
     justify-content: center;
     align-items: center;
+    margin-left: 30px;
 }
 
 .remote-auth-form > * {
     margin-block-end: 0;
     margin-block-start: 0;
     color: #e5e5e5;
-    margin-left: 30px;
+
     text-align: center;
 }
 
 .remote-auth-qr {
+    width: 65%;
+    height: auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.remote-auth-avatar {
     width: 50%;
+    height: auto;
+    border-radius: 50%;
 }
 
 .register-form-container {

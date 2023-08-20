@@ -1,9 +1,14 @@
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {FormEvent, useState} from "react";
 import ApiClient, {ErrorResponse} from "../../api/client";
 import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
+import RemoteAuthWebsocket from "../../ws/remote_auth/RemoteAuthWebsocket";
+import {RootState} from "../../store";
+import { PUBLIC_URL } from "../../constants";
+import QRCode from "react-qr-code";
+import RemoteAuthForm from "./RemoteAuthForm";
 
 interface LoginErrors {
     email?: string,
@@ -55,7 +60,8 @@ export default function LoginForm() {
     const loginErr = () => errors.email ? " - " + errors.email : null;
     const passwordErr = () => errors.password ? " - " + errors.password : null;
 
-    return (
+    return (<>
+        <RemoteAuthWebsocket/>
         <form className="login-form-container" onSubmit={submit}>
             <div className="login-form">
                 <div className="login-form-header">
@@ -67,7 +73,8 @@ export default function LoginForm() {
                         Email or phone number
                         <span className="required-asterisk">{loginErr() ? loginErr() : " *"}</span>
                     </label>
-                    <input name="email" type="email" className="input-primary" onChange={e => setEmail(e.target.value)}
+                    <input name="email" type="email" className="input-primary"
+                           onChange={e => setEmail(e.target.value)}
                            required={true}/>
                 </div>
                 <div className="input-container">
@@ -84,11 +91,7 @@ export default function LoginForm() {
                     Need an account? <a onClick={() => navigate("/register")} className="form-link">Register</a>
                 </p>
             </div>
-            <div className="remote-auth-form">
-                <img className="remote-auth-qr" src="/no-image.png"/>
-                <h3>Log in with QR Code</h3>
-                <p>Scan this with mobile app to log in instantly.</p>
-            </div>
+            <RemoteAuthForm/>
         </form>
-    );
+    </>);
 }

@@ -32,9 +32,9 @@ export const appState = createSlice({
         settingsDialogOpen: false,
     } as AppState,
     reducers: {
-        setToken: (state: AppState, action: PayloadAction<string>) => {
+        setToken: (state: AppState, action: PayloadAction<string|null>) => {
             state.token = action.payload;
-            localStorage.setItem("token", action.payload);
+            action.payload ? localStorage.setItem("token", action.payload) : localStorage.removeItem("token");
         },
         setCurrentUser: (state: AppState, action: PayloadAction<UserMe>) => {
             state.me = action.payload;

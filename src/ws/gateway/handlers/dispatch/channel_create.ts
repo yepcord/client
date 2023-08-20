@@ -1,7 +1,7 @@
-import store from "../../../store";
-import Channel from "../../../types/channel";
-import {addGuildChannel} from "../../../states/guilds";
-import {addChannel} from "../../../states/channels";
+import store from "../../../../store";
+import Channel from "../../../../types/channel";
+import {addGuildChannel} from "../../../../states/guilds";
+import {addChannel} from "../../../../states/channels";
 
 export interface ChannelCreateHandlerData extends Channel {
 }

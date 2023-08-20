@@ -1,4 +1,4 @@
-import {GatewayOp} from "../../types/gateway";
+import {GatewayOp} from "../../../types/gateway";
 import helloHandler, {HelloHandlerData} from "./hello/hello";
 import readyHandler, {ReadyHandlerData} from "./dispatch/ready";
 import readySupplementalHandler, {ReadySupplementalHandlerData} from "./dispatch/ready_supplemental";

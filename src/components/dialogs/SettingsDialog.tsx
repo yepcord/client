@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {closeSettings} from "../../states/app";
 import CloseIcon from '@mui/icons-material/Close';
+import {logOut} from "../../utils";
+import {useNavigate} from "react-router-dom";
 
 type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
     "accessibility" | "voice_and_video" | "text_and_images" | "notifications" | "keybinds" | "language" |
@@ -15,6 +17,7 @@ export default function SettingsDialog() {
     const open = useSelector((state: RootState) => state.app.settingsDialogOpen);
     const dispatch = useDispatch();
     const [selectedCategory, setSelected] = useState("account" as SettingsCategories);
+    const navigate = useNavigate();
 
     const getSelected = (name: SettingsCategories) => {
         return name === selectedCategory ? " btn-secondary-transparent-selected" : "";
@@ -88,6 +91,12 @@ export default function SettingsDialog() {
 
                         <button onClick={() => setSelected("hypesquad")}
                                 className={`btn-secondary-transparent ${getSelected("hypesquad")}`}>HypeSquad
+                        </button>
+
+                        <Divider flexItem sx={{backgroundColor: "#757575"}}/>
+
+                        <button onClick={() => {logOut(); navigate("/login")}} className="btn-secondary-transparent">
+                            Log Out
                         </button>
                     </div>
                 </div>

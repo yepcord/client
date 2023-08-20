@@ -1,5 +1,5 @@
 import {websocketState} from "../../GatewayWebsocket";
-import {GatewayOp} from "../../../types/gateway";
+import {GatewayOp} from "../../../../types/gateway";
 
 export interface HelloHandlerData {
     heartbeat_interval: number,

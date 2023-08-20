@@ -1,5 +1,5 @@
-import store from "../../../store";
-import {removeGuild} from "../../../states/guilds";
+import store from "../../../../store";
+import {removeGuild} from "../../../../states/guilds";
 
 export interface GuildDeleteHandlerData {
     id: string,

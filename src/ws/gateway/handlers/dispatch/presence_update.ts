@@ -1,6 +1,6 @@
-import User, {Presence} from "../../../types/user";
-import store from "../../../store";
-import {addPresence, addUser} from "../../../states/users";
+import User, {Presence} from "../../../../types/user";
+import store from "../../../../store";
+import {addPresence, addUser} from "../../../../states/users";
 
 export interface PresenceUpdateHandlerData extends Presence {
     user?: User,

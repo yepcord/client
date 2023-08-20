@@ -1,8 +1,8 @@
-import store from "../../../store";
-import Snowflake from "../../../types/snowflake";
-import {replaceSnowflakeArrWithObj} from "../../../utils";
-import {addGuild} from "../../../states/guilds";
-import Guild from "../../../types/guild";
+import store from "../../../../store";
+import Snowflake from "../../../../types/snowflake";
+import {replaceSnowflakeArrWithObj} from "../../../../utils";
+import {addGuild} from "../../../../states/guilds";
+import Guild from "../../../../types/guild";
 
 export interface GuildUpdateHandlerData extends Guild {}
 

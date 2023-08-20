@@ -1,8 +1,8 @@
-import store from "../../../store";
-import Channel from "../../../types/channel";
-import {addGuildChannel, GuildsState} from "../../../states/guilds";
-import {addChannel, updateSelectedChannel} from "../../../states/channels";
-import Guild from "../../../types/guild";
+import store from "../../../../store";
+import Channel from "../../../../types/channel";
+import {addGuildChannel, GuildsState} from "../../../../states/guilds";
+import {addChannel, updateSelectedChannel} from "../../../../states/channels";
+import Guild from "../../../../types/guild";
 
 export interface ChannelUpdateHandlerData extends Channel {
 }

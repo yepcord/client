@@ -20,7 +20,6 @@ export default function RelationshipList() {
             return <PendingRequestItem user={user} type={rel.type}/>
         });
     } else if (tab === "blocked") {
-        console.log(relationships)
         relationship_items = relationships.map((rel) => {
             let user = users[rel.id];
             return <BlockedItem user={user}/>

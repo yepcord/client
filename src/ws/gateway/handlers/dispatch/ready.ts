@@ -1,13 +1,13 @@
-import store from "../../../store";
-import {setCurrentUser, setSettings, setWsReady} from "../../../states/app";
-import {addGuilds} from "../../../states/guilds";
-import {addPresence, addRelationships, addUsers} from "../../../states/users";
-import {addChannels} from "../../../states/channels";
-import User, {Relationship, UserMe, UserSettings} from "../../../types/user";
-import Channel from "../../../types/channel";
-import Guild, {GuildFeatures} from "../../../types/guild";
-import {replaceSnowflakeArrWithObj} from "../../../utils";
-import Snowflake from "../../../types/snowflake";
+import store from "../../../../store";
+import {setCurrentUser, setSettings, setWsReady} from "../../../../states/app";
+import {addGuilds} from "../../../../states/guilds";
+import {addPresence, addRelationships, addUsers} from "../../../../states/users";
+import {addChannels} from "../../../../states/channels";
+import User, {Relationship, UserMe, UserSettings} from "../../../../types/user";
+import Channel from "../../../../types/channel";
+import Guild, {GuildFeatures} from "../../../../types/guild";
+import {replaceSnowflakeArrWithObj} from "../../../../utils";
+import Snowflake from "../../../../types/snowflake";
 
 export interface ReadyHandlerData {
     user: UserMe,

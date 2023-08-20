@@ -10,9 +10,8 @@ import CheckUnauthenticated from "./components/CheckUnauthenticated";
 import {useDispatch, useSelector} from "react-redux";
 import {setSelectedGuild} from "./states/guilds";
 import {selectChannel} from "./utils";
-import GatewayWebsocket from "./ws/GatewayWebsocket";
+import GatewayWebsocket from "./ws/gateway/GatewayWebsocket";
 import SettingsDialog from "./components/dialogs/SettingsDialog";
-import {Root} from "react-dom/client";
 import {RootState} from "./store";
 import Loader from "./components/loader";
 

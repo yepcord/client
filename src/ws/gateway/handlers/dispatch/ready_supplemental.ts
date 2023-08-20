@@ -1,6 +1,6 @@
-import {Presence} from "../../../types/user";
-import store from "../../../store";
-import {addPresences} from "../../../states/users";
+import {Presence} from "../../../../types/user";
+import store from "../../../../store";
+import {addPresences} from "../../../../states/users";
 
 export interface ReadySupplementalHandlerData {
     guilds: {

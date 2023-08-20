@@ -1,6 +1,8 @@
 import store from "./store";
 import {setSelectedChannel} from "./states/channels";
 import Snowflake from "./types/snowflake";
+import ApiClient from "./api/client";
+import {setToken} from "./states/app";
 
 export function selectChannel(channelId: string | null) {
     const global_state = store.getState();
@@ -17,4 +19,9 @@ export function replaceSnowflakeArrWithObj(arr: Snowflake[]) {
         obj[sf.id] = sf;
     }
     return obj;
+}
+
+export function logOut() {
+    ApiClient.logout().then();
+    store.dispatch(setToken(null));
 }

@@ -100,4 +100,12 @@ export default class ApiClient {
             }
         });
     }
+
+    static async logout() {
+        return await this.makeRequest({
+            method: "POST",
+            url: "auth/logout",
+            authRequired: true,
+        });
+    }
 }

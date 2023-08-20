@@ -3,6 +3,7 @@ import '../../styles/channel-content.css';
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import RelationshipsContent from "./relationships/RelationshipsContent";
+import TextChannelContent from "./TextChannelContent";
 
 export default function ChannelContent() {
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
@@ -11,10 +12,6 @@ export default function ChannelContent() {
     if (selectedGuild === null && selectedChannel === null) {
         return <RelationshipsContent/>;
     } else {
-        return (
-            <div className="channel-content">
-                <p><b>Guild or DM channel content</b></p>
-            </div>
-        );
+        return <TextChannelContent/>;
     }
 }

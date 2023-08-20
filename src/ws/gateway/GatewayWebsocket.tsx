@@ -1,10 +1,10 @@
 import {useDispatch} from "react-redux";
 import useWebSocket from "react-use-websocket";
-import {GATEWAY_ENDPOINT, VERSION_NUMBER} from "../constants";
-import {setWsReady} from "../states/app";
+import {GATEWAY_ENDPOINT, VERSION_NUMBER} from "../../constants";
+import {setWsReady} from "../../states/app";
 import {SendJsonMessage} from "react-use-websocket/src/lib/types";
-import {GatewayOp} from "../types/gateway";
-import store from "../store";
+import {GatewayOp} from "../../types/gateway";
+import store from "../../store";
 import handleGatewayMessage from "./handlers";
 
 
