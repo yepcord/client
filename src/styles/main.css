@@ -87,3 +87,11 @@
     background-color: #6b6b6b;
     color: white;
 }
+
+.vis-hidden {
+    visibility: hidden;
+}
+
+.h-0 {
+    height: 0;
+}

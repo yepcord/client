@@ -7,9 +7,12 @@ import {RootState} from "../../store";
 interface AvatarProps {
     user: User,
     withBadge?: boolean,
+    size?: number,
+    divClassName?: string,
+    imgClassName?: string,
 }
 
-export default function Avatar({user, withBadge = true}: AvatarProps) {
+export default function Avatar({user, withBadge = true, size = 32, divClassName="", imgClassName=""}: AvatarProps) {
     const presence = useSelector((state: RootState) => state.users.presences[user.id]);
     let status = presence ? presence.status : "offline";
 
@@ -19,16 +22,16 @@ export default function Avatar({user, withBadge = true}: AvatarProps) {
 
     return withBadge
         ? (
-            <div className="dm-channel-icon">
+            <div className={`dm-channel-icon ${divClassName}`}>
                 <StatusBadge status={status}>
-                    <img width={32} height={32} className="dm-channel-icon-img" src={getAvatarUrl(user)}
+                    <img width={size} height={size} className="dm-channel-icon-img" src={getAvatarUrl(user)}
                          alt={`${user.username}#${user.discriminator}`}/>
                 </StatusBadge>
             </div>
         )
         : (
-            <div className="dm-channel-icon">
-                <img width={32} height={32} className="dm-channel-icon-img" src={getAvatarUrl(user)}
+            <div className={`dm-channel-icon ${divClassName}`}>
+                <img width={size} height={size} className={`dm-channel-icon-img ${imgClassName}`} src={getAvatarUrl(user)}
                      alt={`${user.username}#${user.discriminator}`}/>
             </div>
         );

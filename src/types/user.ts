@@ -7,7 +7,7 @@ export default interface User extends Snowflake {
     avatar: string | null,
     banner: string | null,
     bio: string | null,
-    bot: boolean,
+    bot?: boolean,
     public_flags: number,
 }
 

@@ -9,9 +9,13 @@ import guildUpdateHandler, {GuildUpdateHandlerData} from "./dispatch/guild_updat
 import channelCreateHandler, {ChannelCreateHandlerData} from "./dispatch/channel_create";
 import channelUpdateHandler, {ChannelUpdateHandlerData} from "./dispatch/channel_update";
 import channelDeleteHandler, {ChannelDeleteHandlerData} from "./dispatch/channel_delete";
+import messageCreateHandler, {MessageCreateHandlerData} from "./dispatch/message_create";
+import messageDeleteHandler, {MessageDeleteHandlerData} from "./dispatch/message_delete";
+import messageUpdateHandler, {MessageUpdateHandlerData} from "./dispatch/message_update";
 
 type DispatchData = ReadyHandlerData | ReadySupplementalHandlerData | PresenceUpdateHandlerData | GuildCreateHandlerData |
-    GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData;
+    GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData |
+    MessageCreateHandlerData | MessageDeleteHandlerData | MessageUpdateHandlerData;
 
 interface GatewayMessage {
     op: GatewayOp,
@@ -58,6 +62,18 @@ function handleDispatchMessage(type: string, data: DispatchData) {
         }
         case "CHANNEL_DELETE": {
             channelDeleteHandler(data as ChannelDeleteHandlerData);
+            break;
+        }
+        case "MESSAGE_CREATE": {
+            messageCreateHandler(data as MessageCreateHandlerData);
+            break;
+        }
+        case "MESSAGE_DELETE": {
+            messageDeleteHandler(data as MessageDeleteHandlerData);
+            break;
+        }
+        case "MESSAGE_UPDATE": {
+            messageUpdateHandler(data as MessageUpdateHandlerData);
             break;
         }
     }

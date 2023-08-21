@@ -108,4 +108,15 @@ export default class ApiClient {
             authRequired: true,
         });
     }
+
+    static async getMessages(channel_id: string) {
+        return await this.makeRequest({
+            method: "GET",
+            url: `channels/${channel_id}/messages`,
+            authRequired: true,
+            params: {
+                limit: 50
+            }
+        });
+    }
 }
