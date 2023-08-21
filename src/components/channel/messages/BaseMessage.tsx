@@ -12,6 +12,7 @@ export default function BaseMessage({message, previous_message}: BaseMessageProp
     const date = parseISO(message.timestamp);
     const date_str = format(date, "dd.MM.yyyy h:mm aa");
     const sameAuthor = previous_message?.author.id === message.author.id;
+    const sent = message.sent === undefined ? false : message.sent;
 
     return (
         <div className="message">
@@ -22,7 +23,7 @@ export default function BaseMessage({message, previous_message}: BaseMessageProp
                         <span className="message-username">{message.author.username}</span>
                         <span className="message-timestamp">{date_str}</span>
                     </div>
-                    <div className="message-content">
+                    <div className={`message-content ${sent ? "message-content-pending" : ""}`}>
                         {message.content}
                     </div>
                 </div>

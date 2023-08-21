@@ -49,8 +49,8 @@ export interface Message {
     attachments?: unknown[], // TODO: add Attachment type,
     guild_id?: string | null,
     mention_everyone?: boolean | null,
-    mentions: User[],
-    mention_roles: string[],
+    mentions?: User[],
+    mention_roles?: string[],
     message_reference?: {
         message_id: string,
         channel_id: string,
@@ -59,4 +59,6 @@ export interface Message {
     referenced_message?: Message | null,
     nonce?: string,
     reactions?: unknown[], // TODO: add Reaction type
+
+    sent?: boolean,
 }

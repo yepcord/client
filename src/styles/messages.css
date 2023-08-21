@@ -63,3 +63,7 @@
     color: white;
     font-size: 14px;
 }
+
+.message-content-pending {
+    color: #8f8f8f;
+}

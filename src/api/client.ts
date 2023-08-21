@@ -1,5 +1,6 @@
 import {API_ENDPOINT} from "../constants";
 import store from "../store";
+import {MessagePostRequest} from "./types";
 
 interface MakeRequestProps {
     method: string,
@@ -117,6 +118,16 @@ export default class ApiClient {
             params: {
                 limit: 50
             }
+        });
+    }
+
+    static async postMessages(data: MessagePostRequest) {
+        const req_data = (({ channel_id, ...o }) => o)(data);
+        return await this.makeRequest({
+            method: "POST",
+            url: `channels/${data.channel_id}/messages`,
+            authRequired: true,
+            body: req_data
         });
     }
 }
