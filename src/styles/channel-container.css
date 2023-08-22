@@ -112,7 +112,7 @@
 .channel-messages {
     display: flex;
     flex-grow: 1;
-    flex-direction: column;
+    flex-direction: column-reverse;
     overflow-y: scroll;
     height: 0;
 }

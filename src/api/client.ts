@@ -110,14 +110,18 @@ export default class ApiClient {
         });
     }
 
-    static async getMessages(channel_id: string) {
+    static async getMessages(channel_id: string, before: string | null = null) {
+        let params: {[key:string]: any} = {
+            limit: 50,
+        }
+        if(before)
+            params["before"] = before;
+
         return await this.makeRequest({
             method: "GET",
             url: `channels/${channel_id}/messages`,
             authRequired: true,
-            params: {
-                limit: 50
-            }
+            params: params
         });
     }
 

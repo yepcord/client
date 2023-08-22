@@ -7,27 +7,47 @@ export interface MessagesState {
             [key: string]: Message,
         }
     },
+    info: {
+        [key: string]: {
+            minimal: string | null,
+            all: boolean,
+        }
+    }
 }
 
 export const messageState = createSlice({
     "name": "message",
     initialState: {
         messages: {},
+        info: {},
     } as MessagesState,
     reducers: {
         addMessage: (state: MessagesState, action: PayloadAction<Message>) => {
             const message: Message = action.payload;
-            (!(message.channel_id in state.messages)) && (state.messages[message.channel_id] = {});
+            if(!(message.channel_id in state.messages)) {
+                state.messages[message.channel_id] = {};
+                state.info[message.channel_id] = {minimal: message.id, all: false};
+            }
             const messages = state.messages[message.channel_id];
+            const info = state.info[message.channel_id];
+
             message.id in messages ? Object.assign(messages[message.id], message) : messages[message.id] = message;
+
+            if(info.minimal === null || BigInt(message.id) < BigInt(info.minimal))
+                info.minimal = message.id;
         },
         removeMessage: (state: MessagesState, action: PayloadAction<{id: string, channel_id: string}>) => {
             const id = action.payload.id;
             const channel_id = action.payload.channel_id;
             if(!(channel_id in state.messages)) return;
             id in state.messages[channel_id] && delete state.messages[channel_id][id];
-        }
+        },
+        setAllLoaded: (state: MessagesState, action: PayloadAction<string>) => {
+            const channel_id = action.payload;
+            if(!(channel_id in state.info)) return;
+            state.info[channel_id].all = true;
+        },
     }
 });
 
-export const {addMessage, removeMessage} = messageState.actions;
+export const {addMessage, removeMessage, setAllLoaded} = messageState.actions;
