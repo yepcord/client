@@ -1,15 +1,16 @@
-import "../../styles/settings.css";
-import "../../styles/main.css";
+import "../../../styles/settings.css";
+import "../../../styles/main.css";
 import {Dialog, Divider} from "@mui/material";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
-import {closeSettings} from "../../states/app";
+import {RootState} from "../../../store";
+import {closeSettings} from "../../../states/app";
 import CloseIcon from '@mui/icons-material/Close';
-import {logOut} from "../../utils";
+import {logOut} from "../../../utils";
 import {useNavigate} from "react-router-dom";
+import {SettingsTab} from "./tabs/SettingsTab";
 
-type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
+export type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
     "accessibility" | "voice_and_video" | "text_and_images" | "notifications" | "keybinds" | "language" |
     "streamer_mode" | "advanced" | "activity_privacy" | "games" | "hypesquad";
 
@@ -102,7 +103,7 @@ export default function SettingsDialog() {
                 </div>
                 <div className="settings-content-container">
                     <div className="settings-content">
-                        Content
+                        <SettingsTab name={selectedCategory}/>
                     </div>
                     <div>
                         <div className="settings-close-button-container" onClick={() => dispatch(closeSettings())}>

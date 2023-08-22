@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setSelectedGuild} from "./states/guilds";
 import {selectChannel} from "./utils";
 import GatewayWebsocket from "./ws/gateway/GatewayWebsocket";
-import SettingsDialog from "./components/dialogs/SettingsDialog";
+import SettingsDialog from "./components/dialogs/settings/SettingsDialog";
 import {RootState} from "./store";
 import Loader from "./components/loader";
 

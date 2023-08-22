@@ -17,7 +17,7 @@ export default function Avatar({user, withBadge = true, size = 32, divClassName=
     let status = presence ? presence.status : "offline";
 
     const getAvatarUrl = (user: User) => {
-        return user.avatar ? `${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.webp?size=32` : "/no-image.png";
+        return user.avatar ? `${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.webp?size=${size}` : "/no-image.png";
     }
 
     return withBadge

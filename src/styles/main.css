@@ -95,3 +95,78 @@
 .h-0 {
     height: 0;
 }
+
+.btn-primary {
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #156bff;
+    transition: all .1s ease-out;
+    font-size: 16px;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.btn-primary:hover {
+    background-color: #0261ff;
+}
+
+.btn-primary:active {
+    background-color: #004ed7;
+}
+
+.btn-secondary {
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #545454;
+    transition: all .1s ease-out;
+    font-size: 16px;
+    align-items: center;
+}
+
+.btn-secondary:hover {
+    background-color: #727272;
+}
+
+.btn-secondary:active {
+    background-color: #949494;
+}
+
+.font-13 {
+    font-size: 13px;
+}
+
+.btn-danger {
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #ff3b3b;
+    transition: all .1s ease-out;
+    font-size: 16px;
+    align-items: center;
+}
+
+.btn-danger:hover {
+    background-color: #ff0000;
+    border: none;
+}
+
+.btn-danger:active {
+    background-color: #930000;
+    border: none;
+}
+
+.btn-danger-outline {
+    border: 2px solid #ff3b3b;
+    background-color: transparent;
+}
