@@ -1,6 +1,5 @@
 import "../styles/loader.css";
-import {CircularProgress, createTheme, Divider, LinearProgress, Skeleton, ThemeProvider} from "@mui/material";
-import {Tag} from "@mui/icons-material";
+import {CircularProgress, createTheme, LinearProgress, Skeleton, ThemeProvider} from "@mui/material";
 import TagIcon from "@mui/icons-material/Tag";
 
 const theme = createTheme({
@@ -46,7 +45,7 @@ export default function Loader() {
                     <div className="loader-panel">
                         <Skeleton animation="wave" sx={{height: 25}} variant="rounded"/>
                         <Skeleton animation="wave" sx={{height: 50}} variant="rounded"/>
-                        <LinearProgress color="inherit" />
+                        <LinearProgress color="inherit"/>
 
                         <DmChannelSkeleton/>
                         <DmChannelSkeleton/>
@@ -62,9 +61,9 @@ export default function Loader() {
                             <Skeleton animation="wave" sx={{height: 20, width: 150}} variant="rounded"/>
                         </div>
                     </div>
-                    <LinearProgress color="inherit" />
+                    <LinearProgress color="inherit"/>
                     <div className="loader-channel-content">
-                        <CircularProgress color="inherit" sx={{ width: 100, height: 100 }} />
+                        <CircularProgress color="inherit" sx={{width: 100, height: 100}}/>
                         Loading
                     </div>
                 </div>

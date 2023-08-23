@@ -6,6 +6,12 @@ import {Message} from "../../types/message";
 import {addMessage, setAllLoaded} from "../../states/messages";
 import {useEffect, useRef, useState} from "react";
 import BaseMessage from "./messages/BaseMessage";
+import {ChannelType} from "../../types/channel";
+import DmChannelBeginning from "./messages/DmChannelBeginning";
+import GuildChannelBeginning from "./messages/GuildChannelBeginning";
+import OnlyContentMessage from "./messages/OnlyContentMessage";
+import {format, parseISO} from "date-fns";
+import {Divider} from "@mui/material";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -60,7 +66,20 @@ export default function TextChannelContent() {
             return _a < _b ? -1 : _a > _b ? 1 : 0;
         });
         return messages_sorted.map((message, idx) => {
-            return <BaseMessage message={message} previous_message={idx ? messages_sorted[idx-1] : null}/>;
+            const prev = idx ? messages_sorted[idx-1] : null;
+            const date = parseISO(message.timestamp);
+            const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
+            const sameAuthor = sameDay ? prev?.author.id === message.author.id : false;
+            let ret = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
+            if(!sameDay) {
+                ret = (<>
+                    {ret}
+                    <Divider flexItem sx={{borderBottomWidth: "2px", color: "#adadad", margin: "0 20px", fontSize: 14}}>
+                        {format(date, "MMMM dd, yyyy")}
+                    </Divider>
+                </>);
+            }
+            return ret;
         }).reverse();
     }
 
@@ -69,7 +88,7 @@ export default function TextChannelContent() {
             <div className="channel-messages" onScroll={handleScroll} ref={messagesRef}>
                 <div ref={bottomRef}/>
                 {messages && getMessages()}
-                <p style={{ color: "white" }}><b>TODO: add header</b></p>
+                {channel?.type === ChannelType.DM ? <DmChannelBeginning channel={channel!}/> : <GuildChannelBeginning channel={channel!}/>}
             </div>
             <TextChannelInputPanel/>
         </div>

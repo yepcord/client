@@ -24,6 +24,10 @@
     flex-direction: row;
 }
 
+.message:hover {
+    background-color: #1c1c1c20;
+}
+
 .message-container {
     display: flex;
     flex-grow: 1;
@@ -66,4 +70,18 @@
 
 .message-content-pending {
     color: #8f8f8f;
+}
+
+.message-timestamp-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #9b9b9b;
+    visibility: hidden;
+    font-size: 12px;
+    width: 56px;
+}
+
+.message:hover > .message-container > .message-timestamp-left {
+    visibility: visible;
 }

@@ -66,3 +66,36 @@
     color: #8d8d8d;
     height: 100%;
 }
+
+.channel-beginning-container {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin: 20px;
+}
+
+.channel-beginning-container > h1 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.channel-beginning-container > .dm-channel-icon {
+    margin-left: 0;
+}
+
+.channel-beginning-text {
+    color: #8f8f8f;
+}
+
+.channel-beginning-username-text {
+    color: #bebebe;
+    font-weight: bold;
+}
+
+.channel-beginning-icon {
+    border-radius: 50%;
+    background-color: #676767;
+    padding: 10px;
+    width: 80px!important;
+    height: 80px!important;
+}

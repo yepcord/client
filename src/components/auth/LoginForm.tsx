@@ -1,13 +1,10 @@
 import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {FormEvent, useState} from "react";
 import ApiClient, {ErrorResponse} from "../../api/client";
 import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
 import RemoteAuthWebsocket from "../../ws/remote_auth/RemoteAuthWebsocket";
-import {RootState} from "../../store";
-import { PUBLIC_URL } from "../../constants";
-import QRCode from "react-qr-code";
 import RemoteAuthForm from "./RemoteAuthForm";
 
 interface LoginErrors {
