@@ -5,7 +5,7 @@ import {Divider} from "@mui/material";
 import {getRelationshipsByTab} from "./utils";
 import RelationshipList from "./RelationshipList";
 
-export default function RelationshipsContent() {
+function RelationshipsListContent() {
     const relationships = useSelector((state: RootState) => state.users.relationships);
     const presences = useSelector((state: RootState) => state.users.presences);
     const tab = useSelector((state: RootState) => state.app.selectedFriendsTab);
@@ -39,5 +39,29 @@ export default function RelationshipsContent() {
             </div>
 
         </div>
-    )
+    );
+}
+
+function RelationshipsAddContent() {
+    const [text, setText] = useState("");
+    const btn_enabled = text.split("#").length === 2 && text.split("#")[0].length > 1  && text.split("#")[1].length === 4;
+
+    return (
+        <div className="channel-content">
+            <div className="add-friend-form">
+                <h4 className="add-friend-header">ADD FRIEND</h4>
+                <span className="card-text-secondary">You can add a friend with their Tag. It's CaSe SeNsItIvE!</span>
+                <div className="add-friend-input">
+                    <input className="input-primary" placeholder="Enter a Username#1234" value={text} onChange={(e) => setText(e.currentTarget.value)}/>
+                    <button className="btn-primary" disabled={!btn_enabled}>Send Friend Request</button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default function RelationshipsContent() {
+    const tab = useSelector((state: RootState) => state.app.selectedFriendsTab);
+
+    return tab === "add" ? <RelationshipsAddContent/> : <RelationshipsListContent/>;
 }

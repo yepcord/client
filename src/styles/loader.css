@@ -78,3 +78,27 @@
     width: 100%;
     gap: 10px;
 }
+
+.loader-message-container {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin: 15px 0;
+}
+
+.loader-message-avatar {
+    margin: 0 10px;
+}
+
+.loader-message-content {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.loader-message-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 7px;
+}

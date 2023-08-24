@@ -12,6 +12,7 @@ import GuildChannelBeginning from "./messages/GuildChannelBeginning";
 import OnlyContentMessage from "./messages/OnlyContentMessage";
 import {format, parseISO} from "date-fns";
 import {Divider} from "@mui/material";
+import TextChannelContentSkeleton from "./messages/TextChannelContentSkeleton";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -22,6 +23,7 @@ export default function TextChannelContent() {
     const messagesRef = useRef<HTMLDivElement>(null);
     const [isLoading, setLoading] = useState(false);
     const [isInit, setInit] = useState(false);
+    const loadingRef = useRef<HTMLDivElement>(null);
 
     const fetchMessages = (before?: string | null) => {
         if(info?.all) return;
@@ -49,7 +51,9 @@ export default function TextChannelContent() {
 
     const handleScroll = () => {
         const t = messagesRef.current;
-        if (t?.scrollHeight! + t?.scrollTop! - t?.offsetHeight! > 360 || isLoading || !isInit) {
+
+        if (t?.scrollHeight! + t?.scrollTop! - t?.offsetHeight! - 200 - loadingRef.current?.offsetHeight! > 360
+            || isLoading || !isInit) {
             return;
         }
         fetchMessages(info.minimal)?.then(count => {
@@ -88,7 +92,11 @@ export default function TextChannelContent() {
             <div className="channel-messages" onScroll={handleScroll} ref={messagesRef}>
                 <div ref={bottomRef}/>
                 {messages && getMessages()}
-                {channel?.type === ChannelType.DM ? <DmChannelBeginning channel={channel!}/> : <GuildChannelBeginning channel={channel!}/>}
+                <div ref={loadingRef} className={`${info?.all && "d-none"}`}>
+                    <TextChannelContentSkeleton/>
+                </div>
+
+                {info?.all && channel?.type === ChannelType.DM ? <DmChannelBeginning channel={channel!}/> : <GuildChannelBeginning channel={channel!}/>}
             </div>
             <TextChannelInputPanel/>
         </div>

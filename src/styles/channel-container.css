@@ -115,6 +115,7 @@
     flex-direction: column-reverse;
     overflow-y: scroll;
     height: 0;
+    max-width: 100%;
 }
 
 .channel-messages::-webkit-scrollbar {
@@ -167,4 +168,28 @@
     cursor: pointer;
     height: 28px!important;
     width: 28px!important;
+}
+
+.add-friend-form {
+    margin: 20px;
+}
+
+.add-friend-header {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    color: white;
+}
+
+.add-friend-input {
+    display: flex;
+    flex-direction: row;
+    background-color: #1e1e1e;
+    padding: 7px;
+    border-radius: 10px;
+    gap: 5px;
+}
+
+.add-friend-input > input {
+    flex-grow: 1;
+    outline: none;
 }

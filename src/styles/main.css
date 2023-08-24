@@ -118,6 +118,10 @@
     background-color: #004ed7;
 }
 
+.btn-primary:disabled {
+    background-color: #003793;
+}
+
 .btn-secondary {
     display: flex;
     flex-direction: row;
