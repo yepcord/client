@@ -14,6 +14,7 @@ import GatewayWebsocket from "./ws/gateway/GatewayWebsocket";
 import SettingsDialog from "./components/dialogs/settings/SettingsDialog";
 import {RootState} from "./store";
 import Loader from "./components/loader";
+import UserProfileDialog from "./components/dialogs/users/UserProfileDialog";
 
 const theme = createTheme({
     components: {
@@ -41,7 +42,6 @@ function AppPage() {
     channelAction && dispatch(channelAction);
 
     return (<>
-        <SettingsDialog/>
         <div className="main-container">
             <ThemeProvider theme={theme}>
                 <NavBar/>
@@ -52,6 +52,8 @@ function AppPage() {
             </ThemeProvider>
             <GatewayWebsocket/>
         </div>
+        <SettingsDialog/>
+        <UserProfileDialog/>
     </>);
 }
 

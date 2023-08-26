@@ -10,6 +10,7 @@ export interface AppState {
     selectedFriendsTab: SelFriendsTab,
     websocketReady: boolean,
     settingsDialogOpen: boolean,
+    profileDialogUserId: string | null,
 }
 
 export const appState = createSlice({
@@ -30,6 +31,7 @@ export const appState = createSlice({
         selectedFriendsTab: "online",
         websocketReady: false,
         settingsDialogOpen: false,
+        profileDialogUserId: null,
     } as AppState,
     reducers: {
         setToken: (state: AppState, action: PayloadAction<string|null>) => {
@@ -54,7 +56,10 @@ export const appState = createSlice({
         closeSettings: (state: AppState) => {
             state.settingsDialogOpen = false;
         },
+        setUserProfileDialog: (state: AppState, action: PayloadAction<string | null>) => {
+            state.profileDialogUserId = action.payload;
+        },
     }
 });
 
-export const {setToken, setCurrentUser, setFriendsTab, setWsReady, setSettings, openSettings, closeSettings} = appState.actions;
+export const {setToken, setCurrentUser, setFriendsTab, setWsReady, setSettings, openSettings, closeSettings, setUserProfileDialog} = appState.actions;

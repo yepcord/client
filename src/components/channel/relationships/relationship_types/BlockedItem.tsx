@@ -2,6 +2,7 @@ import Avatar from "../../../user/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import User from "../../../../types/user";
 import CloseIcon from '@mui/icons-material/Close';
+import ApiClient from "../../../../api/client";
 
 interface BlockedItemProps {
     user: User,
@@ -25,7 +26,7 @@ export default function BlockedItem({user}: BlockedItemProps) {
             </div>
             <div className="profile-panel-buttons">
                 <Tooltip title="Unblock" placement="top" arrow>
-                    <CloseIcon/>
+                    <CloseIcon onClick={() => ApiClient.deleteRelationship(user.id)}/>
                 </Tooltip>
             </div>
         </div>

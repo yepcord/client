@@ -3,6 +3,9 @@ import Tooltip from "@mui/material/Tooltip";
 import User, {RelationshipType} from "../../../../types/user";
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import ApiClient from "../../../../api/client";
+import {setUserProfileDialog} from "../../../../states/app";
+import {useDispatch} from "react-redux";
 
 interface PendingRequestItemProps {
     user: User,
@@ -10,8 +13,10 @@ interface PendingRequestItemProps {
 }
 
 export default function PendingRequestItem({user, type}: PendingRequestItemProps) {
+    const dispatch = useDispatch();
+
     return (
-        <div className="profile-panel bg-transparent">
+        <div className="profile-panel bg-transparent" onClick={() => dispatch(setUserProfileDialog(user.id))}>
             <div className="profile-panel-user">
                 <Avatar user={user} withBadge={false}/>
 
@@ -32,7 +37,7 @@ export default function PendingRequestItem({user, type}: PendingRequestItemProps
                     </Tooltip>
                 )}
                 <Tooltip title={type === RelationshipType.REQUEST_SENT ? "Cancel" : "Ignore"} placement="top" arrow>
-                    <CloseIcon/>
+                    <CloseIcon onClick={() => ApiClient.deleteRelationship(user.id)}/>
                 </Tooltip>
             </div>
         </div>

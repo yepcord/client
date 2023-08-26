@@ -134,4 +134,35 @@ export default class ApiClient {
             body: req_data
         });
     }
+
+    static async deleteRelationship(user_id: string) {
+        return await this.makeRequest({
+            method: "DELETE",
+            url: `users/@me/relationships/${user_id}`,
+            authRequired: true,
+        });
+    }
+
+    static async requestRelationship(username: string, discriminator: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/relationships`,
+            authRequired: true,
+            body: {
+                "username": username,
+                "discriminator": discriminator,
+            }
+        });
+    }
+
+    static async getOrCreateDmChannel(user_id: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/channels`,
+            authRequired: true,
+            body: {
+                "recipients": [user_id],
+            }
+        });
+    }
 }

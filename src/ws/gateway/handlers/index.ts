@@ -12,10 +12,13 @@ import channelDeleteHandler, {ChannelDeleteHandlerData} from "./dispatch/channel
 import messageCreateHandler, {MessageCreateHandlerData} from "./dispatch/message_create";
 import messageDeleteHandler, {MessageDeleteHandlerData} from "./dispatch/message_delete";
 import messageUpdateHandler, {MessageUpdateHandlerData} from "./dispatch/message_update";
+import relationshipAddHandler, {RelationshipAddHandlerData} from "./dispatch/relationship_add";
+import relationshipRemoveHandler, {RelationshipRemoveHandlerData} from "./dispatch/relationship_remove";
 
 type DispatchData = ReadyHandlerData | ReadySupplementalHandlerData | PresenceUpdateHandlerData | GuildCreateHandlerData |
     GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData |
-    MessageCreateHandlerData | MessageDeleteHandlerData | MessageUpdateHandlerData;
+    MessageCreateHandlerData | MessageDeleteHandlerData | MessageUpdateHandlerData | RelationshipAddHandlerData |
+    RelationshipRemoveHandlerData;
 
 interface GatewayMessage {
     op: GatewayOp,
@@ -74,6 +77,14 @@ function handleDispatchMessage(type: string, data: DispatchData) {
         }
         case "MESSAGE_UPDATE": {
             messageUpdateHandler(data as MessageUpdateHandlerData);
+            break;
+        }
+        case "RELATIONSHIP_ADD": {
+            relationshipAddHandler(data as RelationshipAddHandlerData);
+            break;
+        }
+        case "RELATIONSHIP_REMOVE": {
+            relationshipRemoveHandler(data as RelationshipRemoveHandlerData);
             break;
         }
     }

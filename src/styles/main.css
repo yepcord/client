@@ -3,7 +3,7 @@
     background-color: #156bff;
     height: 40px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: white;
     font-size: 16px;
     transition: all .1s ease-out;
@@ -72,7 +72,7 @@
     flex-direction: row;
     padding: 7px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: #b2b2b2;
     background-color: transparent;
     transition: all .1s ease-out;
@@ -101,7 +101,7 @@
     flex-direction: row;
     padding: 7px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: white;
     background-color: #156bff;
     transition: all .1s ease-out;
@@ -127,7 +127,7 @@
     flex-direction: row;
     padding: 7px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: white;
     background-color: #545454;
     transition: all .1s ease-out;
@@ -152,7 +152,7 @@
     flex-direction: row;
     padding: 7px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     color: white;
     background-color: #ff3b3b;
     transition: all .1s ease-out;
@@ -173,4 +173,39 @@
 .btn-danger-outline {
     border: 2px solid #ff3b3b;
     background-color: transparent;
+}
+
+.btn-success {
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    background-color: #00ab0d;
+    transition: all .1s ease-out;
+    font-size: 16px;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.btn-success:hover {
+    background-color: #00cb0d;
+}
+
+.btn-success:active {
+    background-color: #00860a;
+}
+
+.btn-success:disabled {
+    background-color: #006208;
+}
+
+.btn-icon {
+    color: #8f8f8f;
+    cursor: pointer;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

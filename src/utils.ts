@@ -1,10 +1,10 @@
 import store from "./store";
-import {setSelectedChannel} from "./states/channels";
+import {addChannel, setSelectedChannel} from "./states/channels";
 import Snowflake from "./types/snowflake";
 import ApiClient from "./api/client";
 import {setToken} from "./states/app";
 import {SNOWFLAKE_EPOCH} from "./constants";
-import {RefObject, useEffect, useMemo, useState} from "react";
+import Channel, {ChannelType} from "./types/channel";
 
 export function selectChannel(channelId: string | null) {
     const global_state = store.getState();
@@ -36,4 +36,20 @@ export function createSnowflake() {
     snowflake += BigInt(4095);
 
     return snowflake.toString();
+}
+
+export async function dmChannelByUserId(user_id: string) {
+    for (let channel of Object.values(store.getState().channel.dmChannels)) {
+        if(channel.type !== ChannelType.DM || channel.recipients === null) continue;
+        for(let recipient of channel.recipients) {
+            if(recipient.id === user_id) return channel;
+        }
+    }
+    const resp = await ApiClient.getOrCreateDmChannel(user_id);
+    if(resp.status !== 200) return null;
+
+    const channel = resp.body as Channel;
+    store.dispatch(addChannel(channel));
+
+    return channel;
 }

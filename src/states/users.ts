@@ -39,7 +39,7 @@ export const usersState = createSlice({
                 rel.id in state.relationships ? Object.assign(state.relationships[rel.id], rel) : state.relationships[rel.id] = rel;
             }
         },
-        removeFriend: (state: UsersState, action: PayloadAction<string>) => {
+        removeRelationship: (state: UsersState, action: PayloadAction<string>) => {
             delete state.relationships[action.payload];
         },
         addPresence: (state: UsersState, action: PayloadAction<Presence>) => {
@@ -54,4 +54,4 @@ export const usersState = createSlice({
     }
 });
 
-export const {addUser, addUsers, addRelationships, addPresence, addPresences} = usersState.actions;
+export const {addUser, addUsers, addRelationship, addRelationships, removeRelationship, addPresence, addPresences} = usersState.actions;
