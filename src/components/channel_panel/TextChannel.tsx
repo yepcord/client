@@ -3,6 +3,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store";
+import TransparentSecondaryButton from "../ui/TransparentSecondaryButton";
 
 interface TextChannelProps {
     channel: Channel,
@@ -14,13 +15,13 @@ export default function TextChannel({channel}: TextChannelProps) {
 
     return (
         <div className="channel-panel-item-container">
-            <button className={`btn-secondary-transparent margin-tb-10px channel-panel-item ${selected?.id === channel.id && "btn-secondary-transparent-selected"}`}
+            <TransparentSecondaryButton className="margin-tb-10px channel-panel-item" selected={selected?.id === channel.id}
                     onClick={() => navigate(`/channels/${channel.guild_id}/${channel.id}`)}>
                 <div className="channel-panel-item-name">
                     <TagIcon/>
                     {channel.name}
                 </div>
-            </button>
+            </TransparentSecondaryButton>
         </div>
     );
 }

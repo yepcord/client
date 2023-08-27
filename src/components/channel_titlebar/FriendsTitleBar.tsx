@@ -4,6 +4,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AddCommentRoundedIcon from "@mui/icons-material/AddCommentRounded";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
+import TransparentSecondaryButton from "../ui/TransparentSecondaryButton";
 
 export default function FriendsTitleBar() {
     const dispatch = useDispatch();
@@ -17,26 +18,18 @@ export default function FriendsTitleBar() {
         <div className="vertical-divider"/>
         <div className="friends-buttons-container">
             <div className="friends-buttons">
-                <button
-                    className={`titlebar-friends-button ${selectedTab === "online" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("online"))}>
+                <TransparentSecondaryButton selected={selectedTab === "online"} onClick={() => dispatch(setFriendsTab("online"))}>
                     Online
-                </button>
-                <button
-                    className={`titlebar-friends-button ${selectedTab === "all" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("all"))}>
+                </TransparentSecondaryButton>
+                <TransparentSecondaryButton selected={selectedTab === "all"} onClick={() => dispatch(setFriendsTab("all"))}>
                     All
-                </button>
-                <button
-                    className={`titlebar-friends-button ${selectedTab === "pending" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("pending"))}>
+                </TransparentSecondaryButton>
+                <TransparentSecondaryButton selected={selectedTab === "pending"} onClick={() => dispatch(setFriendsTab("pending"))}>
                     Pending
-                </button>
-                <button
-                    className={`titlebar-friends-button ${selectedTab === "blocked" ? "titlebar-friends-button-selected" : ""}`}
-                    onClick={() => dispatch(setFriendsTab("blocked"))}>
+                </TransparentSecondaryButton>
+                <TransparentSecondaryButton selected={selectedTab === "blocked"} onClick={() => dispatch(setFriendsTab("blocked"))}>
                     Blocked
-                </button>
+                </TransparentSecondaryButton>
 
                 <button
                     className={`titlebar-friends-button-green ${selectedTab === "add" ? "titlebar-friends-button-green-selected" : ""}`}

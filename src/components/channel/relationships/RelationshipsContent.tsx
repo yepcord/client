@@ -5,6 +5,7 @@ import {Divider} from "@mui/material";
 import {getRelationshipsByTab} from "./utils";
 import RelationshipList from "./RelationshipList";
 import ApiClient from "../../../api/client";
+import PrimaryButton from "../../ui/PrimaryButton";
 
 function RelationshipsListContent() {
     const relationships = useSelector((state: RootState) => state.users.relationships);
@@ -70,7 +71,7 @@ function RelationshipsAddContent() {
                 <span className="card-text-secondary">You can add a friend with their Tag. It's CaSe SeNsItIvE!</span>
                 <div className="add-friend-input">
                     <input className="input-primary" placeholder="Enter a Username#1234" value={text} onChange={(e) => setText(e.currentTarget.value)}/>
-                    <button className="btn-primary" disabled={!btn_enabled} onClick={sendRelReq}>Send Friend Request</button>
+                    <PrimaryButton disabled={!btn_enabled} onClick={sendRelReq}>Send Friend Request</PrimaryButton>
                 </div>
             </div>
         </div>

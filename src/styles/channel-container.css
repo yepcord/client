@@ -2,7 +2,7 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    background-color: #494949;
+    background-color: var(--theme-3);
 }
 
 .channel-titlebar {
@@ -11,7 +11,7 @@
     flex-direction: row;
     align-items: center;
     margin: 0 15px;
-    color: #d2d2d2;
+    color: var(--theme-text-primary);
     justify-content: space-between;
 }
 
@@ -23,16 +23,16 @@
 }
 
 .channel-titlebar > svg {
-    fill: #d2d2d2;
+    fill: var(--theme-text-primary);
 }
 
 .titlebar-icon-button {
-    fill: #d2d2d2;
+    fill: var(--theme-text-primary);
     cursor: pointer;
 }
 
 .titlebar-icon-button:hover {
-    fill: #e5e5e5;
+    fill: var(--theme-text-primary);
     transition: all .1s ease-in;
 }
 
@@ -46,7 +46,7 @@
 .vertical-divider {
     width: 2px;
     height: 75%;
-    background-color: #626262;
+    background-color: var(--theme-5);
     margin: 5px 10px;
     border-radius: 2px;
 }
@@ -66,28 +66,8 @@
     gap: 10px;
 }
 
-.titlebar-friends-button {
-    color: #c5c5c5;
-    padding: 7px 10px;
-    background-color: transparent;
-    border: none;
-    font-size: 16px;
-}
-
-.titlebar-friends-button:hover {
-    color: #e0e0e0;
-    background-color: #b0b0b040;
-    border-radius: 7px;
-}
-
-.titlebar-friends-button-selected {
-    color: #e0e0e0;
-    background-color: #b0b0b080;
-    border-radius: 7px;
-}
-
 .titlebar-friends-button-green {
-    color: #e0e0e0;
+    color: var(--theme-text-primary);
     padding: 7px 10px;
     background-color: #1c911c;
     border: none;
@@ -124,13 +104,13 @@
 }
 
 .channel-messages::-webkit-scrollbar-thumb {
-    background: #2f2f2f;
+    background: var(--theme-1);
     border-radius: 2px;
     cursor: pointer;
 }
 
 .channel-input-container-1 {
-    background-color: #5d5d5d;
+    background-color: var(--theme-4);
     border-radius: 10px;
     margin: 10px 15px;
 }
@@ -146,7 +126,7 @@
     flex-grow: 1;
     background-color: transparent;
     border: none;
-    color: white;
+    color: var(--theme-text-main);
     font-size: 15px;
     outline: none;
     resize: none;
@@ -164,7 +144,7 @@
 }
 
 .channel-input-icon {
-    color: #b0b0b0;
+    color: var(--theme-text-secondary);
     cursor: pointer;
     height: 28px!important;
     width: 28px!important;
@@ -177,13 +157,13 @@
 .add-friend-header {
     margin-block-start: 0;
     margin-block-end: 0;
-    color: white;
+    color: var(--theme-text-main);
 }
 
 .add-friend-input {
     display: flex;
     flex-direction: row;
-    background-color: #1e1e1e;
+    background-color: var(--theme-0);
     padding: 7px;
     border-radius: 10px;
     gap: 5px;

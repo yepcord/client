@@ -9,6 +9,8 @@ import {RelationshipType} from "../../../types/user";
 import ApiClient from "../../../api/client";
 import {dmChannelByUserId} from "../../../utils";
 import {useNavigate} from "react-router-dom";
+import SuccessButton from "../../ui/SuccessButton";
+import SecondaryButton from "../../ui/SecondaryButton";
 
 export default function UserProfileDialog() {
     const selectedUserId = useSelector((state: RootState) => state.app.profileDialogUserId)
@@ -24,24 +26,24 @@ export default function UserProfileDialog() {
 
     let buttons = <></>;
     if (relationship === null)
-        buttons = <button className="btn-success">Send Friend Request</button>;
+        buttons = <SuccessButton>Send Friend Request</SuccessButton>;
     else if (relationship.type === RelationshipType.REQUEST_RECEIVED)
         buttons = (<>
-            <button className="btn-success">Accept</button>
-            <button className="btn-secondary" onClick={() => ApiClient.deleteRelationship(user!.id)}>Ignore</button>
+            <SuccessButton>Accept</SuccessButton>
+            <SecondaryButton onClick={() => ApiClient.deleteRelationship(user!.id)}>Ignore</SecondaryButton>
         </>);
     else if (relationship.type === RelationshipType.REQUEST_SENT)
-        buttons = <button className="btn-success" disabled>Friend Request Sent</button>;
+        buttons = <SuccessButton disabled>Friend Request Sent</SuccessButton>;
     else if (relationship.type === RelationshipType.FRIEND)
         buttons = (
-            <button className="btn-success" onClick={() => {
+            <SuccessButton onClick={() => {
                 dmChannelByUserId(user!.id).then(channel => {
                     if (channel === null) return;
                     navigate(`/channels/@me/${channel.id}`);
                 })
             }}>
                 Send Message
-            </button>
+            </SuccessButton>
         );
 
     return (<>

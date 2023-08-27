@@ -4,6 +4,7 @@ import {FormEvent, useState} from "react";
 import ApiClient, {ErrorResponse} from "../../api/client";
 import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
+import PrimaryButton from "../ui/PrimaryButton";
 
 interface RegisterErrors {
     email?: string,
@@ -146,7 +147,7 @@ export default function RegisterForm() {
                         </select>
                     </div>
                 </div>
-                <button type="submit" className="btn-primary-wide">Continue</button>
+                <PrimaryButton type="submit" wide={true}>Continue</PrimaryButton>
                 <p>
                     Already have an account? <a onClick={() => navigate("/login")} className="form-link">Login</a>
                 </p>

@@ -2,6 +2,9 @@ import Avatar from "../../../user/Avatar";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store";
 import {Divider} from "@mui/material";
+import PrimaryButton from "../../../ui/PrimaryButton";
+import DangerButton from "../../../ui/DangerButton";
+import SecondaryButton from "../../../ui/SecondaryButton";
 
 export default function AccountTab() {
     const me = useSelector((state: RootState) => state.app.me);
@@ -19,7 +22,7 @@ export default function AccountTab() {
                         <h3 className="card-profile-username">{me!.username}</h3>
                         <h3 className="card-profile-discriminator">#{me!.discriminator}</h3>
                     </div>
-                    <button className="btn-primary button-end">Edit User Profile</button>
+                    <PrimaryButton className="button-end">Edit User Profile</PrimaryButton>
                 </div>
                 <div className="card-secondary">
                     <div className="card-info-row">
@@ -30,7 +33,7 @@ export default function AccountTab() {
                                 <span className="card-profile-discriminator">#{me!.discriminator}</span>
                             </div>
                         </div>
-                        <button className="btn-secondary button-end">Edit</button>
+                        <SecondaryButton className="button-end">Edit</SecondaryButton>
                     </div>
 
                     <div className="card-info-row">
@@ -38,7 +41,7 @@ export default function AccountTab() {
                             <span className="card-text-secondary">EMAIL</span>
                             <span className="card-profile-username">{me!.email}</span>
                         </div>
-                        <button className="btn-secondary button-end">Edit</button>
+                        <SecondaryButton className="button-end">Edit</SecondaryButton>
                     </div>
 
                     <div className="card-info-row">
@@ -46,7 +49,7 @@ export default function AccountTab() {
                             <span className="card-text-secondary">PHONE NUMBER</span>
                             <span className="card-profile-username">{me!.phone || "You haven't added a phone number yet."}</span>
                         </div>
-                        <button className="btn-secondary button-end">Edit</button>
+                        <SecondaryButton className="button-end">Edit</SecondaryButton>
                     </div>
                 </div>
             </div>
@@ -55,18 +58,18 @@ export default function AccountTab() {
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 
         <h3>Password and Authentication</h3>
-        <button className="btn-primary">Change Password</button>
+        <PrimaryButton>Change Password</PrimaryButton>
 
         <span className="card-text-secondary">TWO-FACTOR AUTHENTICATION</span>
-        <button className="btn-primary">Enable Two-Factor Auth</button>
+        <PrimaryButton>Enable Two-Factor Auth</PrimaryButton>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 
         <span className="card-text-secondary">ACCOUNT REMOVAL</span>
         <span className="card-text-secondary font-13">Disabling your account means you can recover it at any time after taking this action.</span>
         <div className="card-info-row">
-            <button className="btn-danger">Disable Account</button>
-            <button className="btn-danger btn-danger-outline">Delete Account</button>
+            <DangerButton>Disable Account</DangerButton>
+            <DangerButton outlined={true}>Delete Account</DangerButton>
         </div>
     </>);
 }

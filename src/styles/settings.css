@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    color: #8f8f8f;
+    color: var(--theme-6);
 }
 
 .settings-categories-container {
@@ -11,7 +11,7 @@
     flex-direction: row;
     width: 30%;
     justify-content: flex-end;
-    background-color: #1c1c1c;
+    background-color: var(--theme-0);;
     flex-grow: 1;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -46,7 +46,7 @@
     height: 40px!important;
     width: 40px!important;
     border-radius: 50%;
-    border: 2px solid #676767;
+    border: 2px solid var(--theme-4);
     transition: all .1s ease;
 }
 
@@ -59,14 +59,14 @@
 }
 
 .settings-close-button-container:hover > div {
-    color: #c0c0c0;
+    color: var(--theme-8);
     font-weight: bold;
     transition: all .1s ease;
 }
 
 .settings-close-button-container:hover > .settings-close-button {
-    border: 3px solid #c0c0c0;
-    fill: #c0c0c0;
+    border: 3px solid var(--theme-8);
+    fill: var(--theme-8);
 }
 
 .settings-content {
@@ -75,7 +75,7 @@
     max-width: 70%;
     flex-grow: 1;
     flex-direction: column;
-    color: white;
+    color: var(--theme-text-main);
 }
 
 .settings-content > h3 {
@@ -92,7 +92,7 @@
 .settings-card-head {
     width: 100%;
     height: 100px;
-    background-color: #343434;
+    background-color: var(--theme-2);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -101,7 +101,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #1f1f1f;
+    background-color: var(--theme-0);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     padding: 10px;
@@ -127,11 +127,11 @@
 }
 
 .card-profile-username {
-    color: white;
+    color: var(--theme-text-main);
 }
 
 .card-profile-discriminator {
-    color: #8f8f8f;
+    color: var(--theme-6);
 }
 
 .button-end {
@@ -161,5 +161,5 @@
 }
 
 .card-text-secondary {
-    color: #b4b4b4;
+    color: var(--theme-8);
 }

@@ -1,20 +1,17 @@
-.btn-primary-wide {
-    width: 100%;
-    background-color: #156bff;
-    height: 40px;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    font-size: 16px;
-    transition: all .1s ease-out;
-}
-
-.btn-primary-wide:hover {
-    background-color: #0261ff;
-}
-
-.btn-primary-wide:active {
-    background-color: #004ed7;
+body {
+    --theme-0: #1c1c1c;
+    --theme-1: #2d2d2d;
+    --theme-1p5: #333333;
+    --theme-2: #3b3b3b;
+    --theme-3: #4b4b4b;
+    --theme-4: #646464;
+    --theme-5: #737373;
+    --theme-6: #888888;
+    --theme-7: #9d9d9d;
+    --theme-8: #b4b4b4;
+    --theme-text-main: white;
+    --theme-text-primary: #eaeaea;
+    --theme-text-secondary: #c5c5c5;
 }
 
 .btn-color-primary {
@@ -23,17 +20,17 @@
 
 .btn-color-primary:hover {
     background-color: #0261ff;
-    color: #ffffff;
+    color: var(--theme-text-main);
 }
 
 .btn-color-primary:active {
     background-color: #004ed7;
-    color: #ffffff;
+    color: var(--theme-text-main);
 }
 
 .input-primary {
-    background-color: #1e1e1e;
-    color: #e8e8e8;
+    background-color: var(--theme-0);
+    color: var(--theme-text-primary);
     height: 35px;
     border-radius: 7px;
     font-size: 16px;
@@ -67,27 +64,6 @@
     display: none!important;
 }
 
-.btn-secondary-transparent {
-    display: flex;
-    flex-direction: row;
-    padding: 7px 10px;
-    border: none;
-    border-radius: 7px;
-    color: #b2b2b2;
-    background-color: transparent;
-    transition: all .1s ease-out;
-    font-size: 16px;
-}
-
-.btn-secondary-transparent:hover {
-    background-color: #545454;
-}
-
-.btn-secondary-transparent:active, .btn-secondary-transparent-selected {
-    background-color: #6b6b6b;
-    color: white;
-}
-
 .vis-hidden {
     visibility: hidden;
 }
@@ -96,18 +72,40 @@
     height: 0;
 }
 
-.btn-primary {
+.font-13 {
+    font-size: 13px;
+}
+
+.btn-icon {
+    color: var(--theme-5);
+    cursor: pointer;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.btn {
     display: flex;
     flex-direction: row;
     padding: 7px 10px;
     border: none;
     border-radius: 7px;
-    color: white;
-    background-color: #156bff;
+    color: var(--theme-text-main);
     transition: all .1s ease-out;
     font-size: 16px;
     align-items: center;
     align-self: flex-start;
+}
+
+.btn-wide {
+    height: 40px;
+    width: 100%;
+}
+
+.btn-primary {
+    color: var(--theme-text-main);
+    background-color: #156bff;
 }
 
 .btn-primary:hover {
@@ -122,42 +120,26 @@
     background-color: #003793;
 }
 
-.btn-secondary {
-    display: flex;
-    flex-direction: row;
-    padding: 7px 10px;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    background-color: #545454;
-    transition: all .1s ease-out;
-    font-size: 16px;
-    align-items: center;
+.btn-success {
+    color: var(--theme-text-main);
+    background-color: #00ab0d;
 }
 
-.btn-secondary:hover {
-    background-color: #727272;
+.btn-success:hover {
+    background-color: #00cb0d;
 }
 
-.btn-secondary:active {
-    background-color: #949494;
+.btn-success:active {
+    background-color: #00860a;
 }
 
-.font-13 {
-    font-size: 13px;
+.btn-success:disabled {
+    background-color: #006208;
 }
 
 .btn-danger {
-    display: flex;
-    flex-direction: row;
-    padding: 7px 10px;
-    border: none;
-    border-radius: 7px;
-    color: white;
+    color: var(--theme-text-main);
     background-color: #ff3b3b;
-    transition: all .1s ease-out;
-    font-size: 16px;
-    align-items: center;
 }
 
 .btn-danger:hover {
@@ -175,37 +157,29 @@
     background-color: transparent;
 }
 
-.btn-success {
-    display: flex;
-    flex-direction: row;
-    padding: 7px 10px;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    background-color: #00ab0d;
-    transition: all .1s ease-out;
-    font-size: 16px;
-    align-items: center;
-    align-self: flex-start;
+.btn-secondary {
+    color: var(--theme-text-main);
+    background-color: var(--theme-3);
 }
 
-.btn-success:hover {
-    background-color: #00cb0d;
+.btn-secondary:hover {
+    background-color: var(--theme-4);
 }
 
-.btn-success:active {
-    background-color: #00860a;
+.btn-secondary:active {
+    background-color: var(--theme-5);
 }
 
-.btn-success:disabled {
-    background-color: #006208;
+.btn-secondary-transparent {
+    color: var(--theme-8);
+    background-color: transparent;
 }
 
-.btn-icon {
-    color: #8f8f8f;
-    cursor: pointer;
+.btn-secondary-transparent:hover {
+    background-color: var(--theme-4);
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.btn-secondary-transparent:active, .btn-secondary-transparent-selected {
+    background-color: var(--theme-5);
+    color: var(--theme-text-main);
 }

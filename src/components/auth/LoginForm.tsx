@@ -6,6 +6,7 @@ import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
 import RemoteAuthWebsocket from "../../ws/remote_auth/RemoteAuthWebsocket";
 import RemoteAuthForm from "./RemoteAuthForm";
+import PrimaryButton from "../ui/PrimaryButton";
 
 interface LoginErrors {
     email?: string,
@@ -83,7 +84,7 @@ export default function LoginForm() {
                            onChange={e => setPassword(e.target.value)} required={true}/>
                     <a href="#" className="form-link">Forgot your password?</a>
                 </div>
-                <button className="btn-primary-wide">Log in</button>
+                <PrimaryButton type="submit" wide={true}>Log in</PrimaryButton>
                 <p>
                     Need an account? <a onClick={() => navigate("/register")} className="form-link">Register</a>
                 </p>

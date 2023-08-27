@@ -9,8 +9,8 @@
 }
 
 .offline-badge {
-    background-color: #545454;
-    border: 3px solid #8f8f8f;
+    background-color: var(--theme-3);
+    border: 3px solid var(--theme-6);
 }
 
 .idle-badge {

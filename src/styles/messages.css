@@ -13,7 +13,7 @@
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-    background: #2f2f2f;
+    background: var(--theme-1);
     border-radius: 2px;
     cursor: pointer;
 }
@@ -55,28 +55,28 @@
 
 .message-username {
     font-weight: bold;
-    color: white;
+    color: var(--theme-text-main);
 }
 
 .message-timestamp {
-    color: #8f8f8f;
+    color: var(--theme-7);
     font-size: 13px;
 }
 
 .message-content {
-    color: white;
+    color: var(--theme-text-main);
     font-size: 14px;
 }
 
 .message-content-pending {
-    color: #8f8f8f;
+    color: var(--theme-6);
 }
 
 .message-timestamp-left {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #9b9b9b;
+    color: var(--theme-7);
     visibility: hidden;
     font-size: 12px;
     width: 56px;

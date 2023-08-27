@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1c1c1c;
+    background-color: var(--theme-0);
     height: 100%;
     width: 100%;
 }
@@ -12,7 +12,7 @@
     flex-direction: row;
     width: 60%;
     border-radius: 15px;
-    background-color: #343434;
+    background-color: var(--theme-2);
     padding: 25px;
 }
 
@@ -22,7 +22,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 5px;
-    color: #d3d3d3;
+    color: var(--theme-text-secondary);
 }
 
 .login-form-header {
@@ -33,7 +33,7 @@
     width: 100%;
     margin-top: 15px;
     margin-bottom: 15px;
-    color: #e5e5e5;
+    color: var(--theme-text-primary);
     gap: 10px;
 }
 
@@ -46,7 +46,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    color: #d3d3d3;
+    color: var(--theme-text-primary);
 }
 
 .required-asterisk {
@@ -80,7 +80,7 @@
 .remote-auth-form > * {
     margin-block-end: 0;
     margin-block-start: 0;
-    color: #e5e5e5;
+    color: var(--theme-text-primary);
 
     text-align: center;
 }
@@ -104,7 +104,7 @@
     flex-direction: row;
     width: 40%;
     border-radius: 15px;
-    background-color: #343434;
+    background-color: var(--theme-2);
     padding: 25px;
 }
 
@@ -114,7 +114,7 @@
     flex-direction: column;
     gap: 20px;
     padding: 5px;
-    color: #d3d3d3;
+    color: var(--theme-text-secondary);
 }
 
 .register-form > h2 {
@@ -132,5 +132,5 @@
 
 .date-of-birth-container > select {
     flex-grow: 1;
-    color: #d3d3d3;
+    color: var(--theme-text-secondary);
 }

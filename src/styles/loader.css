@@ -1,5 +1,5 @@
 .loader-root {
-    background-color: #484848;
+    background-color: var(--theme-3);
     display: flex;
     flex-direction: row;
     height: 100%;
@@ -9,7 +9,7 @@
 .loader-navbar {
     height: 100%;
     width: 75px;
-    background-color: #252525;
+    background-color: var(--theme-1);
     display: flex;
     gap: 10px;
     flex-direction: column;
@@ -30,7 +30,7 @@
     flex-grow: 1;
     width: 250px;
     padding: 10px 10px;
-    background-color: #383838;
+    background-color: var(--theme-2);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -55,7 +55,7 @@
     display: flex;
     flex-direction: row;
     height: 50px;
-    color: #8f8f8f;
+    color: var(--theme-6);
 }
 
 .loader-channel-titlebar-content {
@@ -71,7 +71,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #8f8f8f;
+    color: var(--theme-6);
     font-weight: bold;
     font-size: 24px;
     flex-grow: 1;

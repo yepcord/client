@@ -15,6 +15,7 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
+import PrimaryButton from "../ui/PrimaryButton";
 
 interface GuildMenuButtonProps {
     children?: React.ReactNode,
@@ -23,9 +24,8 @@ interface GuildMenuButtonProps {
 }
 
 function GuildMenuButton({children, onClick, className}: GuildMenuButtonProps) {
-    return <button className={`btn-primary-wide bg-transparent space-between align-center ${className}`} style={{fontSize: "14px"}} onClick={onClick}>
-        {children}
-    </button>;
+    return <PrimaryButton className={`bg-transparent space-between align-center ${className}`}
+                          style={{fontSize: "14px"}} onClick={onClick} children={children}/>;
 }
 
 export default function GuildChannelPanel() {

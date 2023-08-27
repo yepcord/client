@@ -7,7 +7,7 @@
 }
 
 .friends-list-container > p {
-    color: #c5c5c5;
+    color: var(--theme-text-secondary);
     font-size: 12px;
     margin-block-start: 0;
     margin-block-end: 0;
@@ -36,11 +36,12 @@
 }
 
 .friends-list > .profile-panel > .profile-panel-buttons > svg:hover {
-    background-color: #1f1f1f;
+    background-color: var(--theme-0);
+
 }
 
 .friends-list > .profile-panel:hover {
-    background-color: #4f4f4f;
+    background-color: var(--theme-2);
     transition: all .15s ease-in;
     border-radius: 15px;
     cursor: pointer;
@@ -63,14 +64,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #8d8d8d;
+    color: var(--theme-6);
     height: 100%;
 }
 
 .channel-beginning-container {
     display: flex;
     flex-direction: column;
-    color: white;
+    color: var(--theme-text-main);
     margin: 20px;
 }
 
@@ -84,17 +85,17 @@
 }
 
 .channel-beginning-text {
-    color: #8f8f8f;
+    color: var(--theme-6);
 }
 
 .channel-beginning-username-text {
-    color: #bebebe;
+    color: var(--theme-text-secondary);
     font-weight: bold;
 }
 
 .channel-beginning-icon {
     border-radius: 50%;
-    background-color: #676767;
+    background-color: var(--theme-4);
     padding: 10px;
     width: 80px!important;
     height: 80px!important;
