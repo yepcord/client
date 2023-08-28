@@ -3,14 +3,18 @@ import Tooltip from "@mui/material/Tooltip";
 import User from "../../../../types/user";
 import CloseIcon from '@mui/icons-material/Close';
 import ApiClient from "../../../../api/client";
+import {setUserProfileDialog} from "../../../../states/app";
+import {useDispatch} from "react-redux";
 
 interface BlockedItemProps {
     user: User,
 }
 
 export default function BlockedItem({user}: BlockedItemProps) {
+    const dispatch = useDispatch();
+
     return (
-        <div className="profile-panel bg-transparent">
+        <div className="profile-panel bg-transparent" onClick={() => dispatch(setUserProfileDialog(user.id))}>
             <div className="profile-panel-user">
                 <Avatar user={user} withBadge={false}/>
 
@@ -26,7 +30,10 @@ export default function BlockedItem({user}: BlockedItemProps) {
             </div>
             <div className="profile-panel-buttons">
                 <Tooltip title="Unblock" placement="top" arrow>
-                    <CloseIcon onClick={() => ApiClient.deleteRelationship(user.id)}/>
+                    <CloseIcon onClick={(e) => {
+                        e.stopPropagation();
+                        ApiClient.deleteRelationship(user.id);
+                    }}/>
                 </Tooltip>
             </div>
         </div>

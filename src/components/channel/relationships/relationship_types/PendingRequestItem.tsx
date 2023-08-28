@@ -33,11 +33,17 @@ export default function PendingRequestItem({user, type}: PendingRequestItemProps
             <div className="profile-panel-buttons">
                 {type === RelationshipType.REQUEST_RECEIVED && (
                     <Tooltip title="Accept" placement="top" arrow>
-                        <DoneIcon/>
+                        <DoneIcon onClick={(e) => {
+                            e.stopPropagation();
+                            ApiClient.acceptRelationship(user.id);
+                        }}/>
                     </Tooltip>
                 )}
                 <Tooltip title={type === RelationshipType.REQUEST_SENT ? "Cancel" : "Ignore"} placement="top" arrow>
-                    <CloseIcon onClick={() => ApiClient.deleteRelationship(user.id)}/>
+                    <CloseIcon onClick={(e) => {
+                        e.stopPropagation();
+                        ApiClient.deleteRelationship(user.id);
+                    }}/>
                 </Tooltip>
             </div>
         </div>

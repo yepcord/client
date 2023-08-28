@@ -34,15 +34,20 @@ export default function TextChannelContent() {
                 for (let message of resp.body as Message[])
                     dispatch(addMessage(message));
 
-                resolve((resp.body as Message[]).length);
                 setLoading(false);
+                resolve((resp.body as Message[]).length);
             });
         })
     };
 
     useEffect(() => {
         setInit(false);
-        channel && fetchMessages(null)?.then(() => setInit(true));
+        channel && fetchMessages(null)?.then((count) => {
+            setInit(true);
+            if(count === 0) {
+                dispatch(setAllLoaded(channel!.id));
+            }
+        });
     }, [channel]);
 
     useEffect(() => {
@@ -57,8 +62,9 @@ export default function TextChannelContent() {
             return;
         }
         fetchMessages(info.minimal)?.then(count => {
-            if(count === 0)
-                dispatch(setAllLoaded(channel!.id))
+            if(count === 0) {
+                dispatch(setAllLoaded(channel!.id));
+            }
         });
     }
 

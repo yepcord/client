@@ -52,7 +52,7 @@ export default function RegisterForm() {
                 }
 
                 if (r.status >= 400 && r.status < 500) {
-                    const resp_errors = (r.body as ErrorResponse).errors;
+                    const resp_errors = (r.body as ErrorResponse).errors!;
                     const errors: RegisterErrors = {};
                     if ("email" in resp_errors)
                         errors["email"] = resp_errors["email"]["_errors"][0]["message"];

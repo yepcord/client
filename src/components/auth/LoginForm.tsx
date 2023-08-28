@@ -42,7 +42,7 @@ export default function LoginForm() {
                 }
 
                 if (r.status >= 400 && r.status < 500) {
-                    const resp_errors = (r.body as ErrorResponse).errors;
+                    const resp_errors = (r.body as ErrorResponse).errors!;
                     const errors: LoginErrors = {};
                     if ("login" in resp_errors) {
                         errors["email"] = resp_errors["login"]["_errors"][0]["message"];

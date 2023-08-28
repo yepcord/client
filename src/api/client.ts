@@ -1,6 +1,7 @@
 import {API_ENDPOINT} from "../constants";
 import store from "../store";
 import {MessagePostRequest} from "./types";
+import {RelationshipType} from "../types/user";
 
 interface MakeRequestProps {
     method: string,
@@ -19,7 +20,7 @@ interface Response {
 
 export interface ErrorResponse {
     code: number,
-    errors: {
+    errors?: {
         [key: string]: {
             _errors: {
                 code: string,
@@ -163,6 +164,36 @@ export default class ApiClient {
             body: {
                 "recipients": [user_id],
             }
+        });
+    }
+
+    static async blockUser(user_id: string) {
+        return await this.makeRequest({
+            method: "PUT",
+            url: `users/@me/relationships/${user_id}`,
+            authRequired: true,
+            body: {
+                "type": RelationshipType.BLOCK,
+            }
+        });
+    }
+
+    static async acceptRelationship(user_id: string) {
+        return await this.makeRequest({
+            method: "PUT",
+            url: `users/@me/relationships/${user_id}`,
+            authRequired: true,
+            body: {
+                "type": RelationshipType.FRIEND,
+            },
+        });
+    }
+
+    static async deleteChannel(channel_id: string) {
+        return await this.makeRequest({
+            method: "DELETE",
+            url: `channels/${channel_id}`,
+            authRequired: true,
         });
     }
 }

@@ -3,6 +3,9 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Avatar from "../user/Avatar";
 import ChannelIcon from "./ChannelIcon";
 import {useNavigate} from "react-router-dom";
+import ApiClient from "../../api/client";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 interface DmChannelProps {
     channel: Channel,
@@ -10,8 +13,13 @@ interface DmChannelProps {
 
 export default function DmChannelListItem({channel}: DmChannelProps) {
     const navigate = useNavigate();
+    const selectedChannel = useSelector((state: RootState) => state.channel.selectedChannel);
+
     const handleDmChannelDeleteClick = () => {
-        //
+        if (channel.type === ChannelType.DM) {
+            ApiClient.deleteChannel(channel.id);
+            if (selectedChannel?.id === channel.id) navigate("/channels/@me");
+        }
     };
 
     return (
@@ -28,7 +36,10 @@ export default function DmChannelListItem({channel}: DmChannelProps) {
                     }
                 </div>
             </div>
-            <CloseRoundedIcon onClick={handleDmChannelDeleteClick}/>
+            <CloseRoundedIcon onClick={(e) => {
+                e.stopPropagation();
+                handleDmChannelDeleteClick();
+            }}/>
         </div>
     );
 }

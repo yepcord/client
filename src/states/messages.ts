@@ -44,7 +44,7 @@ export const messageState = createSlice({
         },
         setAllLoaded: (state: MessagesState, action: PayloadAction<string>) => {
             const channel_id = action.payload;
-            if(!(channel_id in state.info)) return;
+            if(!(channel_id in state.info)) state.info[channel_id] = {minimal: null, all: false};
             state.info[channel_id].all = true;
         },
     }

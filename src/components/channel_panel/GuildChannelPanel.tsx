@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
 import PrimaryButton from "../ui/PrimaryButton";
+import TransparentPrimaryButton from "../ui/TransparentPrimaryButton";
 
 interface GuildMenuButtonProps {
     children?: React.ReactNode,
@@ -24,7 +25,7 @@ interface GuildMenuButtonProps {
 }
 
 function GuildMenuButton({children, onClick, className}: GuildMenuButtonProps) {
-    return <PrimaryButton className={`bg-transparent space-between align-center ${className}`}
+    return <TransparentPrimaryButton className={`space-between align-center w-100 ${className}`}
                           style={{fontSize: "14px"}} onClick={onClick} children={children}/>;
 }
 
@@ -56,7 +57,7 @@ export default function GuildChannelPanel() {
             </div>
             <Menu open={open} onClose={closeMenu} anchorEl={anchorEl} anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                   transformOrigin={{ vertical: 'top', horizontal: 'center' }}
-                  slotProps={{paper: {sx: {width: "225px", backgroundColor: "#2a2a2a", padding: "0 10px"}}}}>
+                  slotProps={{paper: {sx: {width: "225px", backgroundColor: "var(--theme-1)", padding: "0 10px"}}}}>
                 <GuildMenuButton className="btn-color-primary" onClick={closeMenu}>
                     Invite People <GroupAddIcon/>
                 </GuildMenuButton>

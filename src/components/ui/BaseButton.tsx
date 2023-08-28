@@ -15,7 +15,7 @@ export interface BaseButtonProps {
 
 export default function BaseButton({children, primaryClass, className, onClick, wide, style, type, disabled, selected, outlined}: BaseButtonProps) {
     return (
-        <button className={`btn ${primaryClass} ${selected && primaryClass+"-selected"} ${outlined && primaryClass+"-outline"} ${wide && "btn-wide"} ${className}`}
+        <button className={`btn ${primaryClass} ${selected ? primaryClass+"-selected" : ""} ${outlined ? primaryClass+"-outline" : ""} ${wide ? "btn-wide" : ""} ${className}`}
                 style={style} onClick={onClick} type={type} disabled={disabled}>
             {children}
         </button>

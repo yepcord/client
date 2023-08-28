@@ -4,7 +4,7 @@ import {useState} from "react";
 import {Divider} from "@mui/material";
 import {getRelationshipsByTab} from "./utils";
 import RelationshipList from "./RelationshipList";
-import ApiClient from "../../../api/client";
+import ApiClient, {ErrorResponse} from "../../../api/client";
 import PrimaryButton from "../../ui/PrimaryButton";
 
 function RelationshipsListContent() {
@@ -56,12 +56,18 @@ function parseUsername(username: string) {
 
 function RelationshipsAddContent() {
     const [text, setText] = useState("");
+    const [error, setError] = useState("");
     const btn_enabled = parseUsername(text) !== null;
 
     const sendRelReq = () => {
         const u = parseUsername(text);
         if(u === null) return;
-        ApiClient.requestRelationship(u[0], u[1]).then(); // TODO: check error
+        ApiClient.requestRelationship(u[0], u[1]).then(resp => {
+            if(resp.status >= 400 && resp.status <= 499)
+                setError((resp.body as ErrorResponse).message);
+            if(resp.status >= 500)
+                setError("Unknown server error! Try again later.");
+        }); // TODO: check error
     }
 
     return (
@@ -73,6 +79,7 @@ function RelationshipsAddContent() {
                     <input className="input-primary" placeholder="Enter a Username#1234" value={text} onChange={(e) => setText(e.currentTarget.value)}/>
                     <PrimaryButton disabled={!btn_enabled} onClick={sendRelReq}>Send Friend Request</PrimaryButton>
                 </div>
+                {error && <span className="card-text-secondary" style={{color: "red"}}>{error}</span>}
             </div>
         </div>
     );
