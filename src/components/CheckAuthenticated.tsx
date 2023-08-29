@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 
 interface Props {
     component?: React.FC,
-    element?: JSX.Element,
+    element?: React.JSX.Element,
 }
 
 export default function CheckAuthenticated({component, element}: Props) {

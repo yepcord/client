@@ -17,6 +17,7 @@ export const channelState = createSlice({
     reducers: {
         addChannel: (state: ChannelsState, action: PayloadAction<Channel>) => {
             const channel: Channel = action.payload;
+            if(!channel.recipients && channel.id in state.dmChannels) channel.recipients = state.dmChannels[channel.id].recipients;
             channel.id in state.dmChannels ? Object.assign(state.dmChannels[channel.id], channel) : state.dmChannels[channel.id] = channel;
         },
         removeChannel: (state: ChannelsState, action: PayloadAction<string>) => {

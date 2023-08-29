@@ -2,6 +2,7 @@ import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
 import Avatar from "../../user/Avatar";
 import {parseISO, format} from "date-fns";
+import {parse} from "./formatting";
 
 interface BaseMessageProps {
     message: Message,
@@ -22,7 +23,7 @@ export default function BaseMessage({message}: BaseMessageProps) {
                         <span className="message-timestamp">{date_str}</span>
                     </div>
                     <div className={`message-content ${sent ? "message-content-pending" : ""}`}>
-                        {message.content}
+                        {parse(message.content ? message.content : "")}
                     </div>
                 </div>
             </div>

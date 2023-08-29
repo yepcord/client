@@ -1,6 +1,7 @@
 import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
 import {parseISO, format} from "date-fns";
+import {parse} from "./formatting";
 
 interface OnlyContentMessageProps {
     message: Message,
@@ -19,7 +20,7 @@ export default function OnlyContentMessage({message}: OnlyContentMessageProps) {
                 </div>
                 <div className="message-info-content">
                     <div className={`message-content ${sent ? "message-content-pending" : ""}`}>
-                        {message.content}
+                        {parse(message.content ? message.content : "")}
                     </div>
                 </div>
             </div>

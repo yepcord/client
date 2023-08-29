@@ -1,7 +1,7 @@
 import store from "../../../../store";
 import {setCurrentUser, setSettings, setWsReady} from "../../../../states/app";
 import {addGuilds} from "../../../../states/guilds";
-import {addPresence, addRelationships, addUsers} from "../../../../states/users";
+import {addPresence, addRelationships, addUser, addUsers} from "../../../../states/users";
 import {addChannels} from "../../../../states/channels";
 import User, {Relationship, UserMe, UserSettings} from "../../../../types/user";
 import Channel from "../../../../types/channel";
@@ -114,6 +114,7 @@ export interface ReadyHandlerData {
 }
 
 export default function readyHandler(data: ReadyHandlerData) {
+    store.dispatch(addUser(data.user));
     store.dispatch(setCurrentUser(data.user));
     store.dispatch(setSettings(data.user_settings));
 
