@@ -1,5 +1,4 @@
 import Channel from "../../../types/channel";
-import Avatar from "../../user/Avatar";
 import TagRoundedIcon from "@mui/icons-material/TagRounded";
 
 interface GuildChannelBeginningProps {

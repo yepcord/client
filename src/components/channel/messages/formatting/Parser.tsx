@@ -3,7 +3,7 @@ import React from "react";
 
 function split2s(string: string, d: string) {
     let i = string.indexOf(d);
-    return [string.substring(0, i), string.substring(i + 1 + d.length)];
+    return [string.substring(0, i), string.substring(i + d.length)];
 }
 
 export default class Parser {

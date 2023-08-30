@@ -4,7 +4,7 @@ import {RootState} from "../../store";
 import ApiClient from "../../api/client";
 import {Message} from "../../types/message";
 import {addMessage, setAllLoaded} from "../../states/messages";
-import {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import BaseMessage from "./messages/BaseMessage";
 import {ChannelType} from "../../types/channel";
 import DmChannelBeginning from "./messages/DmChannelBeginning";
@@ -13,6 +13,7 @@ import OnlyContentMessage from "./messages/OnlyContentMessage";
 import {format, parseISO} from "date-fns";
 import {Divider} from "@mui/material";
 import TextChannelContentSkeleton from "./messages/TextChannelContentSkeleton";
+import UserProfileMenu from "./messages/UserProfileMenu";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -105,6 +106,7 @@ export default function TextChannelContent() {
                 {info?.all && channel?.type === ChannelType.DM ? <DmChannelBeginning channel={channel!}/> : <GuildChannelBeginning channel={channel!}/>}
             </div>
             <TextChannelInputPanel/>
+            <UserProfileMenu/>
         </div>
     );
 }

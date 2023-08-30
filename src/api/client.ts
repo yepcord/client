@@ -196,4 +196,16 @@ export default class ApiClient {
             authRequired: true,
         });
     }
+
+    static async getUserProfile(user_id: string, with_mutual_guilds: boolean=true, with_mutual_friends_count: boolean=false) {
+        return await this.makeRequest({
+            method: "GET",
+            url: `users/${user_id}/profile`,
+            authRequired: true,
+            params: {
+                with_mutual_guilds: with_mutual_guilds,
+                with_mutual_friends_count: with_mutual_friends_count,
+            }
+        });
+    }
 }

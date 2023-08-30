@@ -28,12 +28,15 @@ export function logOut() {
     store.dispatch(setToken(null));
 }
 
+let SF_INCREMENT = 0;
+
 export function createSnowflake() {
     let snowflake = BigInt(Date.now()-SNOWFLAKE_EPOCH);
     snowflake = snowflake << BigInt(22);
     snowflake += BigInt(17) << BigInt(17);
     snowflake += BigInt(12) << BigInt(12);
-    snowflake += BigInt(4095);
+    snowflake += BigInt(SF_INCREMENT);
+    SF_INCREMENT++;
 
     return snowflake.toString();
 }
@@ -52,4 +55,9 @@ export async function dmChannelByUserId(user_id: string) {
     store.dispatch(addChannel(channel));
 
     return channel;
+}
+
+export function snowflakeToDate(sf: string) {
+    const millis = Number(BigInt(sf) >> BigInt(22)) + SNOWFLAKE_EPOCH;
+    return new Date(millis);
 }

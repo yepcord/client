@@ -15,7 +15,6 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
-import PrimaryButton from "../ui/PrimaryButton";
 import TransparentPrimaryButton from "../ui/TransparentPrimaryButton";
 
 interface GuildMenuButtonProps {
@@ -26,7 +25,7 @@ interface GuildMenuButtonProps {
 
 function GuildMenuButton({children, onClick, className}: GuildMenuButtonProps) {
     return <TransparentPrimaryButton className={`space-between align-center w-100 ${className}`}
-                          style={{fontSize: "14px"}} onClick={onClick} children={children}/>;
+                                     style={{fontSize: "14px"}} onClick={onClick} children={children}/>;
 }
 
 export default function GuildChannelPanel() {
@@ -55,8 +54,9 @@ export default function GuildChannelPanel() {
 
                 <ProfilePanel/>
             </div>
-            <Menu open={open} onClose={closeMenu} anchorEl={anchorEl} anchorOrigin={{vertical: "bottom", horizontal: "center"}}
-                  transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            <Menu open={open} onClose={closeMenu} anchorEl={anchorEl}
+                  anchorOrigin={{vertical: "bottom", horizontal: "center"}}
+                  transformOrigin={{vertical: 'top', horizontal: 'center'}}
                   slotProps={{paper: {sx: {width: "225px", backgroundColor: "var(--theme-1)", padding: "0 10px"}}}}>
                 <GuildMenuButton className="btn-color-primary" onClick={closeMenu}>
                     Invite People <GroupAddIcon/>
@@ -77,7 +77,7 @@ export default function GuildChannelPanel() {
                     Active Threads <ChatBubbleIcon/>
                 </GuildMenuButton>
 
-                <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656" }}/>
+                <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656"}}/>
 
                 <GuildMenuButton onClick={closeMenu}>
                     Notification Settings <NotificationsIcon/>
@@ -86,13 +86,14 @@ export default function GuildChannelPanel() {
                     Private Settings <ShieldIcon/>
                 </GuildMenuButton>
 
-                <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656" }}/>
+                <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656"}}/>
 
                 <GuildMenuButton onClick={closeMenu}>
                     Edit Guild Profile <EditIcon/>
                 </GuildMenuButton>
                 <GuildMenuButton onClick={() => setHideMuted(!hideMutedChannels)}>
-                    Hide Muted Channels <Checkbox checked={hideMutedChannels} sx={{ color: "#fff", padding: "0", '&.Mui-checked': {color: "#fff"} }} />
+                    Hide Muted Channels <Checkbox checked={hideMutedChannels}
+                                                  sx={{color: "#fff", padding: "0", '&.Mui-checked': {color: "#fff"}}}/>
                 </GuildMenuButton>
             </Menu>
         </>

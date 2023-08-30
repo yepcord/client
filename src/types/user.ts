@@ -5,10 +5,14 @@ export default interface User extends Snowflake {
     username: string,
     discriminator: string,
     avatar: string | null,
-    banner: string | null,
+    banner?: string | null,
+    banner_color?: number | null,
     bio: string | null,
     bot?: boolean,
     public_flags: number,
+    accent_color?: number | null,
+
+    all_loaded?: boolean,
 }
 
 interface PresenceActivity {

@@ -13,6 +13,7 @@ export interface MessagesState {
             all: boolean,
         }
     }
+    profileMenuElementId: string | null,
 }
 
 export const messageState = createSlice({
@@ -20,6 +21,7 @@ export const messageState = createSlice({
     initialState: {
         messages: {},
         info: {},
+        profileMenuElementId: null,
     } as MessagesState,
     reducers: {
         addMessage: (state: MessagesState, action: PayloadAction<Message>) => {
@@ -47,7 +49,10 @@ export const messageState = createSlice({
             if(!(channel_id in state.info)) state.info[channel_id] = {minimal: null, all: false};
             state.info[channel_id].all = true;
         },
+        setProfileMenuElement: (state: MessagesState, action: PayloadAction<string | null>) => {
+            state.profileMenuElementId = action.payload;
+        },
     }
 });
 
-export const {addMessage, removeMessage, setAllLoaded} = messageState.actions;
+export const {addMessage, removeMessage, setAllLoaded, setProfileMenuElement} = messageState.actions;

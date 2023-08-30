@@ -1,5 +1,4 @@
 import {Skeleton} from "@mui/material";
-import {RefObject} from "react";
 
 function random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min) + min);

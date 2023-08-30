@@ -34,7 +34,7 @@
     color: var(--theme-6);
 }
 
-.profile-dialog-avatar > .dm-channel-icon {
+.profile-dialog-avatar > .dm-channel-icon, .profile-dialog-badges-btns > .dm-channel-icon {
     margin: 0;
 }
 

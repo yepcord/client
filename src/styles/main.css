@@ -250,3 +250,30 @@ body {
     background-color: var(--theme-c-danger-a);
     color: var(--theme-text-main);
 }
+
+.user-banner {
+    width: 100%;
+    background-color: var(--theme-3);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.text-primary {
+    color: var(--theme-text-primary);
+}
+
+.text-secondary {
+    color: var(--theme-text-secondary);
+}
+
+.text-main {
+    color: var(--theme-text-main);
+}
+
+.text-14 {
+    font-size: 14px;
+}
+
+.text-bold {
+    font-weight: bold;
+}

@@ -2,18 +2,20 @@ import "../../../styles/profile_dialog.css";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import {setUserProfileDialog} from "../../../states/app";
-import {Dialog, Menu} from "@mui/material";
+import {Dialog, Divider, Menu} from "@mui/material";
 import Avatar from "../../user/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {RelationshipType} from "../../../types/user";
 import ApiClient from "../../../api/client";
-import {dmChannelByUserId} from "../../../utils";
+import {createSnowflake, dmChannelByUserId, snowflakeToDate} from "../../../utils";
 import {useNavigate} from "react-router-dom";
 import SuccessButton from "../../ui/SuccessButton";
 import SecondaryButton from "../../ui/SecondaryButton";
 import TransparentDangerButton from "../../ui/TransparentDangerButton";
 import React, {useState} from "react";
 import TransparentPrimaryButton from "../../ui/TransparentPrimaryButton";
+import Banner from "../../user/Banner";
+import {format} from "date-fns";
 
 export default function UserProfileDialog() {
     const selectedUserId = useSelector((state: RootState) => state.app.profileDialogUserId)
@@ -101,9 +103,7 @@ export default function UserProfileDialog() {
             }
         }}>
             <div className="profile-dialog">
-                <div className="profile-dialog-banner">
-
-                </div>
+                <Banner user={user!}/>
                 <div className="profile-dialog-content">
                     <div className="profile-dialog-badges-btns">
                         <div className="profile-dialog-avatar">
@@ -118,6 +118,24 @@ export default function UserProfileDialog() {
                         <div className="card-profile-fusername">
                             <h3>{user?.username}</h3>
                             <h3 className="card-profile-discriminator">#{user?.discriminator}</h3>
+                        </div>
+
+                        <Divider flexItem sx={{backgroundColor: "var(--theme-3)", margin: "10px 0"}}/>
+
+                        {user?.bio &&
+                            <div className="card-info-row" style={{margin: "7px 0"}}>
+                                <div className="card-info-text text-14">
+                                    <span className="text-main text-bold">ABOUT ME</span>
+                                    <span className="text-secondary">{user?.bio}</span>
+                                </div>
+                            </div>
+                        }
+
+                        <div className="card-info-row" style={{margin: "7px 0"}}>
+                            <div className="card-info-text text-14">
+                                <span className="text-main text-bold">MEMBER SINCE</span>
+                                <span className="text-secondary">{format(snowflakeToDate(user ? user.id : createSnowflake()), "MMM dd, yyyy")}</span>
+                            </div>
                         </div>
                     </div>
                 </div>

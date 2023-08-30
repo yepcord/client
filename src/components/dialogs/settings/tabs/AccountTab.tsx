@@ -5,6 +5,7 @@ import {Divider} from "@mui/material";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import DangerButton from "../../../ui/DangerButton";
 import SecondaryButton from "../../../ui/SecondaryButton";
+import Banner from "../../../user/Banner";
 
 export default function AccountTab() {
     const me = useSelector((state: RootState) => state.app.me);
@@ -12,9 +13,7 @@ export default function AccountTab() {
     return (<>
         <h3>My Account</h3>
         <div className="settings-card">
-            <div className="settings-card-head">
-
-            </div>
+            <Banner user={me!}/>
             <div className="settings-card-body">
                 <div className="settings-card-profile-info">
                     <Avatar user={me!} size={48}/>
