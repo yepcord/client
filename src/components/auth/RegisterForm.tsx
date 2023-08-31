@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import ApiClient, {ErrorResponse} from "../../api/client";
 import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
@@ -16,9 +16,7 @@ interface RegisterErrors {
 export default function RegisterForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
+    const [form, setForm] = useState({email: "", password: "", username: ""});
     const [birth, setBirth] = useState("2000-01-01");
     const [errors, setErrors] = useState({} as RegisterErrors);
 
@@ -31,12 +29,20 @@ export default function RegisterForm() {
         years.push(i);
     }
 
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const field_name = e.target.name;
+        setForm({
+            ...form,
+            [field_name]: e.target.value,
+        });
+    }
+
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrors({});
 
         ApiClient
-            .register(email, password, username, birth)
+            .register(form.email, form.password, form.username, birth)
             .then(r => {
                 if (r.body === null) {
                     setErrors({
@@ -93,22 +99,19 @@ export default function RegisterForm() {
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
                         Email
                         <span className="required-asterisk">{emailErr() ? emailErr() : " *"}</span></label>
-                    <input name="email" type="email" className="input-primary" onChange={e => setEmail(e.target.value)}
-                           required={true}/>
+                    <input name="email" type="email" className="input-primary" onChange={handleFormChange} required={true}/>
                 </div>
                 <div className="input-container">
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
                         Username
                         <span className="required-asterisk">{usernameErr() ? usernameErr() : " *"}</span></label>
-                    <input name="text" type="username" className="input-primary"
-                           onChange={e => setUsername(e.target.value)} required={true}/>
+                    <input name="text" type="username" className="input-primary" onChange={handleFormChange} required={true}/>
                 </div>
                 <div className="input-container">
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
                         Password
                         <span className="required-asterisk">{passwordErr() ? passwordErr() : " *"}</span></label>
-                    <input name="password" type="password" className="input-primary"
-                           onChange={e => setPassword(e.target.value)} required={true}/>
+                    <input name="password" type="password" className="input-primary" onChange={handleFormChange} required={true}/>
                 </div>
                 <div className="input-container">
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>

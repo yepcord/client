@@ -5,7 +5,7 @@ import {setUserProfileDialog} from "../../../states/app";
 import {Dialog, Divider, Menu} from "@mui/material";
 import Avatar from "../../user/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import {RelationshipType} from "../../../types/user";
+import User, {RelationshipType} from "../../../types/user";
 import ApiClient from "../../../api/client";
 import {createSnowflake, dmChannelByUserId, snowflakeToDate} from "../../../utils";
 import {useNavigate} from "react-router-dom";
@@ -16,6 +16,7 @@ import React, {useState} from "react";
 import TransparentPrimaryButton from "../../ui/TransparentPrimaryButton";
 import Banner from "../../user/Banner";
 import {format} from "date-fns";
+import {addUser} from "../../../states/users";
 
 export default function UserProfileDialog() {
     const selectedUserId = useSelector((state: RootState) => state.app.profileDialogUserId)
@@ -96,6 +97,14 @@ export default function UserProfileDialog() {
         );
     }
 
+    (open && (!("all_loaded" in user) || !user.all_loaded)) &&
+    ApiClient.getUserProfile(user!.id).then(resp => {
+        if(resp.status !== 200) return;
+
+        const usr: User = {...((resp.body! as {user: User}).user as User), all_loaded: true};
+        dispatch(addUser(usr));
+    });
+
     return (<>
         <Dialog open={open} onClose={close} sx={{
             "& .MuiPaper-root": {
@@ -103,7 +112,7 @@ export default function UserProfileDialog() {
             }
         }}>
             <div className="profile-dialog">
-                <Banner user={user!}/>
+                {user && <Banner user={user}/>}
                 <div className="profile-dialog-content">
                     <div className="profile-dialog-badges-btns">
                         <div className="profile-dialog-avatar">

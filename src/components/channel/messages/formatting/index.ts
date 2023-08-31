@@ -1,6 +1,7 @@
 import {mentionRule} from "./Mention";
 import Parser from "./Parser";
 import React from "react";
+import {mentionEveryoneRule} from "./MentionEveryone";
 
 export interface ASTNode {
     content: string,
@@ -18,7 +19,7 @@ export interface Rule {
     react: (arg0: ASTNode) => React.JSX.Element,
 }
 
-export const rules = [mentionRule];
+export const rules = [mentionRule, mentionEveryoneRule];
 
 export const parse = (source: string) => {
     return new Parser(source).parse();

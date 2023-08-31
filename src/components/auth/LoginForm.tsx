@@ -1,6 +1,6 @@
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {FormEvent, useState} from "react";
+import React, {FormEvent, useState} from "react";
 import ApiClient, {ErrorResponse} from "../../api/client";
 import {setToken} from "../../states/app";
 import {isEmpty} from "./AuthPage";
@@ -16,16 +16,23 @@ interface LoginErrors {
 export default function LoginForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [form, setForm] = useState({email: "", password: ""});
     const [errors, setErrors] = useState({} as LoginErrors);
+
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const field_name = e.target.name;
+        setForm({
+            ...form,
+            [field_name]: e.target.value,
+        });
+    }
 
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setErrors({});
 
         ApiClient
-            .login(email, password)
+            .login(form.email, form.password)
             .then(r => {
                 if (r.body === null) {
                     setErrors({"email": "Server error, try again.", "password": "Server error, try again."})
@@ -71,17 +78,14 @@ export default function LoginForm() {
                         Email or phone number
                         <span className="required-asterisk">{loginErr() ? loginErr() : " *"}</span>
                     </label>
-                    <input name="email" type="email" className="input-primary"
-                           onChange={e => setEmail(e.target.value)}
-                           required={true}/>
+                    <input name="email" type="email" className="input-primary" onChange={handleFormChange} required={true}/>
                 </div>
                 <div className="input-container">
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
                         Password
                         <span className="required-asterisk">{passwordErr() ? passwordErr() : " *"}</span>
                     </label>
-                    <input name="password" type="password" className="input-primary"
-                           onChange={e => setPassword(e.target.value)} required={true}/>
+                    <input name="password" type="password" className="input-primary" onChange={handleFormChange} required={true}/>
                     <a href="#" className="form-link">Forgot your password?</a>
                 </div>
                 <PrimaryButton type="submit" wide={true}>Log in</PrimaryButton>

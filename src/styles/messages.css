@@ -92,3 +92,7 @@
     font-size: 14px!important;
     font-weight: bold;
 }
+
+.message-container-mention {
+    background-color: #ffe20020;
+}

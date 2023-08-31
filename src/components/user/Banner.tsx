@@ -2,6 +2,8 @@ import User from "../../types/user";
 import {useState} from "react";
 import {MEDIA_ENDPOINT} from "../../constants";
 import { average } from 'color.js';
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 interface BannerProps {
     user: User,
@@ -9,23 +11,36 @@ interface BannerProps {
 }
 
 export default function Banner({user, height=100}: BannerProps) {
+    const storedUser: User | null = useSelector((state: RootState) => state.users.users[user.id]);
     const [bg, setBg] = useState("var(--theme-3)");
 
-    console.log("banner render??")
+    const fullUser: User = {...user, ...storedUser};
+    console.log(fullUser)
+
+    const bgProp = {
+        height: bg.startsWith("#") ? height : undefined,
+        maxHeight: height * 1.75,
+        backgroundColor: bg,
+        backgroundImage: bg.startsWith("#") ? undefined : `url("${bg}")`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+    };
 
     let b;
-    if(user?.banner) {
-        b = `url("${MEDIA_ENDPOINT}/banners/${user.id}/${user.banner}.png") no-repeat`;
+    if(fullUser?.banner) {
+        b = `${MEDIA_ENDPOINT}/banners/${fullUser.id}/${fullUser.banner}.png`;
         b !== bg && setBg(b);
-    } else if (user?.avatar) {
-        average(`${MEDIA_ENDPOINT}/avatars/${user.id}/${user.avatar}.png?size=32`, {format: "hex"}).then(color => {
+    } else if (fullUser?.avatar) {
+        average(`${MEDIA_ENDPOINT}/avatars/${fullUser.id}/${fullUser.avatar}.png?size=32`, {format: "hex"}).then(color => {
             b = color as string;
             b !== bg && setBg(b);
         });
     }
 
     return (
-        <div className="user-banner" style={{height: height, background: bg, backgroundSize: "cover"}}>
+        <div className="user-banner" style={{...bgProp}}>
+            {!bg.startsWith("#") && <img src={bg} style={{visibility: "hidden", width: "100%"}} alt="Banner"/>}
         </div>
     );
 }
