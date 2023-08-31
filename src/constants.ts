@@ -6,3 +6,4 @@ export const PUBLIC_URL = "https://127.0.0.1:8080";
 export const SNOWFLAKE_EPOCH = 1640995200000;
 
 export const VERSION_NUMBER = 1;
+export const INSTANCE_NAME = "YEPCord";
