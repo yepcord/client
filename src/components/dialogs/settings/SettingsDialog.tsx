@@ -10,6 +10,7 @@ import {logOut} from "../../../utils";
 import {useNavigate} from "react-router-dom";
 import {SettingsTab} from "./tabs/SettingsTab";
 import TransparentSecondaryButton from "../../ui/TransparentSecondaryButton";
+import GitInfo from "react-git-info/macro";
 
 export type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
     "accessibility" | "voice_and_video" | "text_and_images" | "notifications" | "keybinds" | "language" |
@@ -100,6 +101,12 @@ export default function SettingsDialog() {
                         <TransparentSecondaryButton onClick={() => {logOut(); navigate("/login")}} className="w-100">
                             Log Out
                         </TransparentSecondaryButton>
+
+                        <Divider flexItem sx={{backgroundColor: "#757575"}}/>
+
+                        <span className="text-primary text-14" style={{textAlign: "center"}}>
+                            YEPCord <a href={`https://github.com/yepcord/client/tree/${GitInfo().commit.hash}`}>{GitInfo().commit.shortHash}</a>
+                        </span>
                     </div>
                 </div>
                 <div className="settings-content-container">

@@ -1,49 +1,33 @@
 import CheckboxOption from "../../../ui/CheckboxOption";
 import {Divider} from "@mui/material";
-import {useState} from "react";
 import {INSTANCE_NAME} from "../../../../constants";
 import RadioOption from "../../../ui/RadioOption";
 import ToDo from "../../../ui/ToDo";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store";
+import {setSettings} from "../../../../states/app";
 
 export default function TextAndImagesTab() {
-    const [spoiler, setSpoiler] = useState("on_click" as ("on_click" | "moderate" | "always"));
-    const [checkboxes, setCheckboxes] = useState({
-        as_links: false,
-        uploaded: false,
-        with_desc: false,
-        show_emb_links: false,
-        show_reactions: false,
-        convert_emoticons: false,
-        sticker_suggestions: false,
-        preview_as_type: false,
-        threads_split_view: false,
-    });
-
-    const toggleCheckbox = (name: "as_links" | "uploaded" | "with_desc" | "show_emb_links" | "show_reactions"
-        | "convert_emoticons" | "sticker_suggestions" | "preview_as_type" | "threads_split_view") => {
-        setCheckboxes({
-            ...checkboxes,
-            [name]: !checkboxes[name]
-        })
-    }
+    const settings = useSelector((state: RootState) => state.app.settings);
+    const dispatch = useDispatch();
 
     return (<>
         <h2>Text & Images</h2>
 
         <span className="card-text-secondary">DISPLAY IMAGES AND VIDEOS</span>
 
-        <CheckboxOption checked={checkboxes.as_links} onClick={() => toggleCheckbox("as_links")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="When posted as links to chat"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
-        <CheckboxOption checked={checkboxes.uploaded} onClick={() => toggleCheckbox("uploaded")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title={`When uploaded directly to ${INSTANCE_NAME}`}
                         description="Images larger than 10 MB will not be previewed."/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
-        <CheckboxOption checked={checkboxes.with_desc} onClick={() => toggleCheckbox("with_desc")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="With image descriptions"
                         description="Images descriptions are used to describe images for screenreaders."/>
 
@@ -51,17 +35,18 @@ export default function TextAndImagesTab() {
 
         <span className="card-text-secondary">EMBEDS AND LINK PREVIEWS</span>
 
-        <CheckboxOption checked={checkboxes.show_emb_links} onClick={() => toggleCheckbox("show_emb_links")}
+        <CheckboxOption checked={settings.render_embeds}
+                        onClick={() => dispatch(setSettings({render_embeds: !settings.render_embeds}))}
                         title="Show embeds and preview website links pasted into chat"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
         <span className="card-text-secondary">EMOJI</span>
 
-        <CheckboxOption checked={checkboxes.show_reactions} onClick={() => toggleCheckbox("show_reactions")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="Show emoji reactions on messages"/>
 
-        <CheckboxOption checked={checkboxes.convert_emoticons} onClick={() => toggleCheckbox("convert_emoticons")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="Automatically convert emoticons in your message to emoji"
                         description={`For example, then you type :-) ${INSTANCE_NAME} will convert it to 🙂.`}/>
 
@@ -69,7 +54,7 @@ export default function TextAndImagesTab() {
 
         <span className="card-text-secondary">STICKERS</span>
 
-        <CheckboxOption checked={checkboxes.sticker_suggestions} onClick={() => toggleCheckbox("sticker_suggestions")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="Sticker Suggestions"
                         description="Allow sticker suggestions to appear when typing messages."/>
 
@@ -77,23 +62,27 @@ export default function TextAndImagesTab() {
 
         <span className="card-text-secondary">TEXT BOX</span>
 
-        <CheckboxOption checked={checkboxes.preview_as_type} onClick={() => toggleCheckbox("preview_as_type")}
+        <CheckboxOption checked={false} onClick={() => {}}
                         title="Preview emojis, mentions, and markdown syntax as you type"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
         <span className="card-text-secondary">THREADS</span>
 
-        <CheckboxOption checked={checkboxes.threads_split_view} onClick={() => toggleCheckbox("threads_split_view")}
-                        title="Open threacs in split view"/>
+        <CheckboxOption checked={false} onClick={() => {}}
+                        title="Open threads in split view"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
         <span className="card-text-secondary">SHOW SPOILER CONTENT</span>
 
-        <RadioOption checked={spoiler === "on_click"} onClick={() => setSpoiler("on_click")} title="On Click"/>
-        <RadioOption checked={spoiler === "moderate"} onClick={() => setSpoiler("moderate")} title="On guilds I moderate"/>
-        <RadioOption checked={spoiler === "always"} onClick={() => setSpoiler("always")} title="Always"/>
+        <RadioOption checked={settings.render_spoilers === "ON_CLICK"}
+                     onClick={() => dispatch(setSettings({render_spoilers: "ON_CLICK"}))} title="On Click"/>
+        <RadioOption checked={settings.render_spoilers === "IF_MODERATOR"}
+                     onClick={() => dispatch(setSettings({render_spoilers: "IF_MODERATOR"}))}
+                     title="On guilds I moderate"/>
+        <RadioOption checked={settings.render_spoilers === "ALWAYS"}
+                     onClick={() => dispatch(setSettings({render_spoilers: "ALWAYS"}))} title="Always"/>
 
         <ToDo text='Add "Chat font scaling" section'/>
     </>);

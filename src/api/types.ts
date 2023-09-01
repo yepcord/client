@@ -3,3 +3,9 @@ export interface MessagePostRequest {
     content?: string | null,
     nonce?: string | null,
 }
+
+export interface EditMeRequest {
+    email?: string,
+    password?: string,
+    new_password?: string,
+}

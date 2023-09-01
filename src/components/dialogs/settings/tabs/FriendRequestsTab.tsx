@@ -1,39 +1,34 @@
 import CheckboxOption from "../../../ui/CheckboxOption";
 import {Divider} from "@mui/material";
-import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../../../store";
+import {setSettings} from "../../../../states/app";
 
 export default function FriendRequestsTab() {
-    const [checkboxes, setCheckboxes] = useState({
-        everyone: false,
-        friends_of_friends: false,
-        guild_members: false,
-    });
-
-    const toggleCheckbox = (name: "everyone" | "friends_of_friends" | "guild_members") => {
-        setCheckboxes({
-            ...checkboxes,
-            [name]: !checkboxes[name]
-        })
-    }
+    const settings = useSelector((state: RootState) => state.app.settings);
+    const dispatch = useDispatch();
 
     return (<>
         <h2>Friend Requests</h2>
 
         <span className="card-text-secondary">WHO CAN SEND YOU A FRIEND REQUEST</span>
 
-        <CheckboxOption checked={checkboxes.everyone} onClick={() => toggleCheckbox("everyone")} title="Everyone"/>
+        <CheckboxOption checked={settings.friend_source_flags.all}
+                        onClick={() => dispatch(setSettings({friend_source_flags: {...settings.friend_source_flags, all: !settings.friend_source_flags.all}}))}
+                        title="Everyone"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
-        <CheckboxOption checked={checkboxes.friends_of_friends} onClick={() => toggleCheckbox("friends_of_friends")}
+        <CheckboxOption checked={Boolean(settings.friend_source_flags.mutual_friends)}
+                        onClick={() => dispatch(setSettings({friend_source_flags: {...settings.friend_source_flags, mutual_friends: !settings.friend_source_flags.mutual_friends}}))}
                         title="Friends of Friends"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
-        <CheckboxOption checked={checkboxes.guild_members} onClick={() => toggleCheckbox("guild_members")}
+        <CheckboxOption checked={Boolean(settings.friend_source_flags.mutual_guilds)}
+                        onClick={() => dispatch(setSettings({friend_source_flags: {...settings.friend_source_flags, mutual_guilds: !settings.friend_source_flags.mutual_guilds}}))}
                         title="Guild Members"/>
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
-
     </>);
 }

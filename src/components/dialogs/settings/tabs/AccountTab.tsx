@@ -1,14 +1,27 @@
-import Avatar from "../../../user/Avatar";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../../store";
-import {Divider} from "@mui/material";
-import PrimaryButton from "../../../ui/PrimaryButton";
+import {Dialog, Divider} from "@mui/material";
 import DangerButton from "../../../ui/DangerButton";
-import SecondaryButton from "../../../ui/SecondaryButton";
+import PrimaryButton from "../../../ui/PrimaryButton";
 import Banner from "../../../user/Banner";
+import Avatar from "../../../user/Avatar";
+import SecondaryButton from "../../../ui/SecondaryButton";
+import React, {useState} from "react";
+import EditEmailDialog from "./dialogs/EditEmailDialog";
+import EditPasswordDialog from "./dialogs/EditPasswordDialog";
+
 
 export default function AccountTab() {
     const me = useSelector((state: RootState) => state.app.me);
+
+    const [accountDialogType, setAccountDialogContent] = useState<"edit_email" | "edit_password" | null>(null);
+    const accountDialogOpen = accountDialogType !== null;
+    const accountDialogClose = () => setAccountDialogContent(null);
+
+    const accountDialogs = {
+        edit_email: <EditEmailDialog close={accountDialogClose}/>,
+        edit_password: <EditPasswordDialog close={accountDialogClose}/>,
+    }
 
     return (<>
         <h3>My Account</h3>
@@ -40,13 +53,15 @@ export default function AccountTab() {
                             <span className="card-text-secondary">EMAIL</span>
                             <span className="card-profile-username">{me!.email}</span>
                         </div>
-                        <SecondaryButton className="button-end">Edit</SecondaryButton>
+                        <SecondaryButton className="button-end"
+                                         onClick={() => setAccountDialogContent("edit_email")}>Edit</SecondaryButton>
                     </div>
 
                     <div className="card-info-row">
                         <div className="card-info-text">
                             <span className="card-text-secondary">PHONE NUMBER</span>
-                            <span className="card-profile-username">{me!.phone || "You haven't added a phone number yet."}</span>
+                            <span
+                                className="card-profile-username">{me!.phone || "You haven't added a phone number yet."}</span>
                         </div>
                         <SecondaryButton className="button-end">Edit</SecondaryButton>
                     </div>
@@ -57,7 +72,7 @@ export default function AccountTab() {
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 
         <h3>Password and Authentication</h3>
-        <PrimaryButton>Change Password</PrimaryButton>
+        <PrimaryButton onClick={() => setAccountDialogContent("edit_password")}>Change Password</PrimaryButton>
 
         <span className="card-text-secondary">TWO-FACTOR AUTHENTICATION</span>
         <PrimaryButton>Enable Two-Factor Auth</PrimaryButton>
@@ -70,5 +85,10 @@ export default function AccountTab() {
             <DangerButton>Disable Account</DangerButton>
             <DangerButton outlined={true}>Delete Account</DangerButton>
         </div>
+
+        <Dialog open={accountDialogOpen} onClose={accountDialogClose}
+                sx={{"& .MuiPaper-root": {backgroundColor: "transparent"}}}>
+            {accountDialogType ? accountDialogs[accountDialogType] : null}
+        </Dialog>
     </>);
 }

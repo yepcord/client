@@ -1,6 +1,6 @@
 import {API_ENDPOINT} from "../constants";
 import store from "../store";
-import {MessagePostRequest} from "./types";
+import {EditMeRequest, MessagePostRequest} from "./types";
 import {RelationshipType} from "../types/user";
 
 interface MakeRequestProps {
@@ -206,6 +206,15 @@ export default class ApiClient {
                 with_mutual_guilds: with_mutual_guilds,
                 with_mutual_friends_count: with_mutual_friends_count,
             }
+        });
+    }
+
+    static async editMe(request: EditMeRequest) {
+        return await this.makeRequest({
+            method: "PATCH",
+            url: `users/@me`,
+            authRequired: true,
+            body: request
         });
     }
 }

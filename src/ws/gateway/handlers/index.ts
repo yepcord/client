@@ -14,6 +14,7 @@ import messageDeleteHandler, {MessageDeleteHandlerData} from "./dispatch/message
 import messageUpdateHandler, {MessageUpdateHandlerData} from "./dispatch/message_update";
 import relationshipAddHandler, {RelationshipAddHandlerData} from "./dispatch/relationship_add";
 import relationshipRemoveHandler, {RelationshipRemoveHandlerData} from "./dispatch/relationship_remove";
+import userUpdateHandler, {UserUpdateHandlerData} from "./dispatch/user_update";
 
 type DispatchData = ReadyHandlerData | ReadySupplementalHandlerData | PresenceUpdateHandlerData | GuildCreateHandlerData |
     GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData |
@@ -85,6 +86,10 @@ function handleDispatchMessage(type: string, data: DispatchData) {
         }
         case "RELATIONSHIP_REMOVE": {
             relationshipRemoveHandler(data as RelationshipRemoveHandlerData);
+            break;
+        }
+        case "USER_UPDATE": {
+            userUpdateHandler(data as UserUpdateHandlerData);
             break;
         }
     }

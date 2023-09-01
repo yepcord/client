@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {UserMe, UserSettings} from "../types/user";
+import {PartialUserSettings, UserMe, UserSettings} from "../types/user";
 
 export type SelFriendsTab = "online" | "all" | "pending" | "blocked" | "add";
 
@@ -39,7 +39,7 @@ export const appState = createSlice({
             action.payload ? localStorage.setItem("token", action.payload) : localStorage.removeItem("token");
         },
         setCurrentUser: (state: AppState, action: PayloadAction<UserMe>) => {
-            state.me = action.payload;
+            state.me ? Object.assign(state.me, action.payload) : state.me = action.payload;
         },
         setFriendsTab: (state: AppState, action: PayloadAction<SelFriendsTab>) => {
             state.selectedFriendsTab = action.payload;
@@ -47,7 +47,7 @@ export const appState = createSlice({
         setWsReady: (state: AppState, action: PayloadAction<boolean>) => {
             state.websocketReady = action.payload;
         },
-        setSettings: (state: AppState, action: PayloadAction<UserSettings>) => {
+        setSettings: (state: AppState, action: PayloadAction<PartialUserSettings>) => {
             Object.assign(state.settings, action.payload);
         },
         openSettings: (state: AppState) => {
