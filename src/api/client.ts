@@ -1,6 +1,6 @@
 import {API_ENDPOINT} from "../constants";
 import store from "../store";
-import {EditMeRequest, MessagePostRequest} from "./types";
+import {EditMeRequest, EnableMfaRequest, MessagePostRequest} from "./types";
 import {RelationshipType} from "../types/user";
 
 interface MakeRequestProps {
@@ -215,6 +215,26 @@ export default class ApiClient {
             url: `users/@me`,
             authRequired: true,
             body: request
+        });
+    }
+
+    static async enableMfa(request: EnableMfaRequest) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/mfa/totp/enable`,
+            authRequired: true,
+            body: request
+        });
+    }
+
+    static async disableMfa(code: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/mfa/totp/disable`,
+            authRequired: true,
+            body: {
+                code: code,
+            }
         });
     }
 }

@@ -9,3 +9,9 @@ export interface EditMeRequest {
     password?: string,
     new_password?: string,
 }
+
+export interface EnableMfaRequest {
+    password: string,
+    secret?: string,
+    code?: string,
+}

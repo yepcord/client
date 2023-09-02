@@ -115,6 +115,12 @@ body {
     width: 100%;
 }
 
+.btn-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn-primary {
     color: var(--theme-text-main);
     background-color: var(--theme-c-primary);
@@ -157,15 +163,17 @@ body {
 .btn-danger:hover {
     background-color: var(--theme-c-danger-h);
     border: none;
+    box-shadow: none;
 }
 
 .btn-danger:active {
     background-color: var(--theme-c-danger-a);
     border: none;
+    box-shadow: none;
 }
 
 .btn-danger-outline {
-    border: 2px solid var(--theme-c-danger);
+    box-shadow: inset 0 0 0 2px var(--theme-c-danger);
     background-color: transparent;
 }
 
@@ -329,4 +337,14 @@ input:checked + .switch-checkbox-slider {
 input:checked + .switch-checkbox-slider:before {
     -ms-transform: translateX(20px);
     transform: translateX(20px);
+}
+
+.display-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.gap-10 {
+    display: flex;
+    gap: 10px;
 }

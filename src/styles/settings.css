@@ -256,3 +256,34 @@
     flex-direction: row;
     gap: 15px;
 }
+
+.mfa-enable-step {
+    margin: 0 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.mfa-enable-step-img {
+    width: 96px;
+    height: 96px;
+}
+
+.mfa-enable-step-qr {
+    width: 96px;
+    height: 96px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.mfa-enable-step-qr > * {
+    width: 100%;
+    height: 100%;
+}
+
+.mfa-enable-step-text {
+    display: flex;
+    flex-direction: column;
+}

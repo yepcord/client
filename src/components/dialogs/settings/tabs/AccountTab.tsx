@@ -9,18 +9,23 @@ import SecondaryButton from "../../../ui/SecondaryButton";
 import React, {useState} from "react";
 import EditEmailDialog from "./dialogs/EditEmailDialog";
 import EditPasswordDialog from "./dialogs/EditPasswordDialog";
+import EnableMfaDialog from "./dialogs/EnableMfaDialog";
+import {INSTANCE_NAME} from "../../../../constants";
+import DisableMfaDialog from "./dialogs/DisableMfaDialog";
 
 
 export default function AccountTab() {
     const me = useSelector((state: RootState) => state.app.me);
 
-    const [accountDialogType, setAccountDialogContent] = useState<"edit_email" | "edit_password" | null>(null);
+    const [accountDialogType, setAccountDialogContent] = useState<"edit_email" | "edit_password" | "enable_mfa" | "disable_mfa" | null>(null);
     const accountDialogOpen = accountDialogType !== null;
     const accountDialogClose = () => setAccountDialogContent(null);
 
     const accountDialogs = {
         edit_email: <EditEmailDialog close={accountDialogClose}/>,
         edit_password: <EditPasswordDialog close={accountDialogClose}/>,
+        enable_mfa: <EnableMfaDialog close={accountDialogClose}/>,
+        disable_mfa: <DisableMfaDialog close={accountDialogClose}/>,
     }
 
     return (<>
@@ -74,8 +79,20 @@ export default function AccountTab() {
         <h3>Password and Authentication</h3>
         <PrimaryButton onClick={() => setAccountDialogContent("edit_password")}>Change Password</PrimaryButton>
 
-        <span className="card-text-secondary">TWO-FACTOR AUTHENTICATION</span>
-        <PrimaryButton>Enable Two-Factor Auth</PrimaryButton>
+        {me!.mfa_enabled
+            ? <span style={{color: "var(--theme-c-success-h)"}}>TWO-FACTOR AUTHENTICATION ENABLED</span>
+            : <span className="card-text-secondary">TWO-FACTOR AUTHENTICATION</span>}
+        <span className="card-text-secondary font-13">Two-Factor authentication is a good way to add an extra layer of
+            security to your {INSTANCE_NAME} account to make sure that only you have the ability to log in.</span>
+        {me!.mfa_enabled
+            ? (
+                <div className="card-info-row">
+                    <PrimaryButton>View Backup Codes</PrimaryButton>
+                    <DangerButton outlined={true} onClick={() => setAccountDialogContent("disable_mfa")}>Remove FA</DangerButton>
+                </div>
+            )
+            : <PrimaryButton onClick={() => setAccountDialogContent("enable_mfa")}>Enable Two-Factor Auth</PrimaryButton>}
+
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 

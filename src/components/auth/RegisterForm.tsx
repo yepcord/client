@@ -150,7 +150,7 @@ export default function RegisterForm() {
                         </select>
                     </div>
                 </div>
-                <PrimaryButton type="submit" wide={true}>Continue</PrimaryButton>
+                <PrimaryButton type="submit" wide={true} className="btn-center">Continue</PrimaryButton>
                 <p>
                     Already have an account? <a onClick={() => navigate("/login")} className="form-link">Login</a>
                 </p>

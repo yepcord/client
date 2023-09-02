@@ -88,7 +88,7 @@ export default function LoginForm() {
                     <input name="password" type="password" className="input-primary" onChange={handleFormChange} required={true}/>
                     <a href="#" className="form-link">Forgot your password?</a>
                 </div>
-                <PrimaryButton type="submit" wide={true}>Log in</PrimaryButton>
+                <PrimaryButton type="submit" wide={true} className="btn-center">Log in</PrimaryButton>
                 <p>
                     Need an account? <a onClick={() => navigate("/register")} className="form-link">Register</a>
                 </p>

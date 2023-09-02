@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import useWebSocket from "react-use-websocket";
 import {GATEWAY_ENDPOINT, VERSION_NUMBER} from "../../constants";
-import {setWsReady} from "../../states/app";
+import {setToken, setWsReady} from "../../states/app";
 import {SendJsonMessage} from "react-use-websocket/src/lib/types";
 import {GatewayOp} from "../../types/gateway";
 import store from "../../store";
@@ -86,7 +86,13 @@ export default function GatewayWebsocket() {
             })
         },
         onClose: () => dispatch(setWsReady(false)),
-        shouldReconnect: () => true,
+        shouldReconnect: (e) => {
+            if(e.code === 4004) {
+                dispatch(setToken(null));
+                return false;
+            }
+            return true;
+        },
         onMessage: handleGwMessage,
         retryOnError: true,
         reconnectAttempts: Number.MAX_VALUE,
