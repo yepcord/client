@@ -91,7 +91,7 @@ function VerificationDialog({setBackupCodes, returnKey, nonce, close}: Verificat
             }
             if (resp.status >= 400 && resp.status <= 499) {
                 const resp_error = resp.body as ErrorResponse;
-                setError(resp_error.message)
+                setError(resp_error.message);
             }
             if(resp.status === 200) {
                 const body = resp.body as {backup_codes: BackupCode[]}

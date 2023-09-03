@@ -107,7 +107,9 @@ export default function SettingsDialog() {
                         <span className="text-primary text-14" style={{textAlign: "center"}}>
                             YEPCord <a href={`https://github.com/yepcord/client/tree/${GitInfo().commit.hash}`}
                                        style={{color: "var(--text-main)", textDecoration: "none"}}>
-                            {GitInfo().commit.shortHash}
+                            <span title={`Commit: ${GitInfo().commit.hash} \nMessage: ${GitInfo().commit.message} \nDate: ${GitInfo().commit.date}`}>
+                                {GitInfo().commit.shortHash}
+                            </span>
                         </a>
                         </span>
                     </div>

@@ -84,7 +84,19 @@ export default class ApiClient {
             authRequired: false,
             body: {
                 "login": email,
-                "password": password
+                "password": password,
+            }
+        });
+    }
+
+    static async loginMfa(code: string, ticket: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: "auth/mfa/totp",
+            authRequired: false,
+            body: {
+                "code": code,
+                "ticket": ticket,
             }
         });
     }

@@ -99,7 +99,7 @@
     border-radius: 50%;
 }
 
-.register-form-container {
+.register-form-container, .mfa-form-container {
     display: flex;
     flex-direction: row;
     width: 40%;
@@ -108,7 +108,11 @@
     padding: 25px;
 }
 
-.register-form {
+.mfa-form-container {
+    width: 35%!important;
+}
+
+.register-form, .mfa-form {
     width: 100%;
     display: flex;
     flex-direction: column;

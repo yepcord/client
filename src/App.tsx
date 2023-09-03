@@ -4,7 +4,7 @@ import ChannelPanel from "./components/channel_panel/ChannelPanel";
 import ChannelContainer from "./components/channel/ChannelContainer";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {BrowserRouter, Navigate, Route, Routes, useLocation, useParams} from "react-router-dom";
-import {LoginPage, RegisterPage} from "./components/auth/AuthPage";
+import {LoginPage, MfaPage, RegisterPage} from "./components/auth/AuthPage";
 import CheckAuthenticated from "./components/CheckAuthenticated";
 import CheckUnauthenticated from "./components/CheckUnauthenticated";
 import {useDispatch, useSelector} from "react-redux";
@@ -78,6 +78,7 @@ function App() {
 
                 <Route path="/login" element={<CheckUnauthenticated component={LoginPage}/>}/>
                 <Route path="/register" element={<CheckUnauthenticated component={RegisterPage}/>}/>
+                <Route path="/mfa" element={<CheckUnauthenticated component={MfaPage}/>}/>
             </Routes>
         </BrowserRouter>
     );

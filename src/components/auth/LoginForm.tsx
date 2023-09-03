@@ -38,13 +38,14 @@ export default function LoginForm() {
                     setErrors({"email": "Server error, try again.", "password": "Server error, try again."})
                     return;
                 }
-                if ("token" in r.body) {
+                if ("token" in r.body && r.body.token) {
                     dispatch(setToken(r.body.token));
                     navigate("/app");
                     return;
                 }
-                if ("ticket" in r.body) {
-                    // TODO: handle mfa
+                if ("mfa" in r.body && r.body.mfa) {
+                    navigate(`/mfa?ticket=${r.body.ticket}`)
+                    //navigate({pathname: "/mfa", search: `?ticket=${r.body.ticket}`});
                     return;
                 }
 
