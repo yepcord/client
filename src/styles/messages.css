@@ -96,3 +96,11 @@
 .message-container-mention {
     background-color: #ffe20020;
 }
+
+.message-component-link {
+    color: #74a7ff;
+}
+
+.message-component-link:visited {
+    color: #1e70ff;
+}

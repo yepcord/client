@@ -1,4 +1,4 @@
-import {ASTNode, Capture, Rule} from "./index";
+import {ASTNode, Capture, ComponentContent, Rule} from "./index";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store";
 import React from "react";
@@ -24,7 +24,7 @@ export function Mention({user_id}: MentionProps) {
 
 export const mentionRule: Rule = {
     match: function (source: string) {
-        return /<@((?:!|&)?\d{17,32})>/.exec(source);
+        return /<@((?:!&)?\d{17,32})>/.exec(source);
     },
 
     parse: function (capture: Capture): ASTNode {
@@ -34,7 +34,7 @@ export const mentionRule: Rule = {
         };
     },
 
-    react: function (node: ASTNode) {
-        return <Mention user_id={node.content}/>;
+    react: function (node: ComponentContent) {
+        return <Mention user_id={node as string}/>;
     },
 };

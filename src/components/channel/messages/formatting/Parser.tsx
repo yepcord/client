@@ -26,9 +26,10 @@ export default class Parser {
                 while(cap) {
                     let parsed = rule.parse(cap);
                     let sp = split2s(str, parsed.consume);
+                    let content = parsed?.parseContent ? new Parser(parsed.content).parse() : parsed.content;
 
                     res.push(sp[0]);
-                    res.push(rule.react(parsed));
+                    res.push(rule.react(content));
                     str = sp[1];
 
                     cap = rule.match(str);

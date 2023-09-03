@@ -1,4 +1,4 @@
-import {ASTNode, Capture, Rule} from "./index";
+import {ASTNode, Capture, ComponentContent, Rule} from "./index";
 import React from "react";
 
 interface MentionEveryoneProps {
@@ -21,7 +21,7 @@ export const mentionEveryoneRule: Rule = {
         };
     },
 
-    react: function(node: ASTNode) {
-        return <MentionEveryone mention={node.content as ("everyone" | "here")}/>;
+    react: function(node: ComponentContent) {
+        return <MentionEveryone mention={node as ("everyone" | "here")}/>;
     },
 };
