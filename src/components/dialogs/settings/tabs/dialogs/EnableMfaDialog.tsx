@@ -4,17 +4,22 @@ import TransparentSecondaryButton from "../../../../ui/TransparentSecondaryButto
 import PrimaryButton from "../../../../ui/PrimaryButton";
 import React, {useState} from "react";
 import ApiClient, {ErrorResponse} from "../../../../../api/client";
-import {INSTANCE_NAME, PUBLIC_URL} from "../../../../../constants";
+import {INSTANCE_NAME} from "../../../../../constants";
 import QRCode from "react-qr-code";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../../store";
 import {setToken} from "../../../../../states/app";
+import {BackupCode} from "../AccountTab";
+
+interface EnableMfaDialogProps extends DialogProps {
+    setBackupCodes: (arg0: BackupCode[]) => void,
+}
 
 interface PasswordDialogProps extends DialogProps{
     returnPassword: (arg0: string) => void,
 }
 
-interface VerifyCodeDialogProps extends DialogProps {
+interface VerifyCodeDialogProps extends EnableMfaDialogProps {
     password: string,
     secret: string,
 }
@@ -66,7 +71,7 @@ function PasswordDialog({returnPassword, close}: PasswordDialogProps) {
     </>);
 }
 
-function VerifyCodeDialog({password, secret, close}: VerifyCodeDialogProps) {
+function VerifyCodeDialog({password, secret, close, setBackupCodes}: VerifyCodeDialogProps) {
     const me = useSelector((state: RootState) => state.app.me);
     const [code, setCode] = useState("");
     const [error, setError] = useState("");
@@ -93,6 +98,7 @@ function VerifyCodeDialog({password, secret, close}: VerifyCodeDialogProps) {
             }
             if("token" in resp.body) {
                 dispatch(setToken(resp.body["token"]));
+                setBackupCodes(resp.body["backup_codes"]);
                 close();
             }
         });
@@ -153,7 +159,7 @@ function generateMfaSecret() {
     return result;
 }
 
-export default function EnableMfaDialog({close}: DialogProps) {
+export default function EnableMfaDialog({close, setBackupCodes}: EnableMfaDialogProps) {
     const [password, setPassword] = useState("");
     const secret = generateMfaSecret();
 
@@ -169,7 +175,7 @@ export default function EnableMfaDialog({close}: DialogProps) {
             <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "10px 0"}}/>
 
             {password
-                ? <VerifyCodeDialog close={close} password={password} secret={secret}/>
+                ? <VerifyCodeDialog close={close} password={password} secret={secret} setBackupCodes={setBackupCodes}/>
                 : <PasswordDialog returnPassword={setPassword} close={close}/>}
         </div>
     );

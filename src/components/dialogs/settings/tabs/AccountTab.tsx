@@ -12,20 +12,79 @@ import EditPasswordDialog from "./dialogs/EditPasswordDialog";
 import EnableMfaDialog from "./dialogs/EnableMfaDialog";
 import {INSTANCE_NAME} from "../../../../constants";
 import DisableMfaDialog from "./dialogs/DisableMfaDialog";
+import ViewBackupCodesDialog from "./dialogs/ViewBackupCodesDialog";
+import ApiClient from "../../../../api/client";
 
+
+export interface BackupCode {
+    user_id: string,
+    code: string,
+    consumed: boolean,
+}
+
+interface BackupCodesListProps {
+    codes: BackupCode[],
+}
+
+export interface BackupCodeNonces {
+    nonce: string,
+    regenerate_nonce: string,
+}
+
+function BackupCodesList({codes}: BackupCodesListProps) {
+    return (
+        <div className="backup-codes-columns">
+            <div className="backup-codes-rows">
+                {codes.slice(0, 5).map(code => {
+                    return (
+                        <span className={code.consumed ? "backup-code-used" : ""}>
+                            {code.code.substring(0, 4)}-{code.code.substring(4)}
+                        </span>
+                    );
+                })}
+            </div>
+            <div className="backup-codes-rows">
+                {codes.slice(5).map(code => {
+                    return (
+                        <span className={code.consumed ? "backup-code-used" : ""}>
+                            {code.code.substring(0, 4)}-{code.code.substring(4)}
+                        </span>
+                    );
+                })}
+            </div>
+        </div>
+    )
+}
 
 export default function AccountTab() {
     const me = useSelector((state: RootState) => state.app.me);
+    const [backupCodes, setBackupCodes] = useState<BackupCode[] | null>(null);
+    const [backupCodeNonces, setBackupCodeNonces] = useState<BackupCodeNonces | null>(null);
+    const [backupCodeKey, setBackupCodeKey] = useState<string | null>(null);
 
-    const [accountDialogType, setAccountDialogContent] = useState<"edit_email" | "edit_password" | "enable_mfa" | "disable_mfa" | null>(null);
+    const [accountDialogType, setAccountDialogContent] = useState<"edit_email" | "edit_password" | "enable_mfa" | "disable_mfa" | "view_codes" | null>(null);
     const accountDialogOpen = accountDialogType !== null;
     const accountDialogClose = () => setAccountDialogContent(null);
 
     const accountDialogs = {
         edit_email: <EditEmailDialog close={accountDialogClose}/>,
         edit_password: <EditPasswordDialog close={accountDialogClose}/>,
-        enable_mfa: <EnableMfaDialog close={accountDialogClose}/>,
+        enable_mfa: <EnableMfaDialog close={accountDialogClose} setBackupCodes={setBackupCodes}/>,
         disable_mfa: <DisableMfaDialog close={accountDialogClose}/>,
+        view_codes: <ViewBackupCodesDialog close={accountDialogClose} setBackupCodes={setBackupCodes} setNonces={setBackupCodeNonces} setKey={setBackupCodeKey}/>,
+    }
+
+    const generateCodes = () => {
+        if(!backupCodeNonces || !backupCodeKey) return setAccountDialogContent("view_codes");
+
+        ApiClient.regenerateBackupCodes(backupCodeKey, backupCodeNonces.regenerate_nonce).then(resp => {
+            if(resp.status === 200) {
+                const body = resp.body as {backup_codes: BackupCode[]}
+                setBackupCodes(body.backup_codes);
+                return;
+            }
+            if(resp.status === 400) return setAccountDialogContent("view_codes");
+        });
     }
 
     return (<>
@@ -87,12 +146,23 @@ export default function AccountTab() {
         {me!.mfa_enabled
             ? (
                 <div className="card-info-row">
-                    <PrimaryButton>View Backup Codes</PrimaryButton>
+                    {me!.mfa_enabled && backupCodes !== null
+                        ? <PrimaryButton onClick={generateCodes}>Generate New Backup Codes</PrimaryButton>
+                        : <PrimaryButton onClick={() => setAccountDialogContent("view_codes")}>View Backup Codes</PrimaryButton>}
                     <DangerButton outlined={true} onClick={() => setAccountDialogContent("disable_mfa")}>Remove FA</DangerButton>
                 </div>
             )
             : <PrimaryButton onClick={() => setAccountDialogContent("enable_mfa")}>Enable Two-Factor Auth</PrimaryButton>}
 
+        {me!.mfa_enabled && backupCodes !== null
+            && (<>
+                <span className="card-text-secondary">BACKUP CODES</span>
+                <span className="card-text-secondary font-13">This codes will allow you to enter your account if you lose your auth app.</span>
+                <span className="card-text-secondary font-13 text-bold">Each code can only be used once!.</span>
+
+                <BackupCodesList codes={backupCodes}/>
+            </>)
+        }
 
         <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 

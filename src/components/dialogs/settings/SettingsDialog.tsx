@@ -105,7 +105,10 @@ export default function SettingsDialog() {
                         <Divider flexItem sx={{backgroundColor: "#757575"}}/>
 
                         <span className="text-primary text-14" style={{textAlign: "center"}}>
-                            YEPCord <a href={`https://github.com/yepcord/client/tree/${GitInfo().commit.hash}`}>{GitInfo().commit.shortHash}</a>
+                            YEPCord <a href={`https://github.com/yepcord/client/tree/${GitInfo().commit.hash}`}
+                                       style={{color: "var(--text-main)", textDecoration: "none"}}>
+                            {GitInfo().commit.shortHash}
+                        </a>
                         </span>
                     </div>
                 </div>

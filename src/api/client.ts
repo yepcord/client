@@ -237,4 +237,41 @@ export default class ApiClient {
             }
         });
     }
+
+    static async viewBackupCodesChallenge(password: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `auth/verify/view-backup-codes-challenge`,
+            authRequired: true,
+            body: {
+                password: password,
+            }
+        });
+    }
+
+    static async viewBackupCodes(key: string, nonce: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/mfa/codes-verification`,
+            authRequired: true,
+            body: {
+                key: key,
+                nonce: nonce,
+                regenerate: false,
+            }
+        });
+    }
+
+    static async regenerateBackupCodes(key: string, nonce: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `users/@me/mfa/codes-verification`,
+            authRequired: true,
+            body: {
+                key: key,
+                nonce: nonce,
+                regenerate: true,
+            }
+        });
+    }
 }

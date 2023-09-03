@@ -287,3 +287,23 @@
     display: flex;
     flex-direction: column;
 }
+
+.backup-codes-columns {
+    display: flex;
+    flex-direction: row;
+    gap: 75px;
+    font-size: 16px;
+}
+
+.backup-codes-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.backup-code-used  {
+    display: flex;
+    flex-direction: row;
+    text-decoration: line-through;
+    color: var(--theme-text-secondary);
+}

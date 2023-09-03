@@ -348,3 +348,7 @@ input:checked + .switch-checkbox-slider:before {
     display: flex;
     gap: 10px;
 }
+
+.text-crossed {
+
+}
