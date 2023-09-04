@@ -16,6 +16,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
 import TransparentPrimaryButton from "../ui/TransparentPrimaryButton";
+import CreateGuildChannelDialog from "../dialogs/channels/CreateGuildChannelDialog";
 
 interface GuildMenuButtonProps {
     children?: React.ReactNode,
@@ -32,6 +33,7 @@ export default function GuildChannelPanel() {
     const guild = useSelector((state: RootState) => state.guild.selectedGuild);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [hideMutedChannels, setHideMuted] = useState(false);
+    const [createOpen, setCreateOpen] = useState(false);
     const open = Boolean(anchorEl);
     const openMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -39,6 +41,11 @@ export default function GuildChannelPanel() {
     const closeMenu = () => {
         setAnchorEl(null);
     };
+
+    const handleCreateChannel = () => {
+        setCreateOpen(true);
+        closeMenu();
+    }
 
     return (
         <>
@@ -64,7 +71,7 @@ export default function GuildChannelPanel() {
                 <GuildMenuButton onClick={closeMenu}>
                     Guild Settings <SettingsIcon/>
                 </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                <GuildMenuButton onClick={handleCreateChannel}>
                     Create Channel <AddCircleIcon/>
                 </GuildMenuButton>
                 <GuildMenuButton onClick={closeMenu}>
@@ -96,6 +103,8 @@ export default function GuildChannelPanel() {
                                                   sx={{color: "#fff", padding: "0", '&.Mui-checked': {color: "#fff"}}}/>
                 </GuildMenuButton>
             </Menu>
+            <CreateGuildChannelDialog guild_id={guild!.id} parent={null} open={createOpen}
+                                      close={() => setCreateOpen(false)}/>
         </>
     );
 }

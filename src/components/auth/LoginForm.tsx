@@ -45,7 +45,6 @@ export default function LoginForm() {
                 }
                 if ("mfa" in r.body && r.body.mfa) {
                     navigate(`/mfa?ticket=${r.body.ticket}`)
-                    //navigate({pathname: "/mfa", search: `?ticket=${r.body.ticket}`});
                     return;
                 }
 
@@ -87,11 +86,11 @@ export default function LoginForm() {
                         <span className="required-asterisk">{passwordErr() ? passwordErr() : " *"}</span>
                     </label>
                     <input name="password" type="password" className="input-primary" onChange={handleFormChange} required={true}/>
-                    <a href="#" className="form-link">Forgot your password?</a>
+                    <a href="#/restore-password" className="form-link">Forgot your password?</a>
                 </div>
                 <PrimaryButton type="submit" wide={true} className="btn-center">Log in</PrimaryButton>
                 <p>
-                    Need an account? <a onClick={() => navigate("/register")} className="form-link">Register</a>
+                    Need an account? <a href="#/register" onClick={() => navigate("/register")} className="form-link">Register</a>
                 </p>
             </div>
             <RemoteAuthForm/>

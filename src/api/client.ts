@@ -2,6 +2,7 @@ import {API_ENDPOINT} from "../constants";
 import store from "../store";
 import {EditMeRequest, EnableMfaRequest, MessagePostRequest} from "./types";
 import {RelationshipType} from "../types/user";
+import {ChannelType} from "../types/channel";
 
 interface MakeRequestProps {
     method: string,
@@ -283,6 +284,19 @@ export default class ApiClient {
                 key: key,
                 nonce: nonce,
                 regenerate: true,
+            }
+        });
+    }
+
+    static async createGuildChannel(guild_id: string, name: string, type: ChannelType, parent_id?: string | null) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `guilds/${guild_id}/channels`,
+            authRequired: true,
+            body: {
+                name: name,
+                type: type,
+                parent_id: parent_id,
             }
         });
     }

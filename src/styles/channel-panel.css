@@ -252,4 +252,19 @@
     display: flex;
     flex-direction: column;
     gap: 1px;
+    padding-left: 15px;
+}
+
+.channel-create-dialog {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    padding: 10px;
+    gap: 10px;
+    background-color: var(--theme-1);
+}
+
+.channel-create-dialog-title > * {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }

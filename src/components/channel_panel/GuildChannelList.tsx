@@ -3,6 +3,8 @@ import {RootState} from "../../store";
 import Channel, {ChannelType} from "../../types/channel";
 import {ChannelsH, ChannelsHValues} from "./ChannelsH";
 import CategoryChannel from "./CategoryChannel";
+import VoiceChannel from "./VoiceChannel";
+import TextChannel from "./TextChannel";
 
 export default function GuildChannelList() {
     const guild_channels = useSelector((state: RootState) => state.guild.selectedGuild?.channels);
@@ -27,7 +29,11 @@ export default function GuildChannelList() {
     return (
         <div className="guild-channel-list">
             {buildChannelsHierarchy(guild_channels!).map(item => {
-                return <CategoryChannel {...item}/>
+                return item.channel.type === ChannelType.GUILD_CATEGORY
+                    ? <CategoryChannel {...item}/>
+                    : (item.channel.type === ChannelType.GUILD_VOICE
+                        ? <VoiceChannel channel={item.channel}/>
+                        : <TextChannel channel={item.channel}/>);
             })}
         </div>
     );

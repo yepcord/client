@@ -60,7 +60,7 @@ export default function MfaForm() {
                            placeholder="6-digit auth code / 8-digit backup code"/>
                 </div>
                 <PrimaryButton type="submit" wide={true} className="btn-center">Log in</PrimaryButton>
-                <a onClick={() => navigate("/login")} className="form-link">Go Back to Login</a>
+                <a href="#/login" onClick={() => navigate("/login")} className="form-link">Go Back to Login</a>
             </div>
         </form>
     </>);
