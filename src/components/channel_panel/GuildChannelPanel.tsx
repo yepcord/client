@@ -17,6 +17,7 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
 import TransparentPrimaryButton from "../ui/TransparentPrimaryButton";
 import CreateGuildChannelDialog from "../dialogs/channels/CreateGuildChannelDialog";
+import CreateGuildCategoryDialog from "../dialogs/channels/CreateGuildCategoryDialog";
 
 interface GuildMenuButtonProps {
     children?: React.ReactNode,
@@ -33,7 +34,8 @@ export default function GuildChannelPanel() {
     const guild = useSelector((state: RootState) => state.guild.selectedGuild);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [hideMutedChannels, setHideMuted] = useState(false);
-    const [createOpen, setCreateOpen] = useState(false);
+    const [createChannelOpen, setCreateChannelOpen] = useState(false);
+    const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
     const open = Boolean(anchorEl);
     const openMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -43,7 +45,11 @@ export default function GuildChannelPanel() {
     };
 
     const handleCreateChannel = () => {
-        setCreateOpen(true);
+        setCreateChannelOpen(true);
+        closeMenu();
+    }
+    const handleCategoryChannel = () => {
+        setCreateCategoryOpen(true);
         closeMenu();
     }
 
@@ -74,7 +80,7 @@ export default function GuildChannelPanel() {
                 <GuildMenuButton onClick={handleCreateChannel}>
                     Create Channel <AddCircleIcon/>
                 </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                <GuildMenuButton onClick={handleCategoryChannel}>
                     Create Category <CreateNewFolderIcon/>
                 </GuildMenuButton>
                 <GuildMenuButton onClick={closeMenu}>
@@ -103,8 +109,10 @@ export default function GuildChannelPanel() {
                                                   sx={{color: "#fff", padding: "0", '&.Mui-checked': {color: "#fff"}}}/>
                 </GuildMenuButton>
             </Menu>
-            <CreateGuildChannelDialog guild_id={guild!.id} parent={null} open={createOpen}
-                                      close={() => setCreateOpen(false)}/>
+            <CreateGuildChannelDialog guild_id={guild!.id} parent={null} open={createChannelOpen}
+                                      close={() => setCreateChannelOpen(false)}/>
+            <CreateGuildCategoryDialog guild_id={guild!.id} open={createCategoryOpen}
+                                       close={() => setCreateCategoryOpen(false)}/>
         </>
     );
 }

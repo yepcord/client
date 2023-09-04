@@ -27,6 +27,7 @@ export default function CreateGuildChannelDialog({guild_id, parent, open, close}
         ApiClient.createGuildChannel(guild_id, name, type, parent ? parent.id : null).then(resp => {
             // TODO: handle errors
             close();
+            setName("");
         })
     }
 
@@ -59,8 +60,8 @@ export default function CreateGuildChannelDialog({guild_id, parent, open, close}
                 </div>
 
                 <div className="edit-settings-dialog-bottom-buttons">
-                    <TransparentSecondaryButton onClick={close}>Back</TransparentSecondaryButton>
-                    <PrimaryButton onClick={handleSubmit}>Done</PrimaryButton>
+                    <TransparentSecondaryButton onClick={close}>Cancel</TransparentSecondaryButton>
+                    <PrimaryButton onClick={handleSubmit}>Create</PrimaryButton>
                 </div>
             </div>
         </Dialog>
