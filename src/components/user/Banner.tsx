@@ -31,6 +31,11 @@ export default function Banner({user, height=100}: BannerProps) {
     if(fullUser?.banner) {
         b = `${MEDIA_ENDPOINT}/banners/${fullUser.id}/${fullUser.banner}.png`;
         b !== bg && setBg(b);
+    } else if (typeof fullUser?.accent_color === "number") {
+        b = fullUser?.accent_color.toString(16);
+        b = b.length < 6 ? b.padStart(6, "0") : b;
+        b = `#${b}`;
+        b !== bg && setBg(b);
     } else if (fullUser?.avatar) {
         average(`${MEDIA_ENDPOINT}/avatars/${fullUser.id}/${fullUser.avatar}.png?size=32`, {format: "hex"}).then(color => {
             b = color as string;

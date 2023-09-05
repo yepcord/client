@@ -128,7 +128,7 @@ function VerifyCodeDialog({password, secret, close, setBackupCodes}: VerifyCodeD
                 <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "5px 0"}}/>
 
                 <span className="text-primary">2FA key (manual entry)</span>
-                <span className="text-main">{secret.toUpperCase()}</span>
+                <span className="text-main selectable">{secret.toUpperCase()}</span>
             </div>
         </div>
 

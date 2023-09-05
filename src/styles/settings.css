@@ -307,3 +307,15 @@
     text-decoration: line-through;
     color: var(--theme-text-secondary);
 }
+
+.settings-profiles-user {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.settings-profiles-user-col {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+}
