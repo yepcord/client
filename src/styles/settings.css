@@ -319,3 +319,17 @@
     flex-direction: column;
     width: 350px;
 }
+
+.image-upload-dialog {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--theme-4);
+    padding: 10px;
+}
+
+.image-upload-crop-container {
+    width: 100%;
+    height: 300px;
+    margin: 10px 0;
+}

@@ -6,6 +6,8 @@ import {useSelector} from "react-redux";
 import store, {RootState} from "../../../../store";
 import PrimaryButton from "../../../ui/PrimaryButton";
 import TransparentPrimaryButton from "../../../ui/TransparentPrimaryButton";
+import UploadUserImageDialog from "./dialogs/UploadUserImageDialog";
+import ApiClient from "../../../../api/client";
 
 export default function ProfilesTab() {
     const static_me = store.getState().app.me!;
@@ -13,6 +15,8 @@ export default function ProfilesTab() {
     const [changes, setChanges] = useState({bio: static_me.bio, accent_color: static_me.accent_color});
     const avatarFile = useRef<HTMLInputElement>(null);
     const bannerFile = useRef<HTMLInputElement>(null);
+    const [avatarImage, setAvatarImage] = useState<string | null>(null);
+    const [bannerImage, setBannerImage] = useState<string | null>(null);
 
     const int2color = (i: number) => {
         let color = i.toString(16);
@@ -29,9 +33,26 @@ export default function ProfilesTab() {
         setChanges(prev => ({...prev, accent_color: color2int(color)}));
     }
 
+    const setImageB64 = (type: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(!e.target.files) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function () {
+            type === "avatar" ? setAvatarImage(reader.result as string) : setBannerImage(reader.result as string);
+        };
+    }
+
+    const removeImage = (type: string) => () => {
+        type === "avatar"
+            ? ApiClient.editMe({avatar: null}).then()
+            : ApiClient.editProfile({banner: null}).then();
+    }
+
     return (<>
-        <input type="file" ref={avatarFile} style={{display: "none"}}/>
-        <input type="file" ref={bannerFile} style={{display: "none"}}/>
+        <input type="file" ref={avatarFile} style={{display: "none"}} accept="image/png, image/jpeg, image/gif, image/webp" onChange={setImageB64("avatar")}/>
+        <input type="file" ref={bannerFile} style={{display: "none"}} accept="image/png, image/jpeg, image/gif, image/webp" onChange={setImageB64("banner")}/>
+        <UploadUserImageDialog type="avatar" image={avatarImage} close={() => setAvatarImage(null)}/>
+        <UploadUserImageDialog type="banner" image={bannerImage} close={() => setBannerImage(null)}/>
         <h2>Profiles</h2>
         <div className="settings-profiles-user">
             <div className="settings-profiles-user-col">
@@ -39,14 +60,18 @@ export default function ProfilesTab() {
 
                 <div className="card-info-row margin-0">
                     <PrimaryButton onClick={() => avatarFile.current?.click()}>Change Avatar</PrimaryButton>
-                    <TransparentPrimaryButton onClick={() => bannerFile.current?.click()}>Remove Avatar</TransparentPrimaryButton>
+                    {me!.avatar && <TransparentPrimaryButton onClick={removeImage("avatar")}>Remove Avatar</TransparentPrimaryButton>}
                 </div>
 
                 <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 
                 <span className="card-text-secondary">Profile Banner</span>
                 <span className="card-text-secondary text-14">We recommend an image of at leas 600x240. You can upload a PNG, JPG, or an animated GIF under 10MB.</span>
-                <PrimaryButton>Change Banner</PrimaryButton>
+
+                <div className="card-info-row margin-0">
+                    <PrimaryButton onClick={() => bannerFile.current?.click()}>Change Banner</PrimaryButton>
+                    {me!.banner && <TransparentPrimaryButton onClick={removeImage("banner")}>Remove Banner</TransparentPrimaryButton>}
+                </div>
 
                 <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#3b3b3b", margin: "20px 0"}}/>
 

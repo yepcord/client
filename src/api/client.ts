@@ -1,6 +1,6 @@
 import {API_ENDPOINT} from "../constants";
 import store from "../store";
-import {EditMeRequest, EnableMfaRequest, MessagePostRequest} from "./types";
+import {EditMeRequest, EditProfileRequest, EnableMfaRequest, MessagePostRequest} from "./types";
 import {RelationshipType} from "../types/user";
 import {ChannelType} from "../types/channel";
 
@@ -14,7 +14,7 @@ interface MakeRequestProps {
     authRequired?: boolean,
 }
 
-interface Response {
+export interface Response {
     body: { [key: string]: any } | null | any[],
     status: number,
 }
@@ -298,6 +298,15 @@ export default class ApiClient {
                 type: type,
                 parent_id: parent_id,
             }
+        });
+    }
+
+    static async editProfile(request: EditProfileRequest) {
+        return await this.makeRequest({
+            method: "PATCH",
+            url: `users/@me/profile`,
+            authRequired: true,
+            body: request
         });
     }
 }

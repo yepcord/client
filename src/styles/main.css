@@ -370,8 +370,22 @@ input:checked + .switch-checkbox-slider:before {
 .input-color::-webkit-color-swatch-wrapper {
     padding: 0;
 }
+
 .input-color::-webkit-color-swatch {
     border: none;
     border-radius: 10px;
     background-color: transparent;
+}
+
+.input-slider {
+    cursor: col-resize;
+}
+
+.input-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    width: 10px;
+    height: 17px;
+    background-color: var(--theme-7);
 }

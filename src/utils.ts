@@ -5,6 +5,7 @@ import ApiClient from "./api/client";
 import {setToken} from "./states/app";
 import {SNOWFLAKE_EPOCH} from "./constants";
 import Channel, {ChannelType} from "./types/channel";
+import {Area} from "react-easy-crop/types";
 
 export function selectChannel(channelId: string | null) {
     const global_state = store.getState();
@@ -60,4 +61,50 @@ export async function dmChannelByUserId(user_id: string) {
 export function snowflakeToDate(sf: string) {
     const millis = Number(BigInt(sf) >> BigInt(22)) + SNOWFLAKE_EPOCH;
     return new Date(millis);
+}
+
+export const createImage = (url: string): Promise<HTMLImageElement> =>
+    new Promise((resolve, reject) => {
+        const image = new Image();
+        image.addEventListener("load", () => resolve(image));
+        image.addEventListener("error", (error) => reject(error));
+        image.setAttribute("crossOrigin", "anonymous");
+        image.src = url;
+    });
+
+export function getRadianAngle(degreeValue: number) {
+    return (degreeValue * Math.PI) / 180;
+}
+
+export async function getCroppedImg(
+    imageSrc: string,
+    pixelCrop: Area
+) {
+    const image = await createImage(imageSrc);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+        return null;
+    }
+
+    // set canvas size to match the bounding box
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    ctx.drawImage(image, 0, 0);
+
+    const data = ctx.getImageData(
+        pixelCrop.x,
+        pixelCrop.y,
+        pixelCrop.width,
+        pixelCrop.height
+    );
+
+    canvas.width = pixelCrop.width;
+    canvas.height = pixelCrop.height;
+
+    ctx.putImageData(data, 0, 0);
+
+    return canvas.toDataURL();
 }
