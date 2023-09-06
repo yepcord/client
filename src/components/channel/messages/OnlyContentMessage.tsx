@@ -26,7 +26,7 @@ export default function OnlyContentMessage({message}: OnlyContentMessageProps) {
                     {date_str}
                 </div>
                 <div className="message-info-content">
-                    <div className={`message-content ${sent ? "message-content-pending" : ""}`}>
+                    <div className={`message-content selectable ${sent ? "message-content-pending" : ""}`}>
                         {parse(message.content ? message.content : "")}
                     </div>
                 </div>

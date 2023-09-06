@@ -1,36 +1,27 @@
-import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
-import Avatar from "../../user/Avatar";
+import {useDispatch} from "react-redux";
 import {format, parseISO} from "date-fns";
-import {parse} from "./formatting";
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
 import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
-import {RootState} from "../../../store";
+import React from "react";
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
-interface BaseMessageProps {
+interface ThreadCreatedMessageProps {
     message: Message,
 }
 
-export default function BaseMessage({message}: BaseMessageProps) {
-    const me = useSelector((state: RootState) => state.app.me);
+export default function ThreadCreatedMessage({message}: ThreadCreatedMessageProps) {
     const date = parseISO(message.timestamp);
     const date_str = format(date, "dd.MM.yyyy h:mm aa");
-    const sent = message.sent === undefined ? false : message.sent;
     const dispatch = useDispatch();
     const profileMenuId = createSnowflake();
 
     const openProfileMenu = () => dispatch(setProfileMenuElement(profileMenuId));
 
-    const isMention = message.mention_everyone || message.mentions?.map(item => {
-        return item.id === me?.id;
-    }).includes(true);
-
     return (
         <div className="message">
-            <div className={`message-container message-bigger-margin ${isMention ? "message-container-mention" : ""}`}>
-                <Avatar user={message.author} withBadge={false} size={36} onClick={openProfileMenu}/>
+            <div className={`message-container message-bigger-margin`}>
+                <ForumOutlinedIcon style={{color: "var(--theme-text-secondary)"}}/>
                 <div className="message-info-content">
                     <div className="message-info">
                         <span className="message-username cursor-pointer" onClick={openProfileMenu}
@@ -38,10 +29,8 @@ export default function BaseMessage({message}: BaseMessageProps) {
                               data-profile-message={`${message.channel_id}-${message.id}`}>
                             {message.author.username}
                         </span>
+                        <span className="text-secondary text-14">started a thread!</span>
                         <span className="message-timestamp">{date_str}</span>
-                    </div>
-                    <div className={`message-content selectable ${sent ? "message-content-pending" : ""}`}>
-                        {parse(message.content ? message.content : "")}
                     </div>
                 </div>
             </div>

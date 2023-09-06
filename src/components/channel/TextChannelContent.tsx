@@ -2,7 +2,7 @@ import TextChannelInputPanel from "./TextChannelInputPanel";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import ApiClient from "../../api/client";
-import {Message} from "../../types/message";
+import {Message, MessageType} from "../../types/message";
 import {addMessage, setAllLoaded} from "../../states/messages";
 import React, {useEffect, useRef, useState} from "react";
 import BaseMessage from "./messages/BaseMessage";
@@ -14,6 +14,8 @@ import {format, parseISO} from "date-fns";
 import {Divider} from "@mui/material";
 import TextChannelContentSkeleton from "./messages/TextChannelContentSkeleton";
 import UserProfileMenu from "./messages/UserProfileMenu";
+import UserJoinMessage from "./messages/UserJoinMessage";
+import ThreadCreatedMessage from "./messages/ThreadCreatedMessage";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -81,7 +83,21 @@ export default function TextChannelContent() {
             const date = parseISO(message.timestamp);
             const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
             const sameAuthor = sameDay ? prev?.author.id === message.author.id : false;
-            let ret = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
+            let ret;
+            switch (message.type) {
+                case MessageType.DEFAULT: {
+                    ret = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
+                    break;
+                }
+                case MessageType.USER_JOIN: {
+                    ret = <UserJoinMessage message={message}/>;
+                    break;
+                }
+                case MessageType.THREAD_CREATED: {
+                    ret = <ThreadCreatedMessage message={message}/>;
+                    break;
+                }
+            }
             if(!sameDay) {
                 ret = (<>
                     {ret}

@@ -66,6 +66,7 @@
 .message-content {
     color: var(--theme-text-main);
     font-size: 14px;
+    line-height: 24px;
 }
 
 .message-content-pending {
