@@ -8,6 +8,7 @@ import Channel from "../../../../types/channel";
 import Guild, {GuildFeatures} from "../../../../types/guild";
 import {replaceSnowflakeArrWithObj} from "../../../../utils";
 import Snowflake from "../../../../types/snowflake";
+import {websocketState} from "../../GatewayWebsocket";
 
 export interface ReadyHandlerData {
     user: UserMe,
@@ -145,5 +146,9 @@ export default function readyHandler(data: ReadyHandlerData) {
     } // TODO: add custom status
     store.dispatch(addPresence(self_presence));
 
+    if(websocketState.deferedWsNotReadyTimeout !== null) {
+        clearTimeout(websocketState.deferedWsNotReadyTimeout);
+        websocketState.deferedWsNotReadyTimeout = null;
+    }
     store.dispatch(setWsReady(true));
 }

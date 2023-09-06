@@ -18,12 +18,14 @@ interface WebsocketState {
     sendWebsocketMessage: SendJsonMessage | null,
     heartbeatInterval: number | null,
     sequenceNumber: number,
+    deferedWsNotReadyTimeout: number | null,
 }
 
 export const websocketState: WebsocketState = {
     sendWebsocketMessage: null,
     heartbeatInterval: null,
     sequenceNumber: 0,
+    deferedWsNotReadyTimeout: null,
 };
 
 function getIdentifyProperties() {
@@ -85,7 +87,12 @@ export default function GatewayWebsocket() {
                 }
             })
         },
-        onClose: () => dispatch(setWsReady(false)),
+        onClose: () => {
+            if(websocketState.deferedWsNotReadyTimeout !== null) return;
+            websocketState.deferedWsNotReadyTimeout = window.setTimeout(() => {
+                dispatch(setWsReady(false));
+            }, 10000)
+        },
         shouldReconnect: (e) => {
             if(e.code === 4004) {
                 dispatch(setToken(null));
