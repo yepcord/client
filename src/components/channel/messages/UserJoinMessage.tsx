@@ -4,8 +4,6 @@ import {RootState} from "../../../store";
 import {format, parseISO} from "date-fns";
 import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
-import Avatar from "../../user/Avatar";
-import {parse} from "./formatting";
 import React from "react";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 

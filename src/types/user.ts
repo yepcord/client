@@ -120,6 +120,10 @@ export interface UserSettings {
     view_nsfw_commands: boolean,
     view_nsfw_guilds: boolean,
     render_spoilers: "ON_CLICK" | "IF_MODERATOR" | "ALWAYS",
+    use_rich_chat_input: boolean,
+    use_thread_sidebar: boolean,
+    expression_suggestions_enabled: boolean,
+    view_image_descriptions: boolean,
 }
 
 export interface PartialUserSettings {
@@ -163,4 +167,8 @@ export interface PartialUserSettings {
     view_nsfw_commands?: boolean,
     view_nsfw_guilds?: boolean,
     render_spoilers?: "ON_CLICK" | "IF_MODERATOR" | "ALWAYS",
+    use_rich_chat_input?: boolean,
+    use_thread_sidebar?: boolean,
+    expression_suggestions_enabled?: boolean,
+    view_image_descriptions?: boolean,
 }

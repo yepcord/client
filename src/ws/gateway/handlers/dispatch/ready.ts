@@ -3,12 +3,14 @@ import {setCurrentUser, setSettings, setWsReady} from "../../../../states/app";
 import {addGuilds} from "../../../../states/guilds";
 import {addPresence, addRelationships, addUser, addUsers} from "../../../../states/users";
 import {addChannels} from "../../../../states/channels";
-import User, {Relationship, UserMe, UserSettings} from "../../../../types/user";
+import User, {PartialUserSettings, Relationship, UserMe, UserSettings, UserStatus} from "../../../../types/user";
 import Channel from "../../../../types/channel";
 import Guild, {GuildFeatures} from "../../../../types/guild";
-import {replaceSnowflakeArrWithObj} from "../../../../utils";
+import {b64decode, mergeProtoSettings, protoToSettings, replaceSnowflakeArrWithObj} from "../../../../utils";
 import Snowflake from "../../../../types/snowflake";
 import {websocketState} from "../../GatewayWebsocket";
+import {PreloadedUserSettings} from "../../../../proto/discord";
+import Emoji from "../../../../types/emoji";
 
 export interface ReadyHandlerData {
     user: UserMe,
@@ -63,7 +65,7 @@ export interface ReadyHandlerData {
             widget_channel_id: string | null,
             widget_enabled: boolean,
         },
-        emojis: unknown[] | {[key:string]: unknown}, // TODO: add Emoji type
+        emojis: Emoji[] | {[key:string]: Emoji},
         guild_scheduled_event: unknown[] | {[key:string]: unknown}, // TODO: add ScheduledEvent type
         roles: unknown[] | {[key:string]: unknown}, // TODO: add Role type
         stickers: unknown[] | {[key:string]: unknown}, // TODO: add Sticker type
@@ -115,9 +117,17 @@ export interface ReadyHandlerData {
 }
 
 export default function readyHandler(data: ReadyHandlerData) {
+    const s1 = PreloadedUserSettings.fromJson({appearance: {theme: 1}});
+    PreloadedUserSettings.mergePartial(s1, PreloadedUserSettings.fromJson({textAndImages: {showCommandSuggestions: false}}));
+    console.log(s1);
+
+
     store.dispatch(addUser(data.user));
     store.dispatch(setCurrentUser(data.user));
     store.dispatch(setSettings(data.user_settings));
+
+    let binary = b64decode(data.user_settings_proto);
+    store.dispatch(setSettings(mergeProtoSettings(data.user_settings, PreloadedUserSettings.fromBinary(binary))));
 
     let guilds: Guild[] = [];
     for(let guild of data.guilds) {

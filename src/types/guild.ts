@@ -1,5 +1,6 @@
 import Channel from "./channel";
 import Snowflake from "./snowflake";
+import Emoji from "./emoji";
 
 export type GuildFeatures = "ANIMATED_ICON" | "BANNER" | "COMMERCE" | "COMMUNITY" | "DISCOVERABLE" |
     "ENABLED_DISCOVERABLE_BEFORE" | "FORCE_RELAY" | "RELAY_ENABLED" | "INVITE_SPLASH" | "MEMBER_VERIFICATION_GATE_ENABLED" |
@@ -61,7 +62,7 @@ export default interface Guild {
     premium_subscription_count?: number,
     application_command_counts?: unknown,
     emojis?: {
-        [key:string]: Snowflake, // TODO: add Emoji type
+        [key:string]: Emoji, // TODO: add Emoji type
     },
     guild_scheduled_events?: {
         [key:string]: Snowflake, // TODO: add ScheduledEvent type

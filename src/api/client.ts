@@ -309,4 +309,15 @@ export default class ApiClient {
             body: request
         });
     }
+
+    static async updateUserSettings(proto: string) {
+        return await this.makeRequest({
+            method: "PATCH",
+            url: `users/@me/settings-proto/1`,
+            authRequired: true,
+            body: {
+                settings: proto,
+            }
+        });
+    }
 }

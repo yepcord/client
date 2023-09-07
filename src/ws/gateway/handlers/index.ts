@@ -15,11 +15,12 @@ import messageUpdateHandler, {MessageUpdateHandlerData} from "./dispatch/message
 import relationshipAddHandler, {RelationshipAddHandlerData} from "./dispatch/relationship_add";
 import relationshipRemoveHandler, {RelationshipRemoveHandlerData} from "./dispatch/relationship_remove";
 import userUpdateHandler, {UserUpdateHandlerData} from "./dispatch/user_update";
+import userSettingsProtoUpdateHandler, {SettingsProtoUpdateHandlerData} from "./dispatch/user_settings_proto_update";
 
 type DispatchData = ReadyHandlerData | ReadySupplementalHandlerData | PresenceUpdateHandlerData | GuildCreateHandlerData |
     GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData |
     MessageCreateHandlerData | MessageDeleteHandlerData | MessageUpdateHandlerData | RelationshipAddHandlerData |
-    RelationshipRemoveHandlerData;
+    RelationshipRemoveHandlerData | SettingsProtoUpdateHandlerData;
 
 interface GatewayMessage {
     op: GatewayOp,
@@ -90,6 +91,10 @@ function handleDispatchMessage(type: string, data: DispatchData) {
         }
         case "USER_UPDATE": {
             userUpdateHandler(data as UserUpdateHandlerData);
+            break;
+        }
+        case "USER_SETTINGS_PROTO_UPDATE": {
+            userSettingsProtoUpdateHandler(data as SettingsProtoUpdateHandlerData);
             break;
         }
     }
