@@ -75,7 +75,21 @@ export default interface Guild {
         [key:string]: Snowflake, // TODO: add Thread type
     },
     version?: number,
-    members?: {
-        [key:string]: Snowflake, // TODO: add GuildMember type
+    members: {
+        [key:string]: GuildMember, // TODO: add GuildMember type
     },
+}
+
+export interface GuildMember extends Snowflake {
+    id: string,
+    nick: string | null,
+    avatar: string | null,
+    mute: boolean,
+    deaf: boolean,
+    pending?: boolean,
+    is_pending?: boolean,
+    joined_at: string,
+    flags: number,
+    roles: string[],
+    communication_disabled_until?: number | null,
 }

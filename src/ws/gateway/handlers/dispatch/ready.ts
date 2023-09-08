@@ -135,6 +135,7 @@ export default function readyHandler(data: ReadyHandlerData) {
         guild.threads = replaceSnowflakeArrWithObj(guild.threads as Snowflake[]);
 
         guilds.push(guild as unknown as Guild);
+        guilds[guilds.length-1].members = {};
     }
     store.dispatch(addGuilds(guilds));
     store.dispatch(addUsers(data.users));

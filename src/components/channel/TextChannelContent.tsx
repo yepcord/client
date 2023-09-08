@@ -1,6 +1,6 @@
 import TextChannelInputPanel from "./TextChannelInputPanel";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
+import store, {RootState} from "../../store";
 import ApiClient from "../../api/client";
 import {Message, MessageType} from "../../types/message";
 import {addMessage, setAllLoaded} from "../../states/messages";
@@ -16,6 +16,8 @@ import TextChannelContentSkeleton from "./messages/TextChannelContentSkeleton";
 import UserProfileMenu from "./messages/UserProfileMenu";
 import UserJoinMessage from "./messages/UserJoinMessage";
 import ThreadCreatedMessage from "./messages/ThreadCreatedMessage";
+import {websocketState} from "../../ws/gateway/GatewayWebsocket";
+import {GatewayOp} from "../../types/gateway";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -72,13 +74,20 @@ export default function TextChannelContent() {
     }
 
     const getMessages = () => {
+        const isGuild = Boolean(channel?.guild_id);
+        const member_ids = isGuild ? Object.keys(store.getState().guild.guilds[channel?.guild_id!].members) : [];
+        const request_users: Set<string> = new Set();
+
         let messages_sorted = Object.values(messages);
         messages_sorted.sort((a, b) => {
             let _a = BigInt(a.id);
             let _b = BigInt(b.id);
             return _a < _b ? -1 : _a > _b ? 1 : 0;
         });
-        return messages_sorted.map((message, idx) => {
+
+        const result = messages_sorted.map((message, idx) => {
+            if(isGuild && !request_users.has(message.author.id) && !member_ids.includes(message.author.id)) request_users.add(message.author.id);
+
             const prev = idx ? messages_sorted[idx-1] : null;
             const date = parseISO(message.timestamp);
             const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
@@ -108,6 +117,17 @@ export default function TextChannelContent() {
             }
             return ret;
         }).reverse();
+
+        isGuild && request_users.size >= 1 && websocketState.sendWebsocketMessage?.({
+            "op": GatewayOp.GUILD_MEMBERS,
+            "d": {
+                "guild_id": [channel?.guild_id!],
+                "user_ids": [...request_users],
+                "presences":false
+            }
+        })
+
+        return result;
     }
 
     return (

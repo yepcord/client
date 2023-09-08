@@ -5,6 +5,7 @@ import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
 import React from "react";
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import useAuthor from "../../../hooks/use_author";
 
 interface ThreadCreatedMessageProps {
     message: Message,
@@ -15,6 +16,7 @@ export default function ThreadCreatedMessage({message}: ThreadCreatedMessageProp
     const date_str = format(date, "dd.MM.yyyy h:mm aa");
     const dispatch = useDispatch();
     const profileMenuId = createSnowflake();
+    const author = useAuthor(message);
 
     const openProfileMenu = () => dispatch(setProfileMenuElement(profileMenuId));
 
@@ -27,7 +29,7 @@ export default function ThreadCreatedMessage({message}: ThreadCreatedMessageProp
                         <span className="message-username cursor-pointer" onClick={openProfileMenu}
                               data-profile-menu={profileMenuId}
                               data-profile-message={`${message.channel_id}-${message.id}`}>
-                            {message.author.username}
+                            {author.username}
                         </span>
                         <span className="text-secondary text-14">started a thread!</span>
                         <span className="message-timestamp">{date_str}</span>

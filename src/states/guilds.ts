@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import Guild from "../types/guild";
+import Guild, {GuildMember} from "../types/guild";
 import Channel from "../types/channel";
 
 export interface GuildsState {
@@ -57,7 +57,17 @@ export const guildState = createSlice({
 
             updateSelectedGuildIfNeeded(state, guild);
         },
+        updateGuildMembers: (state: GuildsState, action: PayloadAction<{id: string, members: GuildMember[]}>) => {
+            const guild = state.guilds[action.payload.id];
+            if(!guild) return;
+
+            for(let member of action.payload.members) {
+                member.id in guild.members ? Object.assign(guild.members[member.id], member) : guild.members[member.id] = member;
+            }
+
+            updateSelectedGuildIfNeeded(state, guild);
+        },
     }
 });
 
-export const {addGuild, addGuilds, removeGuild, setSelectedGuild, addGuildChannel, removeGuildChannel} = guildState.actions;
+export const {addGuild, addGuilds, removeGuild, setSelectedGuild, addGuildChannel, removeGuildChannel, updateGuildMembers} = guildState.actions;

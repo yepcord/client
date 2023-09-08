@@ -6,6 +6,7 @@ import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
 import React from "react";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import useAuthor from "../../../hooks/use_author";
 
 interface UserJoinMessageProps {
     message: Message,
@@ -13,6 +14,7 @@ interface UserJoinMessageProps {
 
 export default function UserJoinMessage({message}: UserJoinMessageProps) {
     const me = useSelector((state: RootState) => state.app.me);
+    const author = useAuthor(message);
     const date = parseISO(message.timestamp);
     const date_str = format(date, "dd.MM.yyyy h:mm aa");
     const dispatch = useDispatch();
@@ -33,7 +35,7 @@ export default function UserJoinMessage({message}: UserJoinMessageProps) {
                         <span className="message-username cursor-pointer" onClick={openProfileMenu}
                               data-profile-menu={profileMenuId}
                               data-profile-message={`${message.channel_id}-${message.id}`}>
-                            {message.author.username}
+                            {author.username}
                         </span>
                         <span className="text-secondary text-14">just showed up!</span>
                         <span className="message-timestamp">{date_str}</span>

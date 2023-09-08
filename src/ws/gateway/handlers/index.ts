@@ -16,11 +16,12 @@ import relationshipAddHandler, {RelationshipAddHandlerData} from "./dispatch/rel
 import relationshipRemoveHandler, {RelationshipRemoveHandlerData} from "./dispatch/relationship_remove";
 import userUpdateHandler, {UserUpdateHandlerData} from "./dispatch/user_update";
 import userSettingsProtoUpdateHandler, {SettingsProtoUpdateHandlerData} from "./dispatch/user_settings_proto_update";
+import guildMembersChunkHandler, {GuildMembersChunkHandlerData} from "./dispatch/guild_members_chunk";
 
 type DispatchData = ReadyHandlerData | ReadySupplementalHandlerData | PresenceUpdateHandlerData | GuildCreateHandlerData |
     GuildDeleteHandlerData | GuildUpdateHandlerData | ChannelCreateHandlerData | ChannelUpdateHandlerData | ChannelDeleteHandlerData |
     MessageCreateHandlerData | MessageDeleteHandlerData | MessageUpdateHandlerData | RelationshipAddHandlerData |
-    RelationshipRemoveHandlerData | SettingsProtoUpdateHandlerData;
+    RelationshipRemoveHandlerData | SettingsProtoUpdateHandlerData | GuildMembersChunkHandlerData;
 
 interface GatewayMessage {
     op: GatewayOp,
@@ -95,6 +96,10 @@ function handleDispatchMessage(type: string, data: DispatchData) {
         }
         case "USER_SETTINGS_PROTO_UPDATE": {
             userSettingsProtoUpdateHandler(data as SettingsProtoUpdateHandlerData);
+            break;
+        }
+        case "GUILD_MEMBERS_CHUNK": {
+            guildMembersChunkHandler(data as GuildMembersChunkHandlerData);
             break;
         }
     }
