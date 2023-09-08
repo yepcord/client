@@ -1,6 +1,6 @@
 import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
-import {parseISO, format} from "date-fns";
+import {format, parseISO} from "date-fns";
 import {parse} from "./formatting";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store";

@@ -11,7 +11,7 @@ export default function CheckboxOption({checked, onClick, title, description=nul
             <div className="checkbox-option">
                 <span className="text-main cursor-pointer" onClick={onClick}>{title}</span>
                 <label className="switch-checkbox">
-                    <input type="checkbox" checked={checked} onClick={onClick}/>
+                    <input type="checkbox" checked={checked} onChange={onClick}/>
                     <span className="switch-checkbox-slider"></span>
                 </label>
             </div>

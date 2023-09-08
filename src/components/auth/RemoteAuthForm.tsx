@@ -30,7 +30,7 @@ export function RemoteAuthFormUser() {
         <RemoteAuthAvatar id={userdata!.id} avatar={userdata!.avatar}/>
         <h3>Check your phone!</h3>
         <p>Logging in as {userdata!.username}#{userdata!.discriminator}</p>
-        <a onClick={() => ra_websocketState.getWs && ra_websocketState.getWs()?.close()} className="form-link">Not me, start over</a>
+        <a href="#/cancel" onClick={() => ra_websocketState.getWs && ra_websocketState.getWs()?.close()} className="form-link">Not me, start over</a>
     </>);
 }
 

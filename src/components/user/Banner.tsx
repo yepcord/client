@@ -15,7 +15,6 @@ export default function Banner({user, height=100}: BannerProps) {
     const [bg, setBg] = useState("var(--theme-3)");
 
     const fullUser: User = {...user, ...storedUser};
-    console.log(fullUser)
 
     const bgProp = {
         height: bg.startsWith("#") ? height : undefined,
