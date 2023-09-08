@@ -132,7 +132,7 @@ export default function TextChannelContent() {
 
     return (
         <div className="channel-content">
-            <div className="channel-messages" onScroll={handleScroll} ref={messagesRef}>
+            <div className="channel-messages selectable" onScroll={handleScroll} ref={messagesRef}>
                 <div ref={bottomRef}/>
                 {messages && getMessages()}
                 <div ref={loadingRef} className={`${info?.all && "d-none"}`}>

@@ -351,7 +351,6 @@ input:checked + .switch-checkbox-slider:before {
 
 .selectable {
     user-select: text;
-    cursor: text;
 }
 
 .margin-0 {
