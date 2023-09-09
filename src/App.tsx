@@ -79,6 +79,8 @@ function App() {
                 <Route path="/login" element={<CheckUnauthenticated component={LoginPage}/>}/>
                 <Route path="/register" element={<CheckUnauthenticated component={RegisterPage}/>}/>
                 <Route path="/mfa" element={<CheckUnauthenticated component={MfaPage}/>}/>
+
+                <Route path="*" element={<CheckAuthenticated element={<Navigate to="/channels/@me" replace/>}/>}/>
             </Routes>
         </BrowserRouter>
     );

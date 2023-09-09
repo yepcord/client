@@ -8,11 +8,14 @@ import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import {useNavigate} from "react-router-dom";
 import GuildList from "./GuildList";
+import CreateOrJoinGuildDialog from "../dialogs/navbar/CreateOrJoinGuildDialog";
+import {useState} from "react";
 
 export default function NavBar() {
     const navigate = useNavigate();
     const guildsState = useSelector((state: RootState) => state.guild.guilds);
     const selectedGuild = useSelector((state: RootState) => state.guild.selectedGuild);
+    const [addDialogOpen, setAddDialogOpen] = useState(false);
 
     return (
         <div className="servers-list">
@@ -27,7 +30,7 @@ export default function NavBar() {
 
             {Object.keys(guildsState).length > 0 && <Divider className={"icons-divider"}/>}
 
-            <GuildIcon title="Add a Guild" button={true} svg={<AddIcon/>}/>
+            <GuildIcon title="Add a Guild" button={true} svg={<AddIcon/>} onClick={() => setAddDialogOpen(true)}/>
             <GuildIcon title="Explore public guilds" button={true} svg={<ExploreOutlinedIcon/>}/>
 
             <Divider className={"icons-divider"}/>
@@ -35,6 +38,7 @@ export default function NavBar() {
             <GuildIcon title="Download Apps" button={true} svg={<FileDownloadOutlinedIcon/>}/>
 
             <div/>
+            <CreateOrJoinGuildDialog open={addDialogOpen} setOpen={setAddDialogOpen}/>
         </div>
     );
 }

@@ -320,4 +320,28 @@ export default class ApiClient {
             }
         });
     }
+
+    static async createGuild(name: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `guilds`,
+            authRequired: true,
+            body: {
+                channels: [],
+                name: name,
+                icon: null,
+                system_channel_id: null,
+                guild_template_code: "2TffvPucqHkN",
+            }
+        });
+    }
+
+    static async joinInvite(code: string) {
+        return await this.makeRequest({
+            method: "POST",
+            url: `invites/${code}`,
+            authRequired: true,
+            body: {}
+        });
+    }
 }

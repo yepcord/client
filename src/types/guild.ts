@@ -1,6 +1,7 @@
-import Channel from "./channel";
+import Channel, {ChannelType} from "./channel";
 import Snowflake from "./snowflake";
 import Emoji from "./emoji";
+import User from "./user";
 
 export type GuildFeatures = "ANIMATED_ICON" | "BANNER" | "COMMERCE" | "COMMUNITY" | "DISCOVERABLE" |
     "ENABLED_DISCOVERABLE_BEFORE" | "FORCE_RELAY" | "RELAY_ENABLED" | "INVITE_SPLASH" | "MEMBER_VERIFICATION_GATE_ENABLED" |
@@ -92,4 +93,33 @@ export interface GuildMember extends Snowflake {
     flags: number,
     roles: string[],
     communication_disabled_until?: number | null,
+}
+
+interface InviteInfo {
+    channel: {
+        id: string,
+        name: string,
+        type: ChannelType,
+    },
+    code: string,
+    expires_at: string,
+    guild: {
+        id: string,
+        name: string,
+        description: string | null,
+        banner: string | null,
+        icon: string | null,
+        splash: string | null,
+        vanity_url_code: string | null,
+        features: string[],
+        nsfw: boolean,
+        nsfw_level: number,
+        premuim_subscription_count: number,
+        verification_level: number,
+    },
+    inviter: User,
+    new_member: boolean,
+    temporary: boolean,
+    type: number,
+    uses: number,
 }
