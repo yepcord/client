@@ -105,3 +105,28 @@
 .message-component-link:visited {
     color: #1e70ff;
 }
+
+.message-menu {
+    display: flex;
+    background-color: var(--theme-2);
+    flex-direction: row;
+    gap: 5px;
+    border-radius: 5px;
+    height: 32px;
+    color: var(--theme-text-primary);
+    align-items: center;
+    padding: 3px 5px;
+}
+
+.message-menu-button {
+    background-color: transparent;
+    border-radius: 3px;
+}
+
+.message-menu-button:hover {
+    background-color: #ffffff20;
+}
+
+.message-menu-button:active {
+    background-color: #ffffff30;
+}

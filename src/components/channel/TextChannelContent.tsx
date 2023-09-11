@@ -10,7 +10,7 @@ import {ChannelType} from "../../types/channel";
 import DmChannelBeginning from "./messages/DmChannelBeginning";
 import GuildChannelBeginning from "./messages/GuildChannelBeginning";
 import OnlyContentMessage from "./messages/OnlyContentMessage";
-import {format, parseISO} from "date-fns";
+import {differenceInMinutes, format, parseISO} from "date-fns";
 import {Divider} from "@mui/material";
 import TextChannelContentSkeleton from "./messages/TextChannelContentSkeleton";
 import UserProfileMenu from "./messages/UserProfileMenu";
@@ -18,6 +18,7 @@ import UserJoinMessage from "./messages/UserJoinMessage";
 import ThreadCreatedMessage from "./messages/ThreadCreatedMessage";
 import {websocketState} from "../../ws/gateway/GatewayWebsocket";
 import {GatewayOp} from "../../types/gateway";
+import MessageWrapper from "./messages/MessageWrapper";
 
 export default function TextChannelContent() {
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
@@ -91,22 +92,29 @@ export default function TextChannelContent() {
             const prev = idx ? messages_sorted[idx-1] : null;
             const date = parseISO(message.timestamp);
             const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
-            const sameAuthor = sameDay ? prev?.author.id === message.author.id : false;
-            let ret;
+            const same15Min = prev ? Math.abs(differenceInMinutes(parseISO(prev.timestamp), date)) <= 15 : true;
+            const sameAuthor = same15Min ? prev?.author.id === message.author.id : false;
+            let element: React.JSX.Element;
             switch (message.type) {
                 case MessageType.DEFAULT: {
-                    ret = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
+                    element = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
                     break;
                 }
                 case MessageType.USER_JOIN: {
-                    ret = <UserJoinMessage message={message}/>;
+                    element = <UserJoinMessage message={message}/>;
                     break;
                 }
                 case MessageType.THREAD_CREATED: {
-                    ret = <ThreadCreatedMessage message={message}/>;
+                    element = <ThreadCreatedMessage message={message}/>;
                     break;
                 }
+                default: {
+                    element = <></>;
+                }
             }
+
+            let ret = <MessageWrapper message={element}/>
+
             if(!sameDay) {
                 ret = (<>
                     {ret}

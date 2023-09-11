@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import NavBar from "./components/navbar/NavBar";
 import ChannelPanel from "./components/channel_panel/ChannelPanel";
 import ChannelContainer from "./components/channel/ChannelContainer";
@@ -15,6 +15,7 @@ import SettingsDialog from "./components/dialogs/settings/SettingsDialog";
 import {RootState} from "./store";
 import Loader from "./components/loader";
 import UserProfileDialog from "./components/dialogs/users/UserProfileDialog";
+import {setKeyPressed} from "./states/app";
 
 const theme = createTheme({
     components: {
@@ -40,6 +41,24 @@ function AppPage() {
     dispatch(setSelectedGuild(guild));
     const channelAction = selectChannel(channel);
     channelAction && dispatch(channelAction);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Shift')
+                dispatch(setKeyPressed({key: "shift", pressed: true}));
+        }
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, []);
+
+    useEffect(() => {
+        const handleKeyUp = (e: KeyboardEvent) => {
+            if (e.key === 'Shift')
+                dispatch(setKeyPressed({key: "shift", pressed: false}));
+        }
+        document.addEventListener('keyup', handleKeyUp);
+        return () => document.removeEventListener("keyup", handleKeyUp);
+    }, []);
 
     return (<>
         <div className="main-container">
