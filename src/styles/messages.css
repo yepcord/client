@@ -24,7 +24,7 @@
     flex-direction: row;
 }
 
-.message:hover {
+.message:hover, .message-hovered {
     background-color: #1c1c1c20;
 }
 

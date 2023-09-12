@@ -232,3 +232,7 @@ export async function updateSettings(old_settings: UserSettings, new_settings: P
     const proto = settingsToProto({...old_settings, ...new_settings});
     return await ApiClient.updateUserSettings(b64encode(PreloadedUserSettings.toBinary(proto)));
 }
+
+export function checkPermissions(channel_id: string, permission: number) {
+    return true; // TODO: implement permissions
+}

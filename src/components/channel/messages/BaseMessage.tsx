@@ -3,12 +3,13 @@ import {Message} from "../../../types/message";
 import Avatar from "../../user/Avatar";
 import {format, parseISO} from "date-fns";
 import {parse} from "./formatting";
-import React from "react";
+import React, {useContext} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
 import {RootState} from "../../../store";
 import useAuthor from "../../../hooks/use_author";
+import {MessageContext} from "./index";
 
 interface BaseMessageProps {
     message: Message,
@@ -22,6 +23,7 @@ export default function BaseMessage({message}: BaseMessageProps) {
     const sent = message.sent === undefined ? false : message.sent;
     const dispatch = useDispatch();
     const profileMenuId = createSnowflake();
+    const ctx = useContext(MessageContext);
 
     const openProfileMenu = () => dispatch(setProfileMenuElement(profileMenuId));
 
@@ -30,7 +32,7 @@ export default function BaseMessage({message}: BaseMessageProps) {
     }).includes(true);
 
     return (
-        <div className="message">
+        <div className={`message ${ctx.forceHover ? "message-hovered" : ""}`}>
             <div className={`message-container message-bigger-margin ${isMention ? "message-container-mention" : ""}`}>
                 <Avatar user={author} withBadge={false} size={36} onClick={openProfileMenu}/>
                 <div className="message-info-content">

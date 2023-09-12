@@ -113,7 +113,7 @@ export default function TextChannelContent() {
                 }
             }
 
-            let ret = <MessageWrapper message={element}/>
+            let ret = <MessageWrapper messageElement={element} message={message}/>
 
             if(!sameDay) {
                 ret = (<>

@@ -4,9 +4,10 @@ import {RootState} from "../../../store";
 import {format, parseISO} from "date-fns";
 import {createSnowflake} from "../../../utils";
 import {setProfileMenuElement} from "../../../states/messages";
-import React from "react";
+import React, {useContext} from "react";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import useAuthor from "../../../hooks/use_author";
+import {MessageContext} from "./index";
 
 interface UserJoinMessageProps {
     message: Message,
@@ -19,6 +20,7 @@ export default function UserJoinMessage({message}: UserJoinMessageProps) {
     const date_str = format(date, "dd.MM.yyyy h:mm aa");
     const dispatch = useDispatch();
     const profileMenuId = createSnowflake();
+    const ctx = useContext(MessageContext);
 
     const openProfileMenu = () => dispatch(setProfileMenuElement(profileMenuId));
 
@@ -27,7 +29,7 @@ export default function UserJoinMessage({message}: UserJoinMessageProps) {
     }).includes(true);
 
     return (
-        <div className="message">
+        <div className={`message ${ctx.forceHover ? "message-hovered" : ""}`}>
             <div className={`message-container message-bigger-margin ${isMention ? "message-container-mention" : ""}`}>
                 <EastOutlinedIcon style={{color: "var(--theme-c-success-h)"}}/>
                 <div className="message-info-content">
