@@ -7,6 +7,7 @@ import {italicRule} from "./Italic";
 import {boldRule} from "./Bold";
 import {underlineRule} from "./Underline";
 import {emojiRule} from "./Emoji";
+import {spoilerRule} from "./Spoiler";
 
 export interface ASTNode {
     content: string,
@@ -27,7 +28,7 @@ export interface Rule {
     react: (arg0: ComponentContent) => React.JSX.Element,
 }
 
-export const rules = [mentionRule, mentionEveryoneRule, emojiRule, linkRule, boldRule, underlineRule, italicRule];
+export const rules = [mentionRule, mentionEveryoneRule, emojiRule, linkRule, boldRule, underlineRule, italicRule, spoilerRule];
 
 export const parse = (source: string) => {
     return new Parser(source).parse();

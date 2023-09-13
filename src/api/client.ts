@@ -344,4 +344,13 @@ export default class ApiClient {
             body: {}
         });
     }
+
+    static async deleteMessage(channel_id: string, message_id: string) {
+        return await this.makeRequest({
+            method: "DELETE",
+            url: `channels/${channel_id}/messages/${message_id}`,
+            authRequired: true,
+            body: {}
+        });
+    }
 }

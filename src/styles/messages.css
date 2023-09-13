@@ -130,3 +130,18 @@
 .message-menu-button:active {
     background-color: #ffffff30;
 }
+
+.message-spoiler {
+    background-color: var(--theme-1);
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.message-spoiler-show {
+    background-color: var(--theme-4);
+    border-radius: 3px;
+}
+
+.message-spoiler > .spoiler-content {
+    visibility: hidden;
+}

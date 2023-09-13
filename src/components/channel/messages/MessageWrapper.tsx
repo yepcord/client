@@ -7,7 +7,6 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import LinkIcon from '@mui/icons-material/Link';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import {MessageContext} from "./index";
@@ -16,6 +15,8 @@ import {Permissions} from "../../../types/guild";
 import {checkPermissions} from "../../../utils";
 import Tooltip from "@mui/material/Tooltip";
 import SvgIcon from "@mui/material/SvgIcon/SvgIcon";
+import MessageContextMenu from "./MessageContextMenu";
+import ApiClient from "../../../api/client";
 
 interface MessageWrapperProps {
     messageElement: React.JSX.Element,
@@ -25,13 +26,14 @@ interface MessageWrapperProps {
 interface MessageBtnProps {
     name: string,
     component: typeof SvgIcon,
+    onClick?: () => void,
 }
 
-function Btn({name, component}: MessageBtnProps) {
+function Btn({name, component, onClick}: MessageBtnProps) {
     const Component = component;
     return (
         <Tooltip title={name} placement="top" arrow>
-            <Component className="message-menu-button"/>
+            <Component className="message-menu-button" onClick={onClick}/>
         </Tooltip>
     );
 }
@@ -50,6 +52,8 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
         }, 20);
     }
 
+    const deleteMessage = () => ApiClient.deleteMessage(message.channel_id, message.id);
+
     const canDelete = message.author.id === me!.id && checkPermissions(message.channel_id, Permissions.MANAGE_MESSAGES);
     const canEdit = message.author.id === me!.id && checkPermissions(message.channel_id, Permissions.MANAGE_MESSAGES);
     const canAddReaction = checkPermissions(message.channel_id, Permissions.ADD_REACTIONS);
@@ -58,9 +62,11 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
 
     return (<>
         <div onMouseEnter={e => setAnchorEl(e.currentTarget)} onMouseLeave={close}>
-            <MessageContext.Provider value={{forceHover: Boolean(anchorEl)}}>
-                {messageElement}
-            </MessageContext.Provider>
+            <MessageContextMenu message={message}>
+                <MessageContext.Provider value={{forceHover: Boolean(anchorEl)}}>
+                    {messageElement}
+                </MessageContext.Provider>
+            </MessageContextMenu>
         </div>
         <Popper open={Boolean(anchorEl)} anchorEl={anchorEl} placement="top-end"
                 modifiers={[{name: "offset", options: {offset: [-15, -20]}}]}>
@@ -72,14 +78,13 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
                         <Btn name="Mark Unread" component={MarkChatReadIcon}/>
                         {canPin && <Btn name="Pin Message" component={PushPinIcon}/>}
                         <Btn name="Copy Link" component={LinkIcon}/>
-                        {canDelete && <Btn name="Delete" component={DeleteForeverIcon}/>}
+                        {canDelete && <Btn name="Delete" component={DeleteForeverIcon} onClick={deleteMessage}/>}
                     </div>
                 )
                 : (
                     <div className="message-menu" onMouseEnter={() => hovering = true} onMouseLeave={close}>
                         {canAddReaction && <Btn name="Add Reaction" component={AddReactionIcon}/>}
                         {canReply && <Btn name="Reply" component={ReplyIcon}/>}
-                        <Btn name="More" component={MoreHorizIcon}/>
                     </div>
                 )}
         </Popper>

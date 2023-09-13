@@ -15,20 +15,9 @@ import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import ShieldIcon from '@mui/icons-material/Shield';
-import TransparentPrimaryButton from "../ui/TransparentPrimaryButton";
 import CreateGuildChannelDialog from "../dialogs/channels/CreateGuildChannelDialog";
 import CreateGuildCategoryDialog from "../dialogs/channels/CreateGuildCategoryDialog";
-
-interface GuildMenuButtonProps {
-    children?: React.ReactNode,
-    onClick?: () => void,
-    className?: string,
-}
-
-function GuildMenuButton({children, onClick, className}: GuildMenuButtonProps) {
-    return <TransparentPrimaryButton className={`space-between align-center w-100 ${className}`}
-                                     style={{fontSize: "14px"}} onClick={onClick} children={children}/>;
-}
+import {TPrimaryButtonIcon} from "../ui/TPrimaryButtonIcon";
 
 export default function GuildChannelPanel() {
     const guild = useSelector((state: RootState) => state.guild.selectedGuild);
@@ -71,43 +60,43 @@ export default function GuildChannelPanel() {
                   anchorOrigin={{vertical: "bottom", horizontal: "center"}}
                   transformOrigin={{vertical: 'top', horizontal: 'center'}}
                   slotProps={{paper: {sx: {width: "225px", backgroundColor: "var(--theme-1)", padding: "0 10px"}}}}>
-                <GuildMenuButton className="btn-color-primary" onClick={closeMenu}>
+                <TPrimaryButtonIcon className="btn-color-primary" onClick={closeMenu}>
                     Invite People <GroupAddIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Guild Settings <SettingsIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={handleCreateChannel}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={handleCreateChannel}>
                     Create Channel <AddCircleIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={handleCategoryChannel}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={handleCategoryChannel}>
                     Create Category <CreateNewFolderIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Create Event <EditCalendarIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Active Threads <ChatBubbleIcon/>
-                </GuildMenuButton>
+                </TPrimaryButtonIcon>
 
                 <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656"}}/>
 
-                <GuildMenuButton onClick={closeMenu}>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Notification Settings <NotificationsIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={closeMenu}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Private Settings <ShieldIcon/>
-                </GuildMenuButton>
+                </TPrimaryButtonIcon>
 
                 <Divider flexItem sx={{borderBottomWidth: "2px", backgroundColor: "#565656"}}/>
 
-                <GuildMenuButton onClick={closeMenu}>
+                <TPrimaryButtonIcon onClick={closeMenu}>
                     Edit Guild Profile <EditIcon/>
-                </GuildMenuButton>
-                <GuildMenuButton onClick={() => setHideMuted(!hideMutedChannels)}>
+                </TPrimaryButtonIcon>
+                <TPrimaryButtonIcon onClick={() => setHideMuted(!hideMutedChannels)}>
                     Hide Muted Channels <Checkbox checked={hideMutedChannels}
                                                   sx={{color: "#fff", padding: "0", '&.Mui-checked': {color: "#fff"}}}/>
-                </GuildMenuButton>
+                </TPrimaryButtonIcon>
             </Menu>
             <CreateGuildChannelDialog guild_id={guild!.id} parent={null} open={createChannelOpen}
                                       close={() => setCreateChannelOpen(false)}/>
