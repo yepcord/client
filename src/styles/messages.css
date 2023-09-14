@@ -137,7 +137,7 @@
     border-radius: 3px;
 }
 
-.message-spoiler-show {
+.message-spoiler-show, .message-time {
     background-color: var(--theme-4);
     border-radius: 3px;
 }

@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store";
 import {createSnowflake} from "../../../../utils";
 import {setProfileMenuElement} from "../../../../states/messages";
+import {format, formatRelative} from "date-fns";
+import Tooltip from "@mui/material/Tooltip";
 
 interface EmojiProps {
     emoji_name: string,
@@ -50,4 +52,28 @@ interface MentionEveryoneProps {
 
 export function MentionEveryone({mention}: MentionEveryoneProps) {
     return <span className="btn-primary btn-ping">@{mention}</span>;
+}
+
+interface TimeProps {
+    timestamp: number,
+    type: string,
+}
+
+export function Time({timestamp, type}: TimeProps) {
+    const date = new Date(timestamp * 1000);
+    let form;
+    if (type === "t") form = "h:mm aa";
+    else if (type === "T") form = "h:mm:ss aa";
+    else if (type === "d") form = "dd/MM/yyyy";
+    else if (type === "D") form = "MMMM dd, yyyy";
+    else if (type === "F") form = "eeee, MMMM dd, yyyy h:mm aa";
+    else form = "MMMM dd, yyyy h:mm aa";
+
+    return (
+        <Tooltip title={format(date, "eeee, MMMM dd, yyyy h:mm aa")}>
+            <span className="message-time">
+                {format(date, form)}
+            </span>
+        </Tooltip>
+    );
 }

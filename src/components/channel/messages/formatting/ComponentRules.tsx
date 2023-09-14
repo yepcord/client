@@ -1,6 +1,6 @@
 import React from "react";
 import {ASTNode, Capture, ComponentContent, Rule} from "./ComponentFormatting";
-import {Mention, MentionEveryone, Emoji, Link} from "./ComponentTypes";
+import {Mention, MentionEveryone, Emoji, Link, Time} from "./ComponentTypes";
 
 export const mentionRule: Rule = {
     match: function (source: string) {
@@ -71,5 +71,23 @@ export const linkRule: Rule = {
     },
 };
 
-const rules = [mentionRule, mentionEveryoneRule, emojiRule, linkRule];
+export const timeRule: Rule = {
+    match: function (source: string) {
+        return /<t:(\d{1,16})(?::([a-zA-Z]?))?>/.exec(source);
+    },
+
+    parse: function (capture: Capture): ASTNode {
+        return {
+            content: `${capture[1]}:${capture[2]}`,
+            consume: capture[0],
+        };
+    },
+
+    react: function (node: ComponentContent) {
+        const [timestamp, type] = (node as string).split(":");
+        return <Time timestamp={Number(timestamp)} type={type}/>;
+    },
+};
+
+const rules = [mentionRule, mentionEveryoneRule, emojiRule, linkRule, timeRule];
 export default rules;
