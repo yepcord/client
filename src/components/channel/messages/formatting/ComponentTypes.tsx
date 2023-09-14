@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../../store";
 import {createSnowflake} from "../../../../utils";
 import {setProfileMenuElement} from "../../../../states/messages";
-import {format, formatRelative} from "date-fns";
+import {format} from "date-fns";
 import Tooltip from "@mui/material/Tooltip";
 
 interface EmojiProps {

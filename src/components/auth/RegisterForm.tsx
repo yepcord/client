@@ -105,7 +105,7 @@ export default function RegisterForm() {
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
                         Username
                         <span className="required-asterisk">{usernameErr() ? usernameErr() : " *"}</span></label>
-                    <input name="text" type="username" className="input-primary" onChange={handleFormChange} required={true}/>
+                    <input name="username" type="text" className="input-primary" onChange={handleFormChange} required={true}/>
                 </div>
                 <div className="input-container">
                     <label style={{color: !isEmpty(errors) ? "red" : ""}}>
