@@ -29,6 +29,7 @@ enum NodeType {
 const NodeTypes = {
         "__": NodeType.UNDERLINE,
         "*": NodeType.ITALIC,
+        "_": NodeType.ITALIC,
         "**": NodeType.BOLD,
         "~~": NodeType.CROSSED,
         "||": NodeType.SPOILER,
