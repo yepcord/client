@@ -2,7 +2,7 @@ import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
 import Avatar from "../../user/Avatar";
 import {format, parseISO} from "date-fns";
-import {parse} from "./formatting";
+import parse from "./formatting/BasicFormatting";
 import React, {useContext} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createSnowflake} from "../../../utils";

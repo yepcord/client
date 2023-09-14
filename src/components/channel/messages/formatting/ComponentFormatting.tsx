@@ -1,12 +1,35 @@
-import {rules} from "./index";
 import React from "react";
+import rules from "./ComponentRules";
+
+export interface ASTNode {
+    content: string,
+    consume: string,
+    parseContent?: boolean,
+}
+
+export type ComponentContent = string | React.ReactNode;
+
+export interface Capture extends Array<string> {
+    index?: number,
+    input?: string,
+}
+
+export interface Rule {
+    match: (arg0: string) => Capture | null,
+    parse: (arg0: Capture) => ASTNode,
+    react: (arg0: ComponentContent) => React.JSX.Element,
+}
+
+export const parse = (source: string) => {
+    return new ComponentParser(source).parse();
+}
 
 function split2s(string: string, d: string) {
     let i = string.indexOf(d);
     return [string.substring(0, i), string.substring(i + d.length)];
 }
 
-export default class Parser {
+export default class ComponentParser {
     private readonly source: string;
 
     constructor(source: string) {
@@ -26,7 +49,7 @@ export default class Parser {
                 while(cap) {
                     let parsed = rule.parse(cap);
                     let sp = split2s(str, parsed.consume);
-                    let content = parsed?.parseContent ? new Parser(parsed.content).parse() : parsed.content;
+                    let content = parsed?.parseContent ? new ComponentParser(parsed.content).parse() : parsed.content;
 
                     res.push(sp[0]);
                     res.push(rule.react(content));

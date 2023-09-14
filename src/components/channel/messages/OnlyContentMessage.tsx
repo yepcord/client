@@ -1,7 +1,7 @@
 import "../../../styles/messages.css";
 import {Message} from "../../../types/message";
 import {format, parseISO} from "date-fns";
-import {parse} from "./formatting";
+import parse from "./formatting/BasicFormatting";
 import {useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import {useContext} from "react";
