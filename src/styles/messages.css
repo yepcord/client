@@ -34,11 +34,11 @@
     flex-direction: row;
     margin: 3px 10px;
     gap: 7px;
-    align-items: center;
 }
 
 .message-bigger-margin {
     margin-top: 10px;
+    align-items: start;
 }
 
 .message-info-content {
@@ -68,6 +68,7 @@
     color: var(--theme-text-main);
     font-size: 14px;
     line-height: 24px;
+    white-space: pre-wrap;
 }
 
 .message-content-pending {
