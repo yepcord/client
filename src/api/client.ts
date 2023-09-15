@@ -353,4 +353,15 @@ export default class ApiClient {
             body: {}
         });
     }
+
+    static async editMessage(channel_id: string, message_id: string, content: string) {
+        return await this.makeRequest({
+            method: "PATCH",
+            url: `channels/${channel_id}/messages/${message_id}`,
+            authRequired: true,
+            body: {
+                content: content
+            }
+        });
+    }
 }

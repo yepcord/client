@@ -7,12 +7,13 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import LinkIcon from "@mui/icons-material/Link";
 import MarkChatReadIcon from "@mui/icons-material/MarkChatRead";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import {Message} from "../../../types/message";
 import {checkPermissions} from "../../../utils";
 import {Permissions} from "../../../types/guild";
 import ApiClient from "../../../api/client";
+import {setMessageEditing} from "../../../states/messages";
 
 interface MessageContextMenuProps extends React.HTMLAttributes<HTMLDivElement> {
     message: Message,
@@ -24,6 +25,7 @@ export default function MessageContextMenu({message, ...props}: MessageContextMe
         mouseX: number;
         mouseY: number;
     } | null>(null);
+    const dispatch = useDispatch();
 
     const openContextMenu = (event: React.MouseEvent) => {
         event.preventDefault();
@@ -36,6 +38,11 @@ export default function MessageContextMenu({message, ...props}: MessageContextMe
 
     const deleteMessage = () => {
         ApiClient.deleteMessage(message.channel_id, message.id);
+        closeMenu();
+    }
+
+    const editMessage = () => {
+        dispatch(setMessageEditing(message.id));
         closeMenu();
     }
 
@@ -58,7 +65,7 @@ export default function MessageContextMenu({message, ...props}: MessageContextMe
             }
             slotProps={{paper: {sx: {width: "175px", backgroundColor: "var(--theme-1)", padding: "0 10px"}}}}>
 
-            {canEdit && <TPrimaryButtonIcon onClick={closeMenu}>
+            {canEdit && <TPrimaryButtonIcon onClick={editMessage}>
                 Edit Message <EditIcon/>
             </TPrimaryButtonIcon>}
             {canPin && <TPrimaryButtonIcon onClick={closeMenu}>

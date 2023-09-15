@@ -6,10 +6,12 @@ import parse from "./formatting/BasicFormatting";
 import React, {useContext} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {createSnowflake} from "../../../utils";
-import {setProfileMenuElement} from "../../../states/messages";
+import {setMessageEditing, setProfileMenuElement} from "../../../states/messages";
 import {RootState} from "../../../store";
 import useAuthor from "../../../hooks/use_author";
 import {MessageContext} from "./index";
+import {TextChannelInputTextarea} from "../TextChannelInputPanel";
+import ApiClient from "../../../api/client";
 
 interface BaseMessageProps {
     message: Message,
@@ -24,12 +26,31 @@ export default function BaseMessage({message}: BaseMessageProps) {
     const dispatch = useDispatch();
     const profileMenuId = createSnowflake();
     const ctx = useContext(MessageContext);
+    const currentlyEditing = useSelector((state: RootState) => state.messages.editing);
 
     const openProfileMenu = () => dispatch(setProfileMenuElement(profileMenuId));
 
     const isMention = message.mention_everyone || message.mentions?.map(item => {
         return item.id === me?.id;
     }).includes(true);
+
+    const messageKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, text: string) => {
+        if(currentlyEditing !== message.id) return;
+
+        if(e.keyCode === 13 && !e.shiftKey) {
+            e.preventDefault();
+            if(!text) {
+                // ApiClient.deleteMessage(message.channel_id, message.id);
+                dispatch(setMessageEditing(null));
+                return;
+            }
+
+            ApiClient.editMessage(message.channel_id, message.id, text).then()
+            dispatch(setMessageEditing(null));
+        } else if(e.keyCode === 27) {
+            dispatch(setMessageEditing(null));
+        }
+    }
 
     return (
         <div className={`message ${ctx.forceHover ? "message-hovered" : ""}`}>
@@ -45,7 +66,11 @@ export default function BaseMessage({message}: BaseMessageProps) {
                         <span className="message-timestamp">{date_str}</span>
                     </div>
                     <div className={`message-content selectable ${sent ? "message-content-pending" : ""}`}>
-                        {parse(message.content ? message.content : "")}
+                        {currentlyEditing === message.id
+                            ? <TextChannelInputTextarea className="edit-input" keyDown={messageKeyDown}
+                                                        initialText={message.content || ""} placeholder=""/>
+                            : parse(message.content ? message.content : "")
+                        }
                     </div>
                 </div>
             </div>

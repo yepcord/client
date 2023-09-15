@@ -2,7 +2,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
-import {KeyboardEvent, useState} from "react";
+import React, {KeyboardEvent, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../store";
 import {ChannelType} from "../../types/channel";
@@ -12,14 +12,18 @@ import {MessageType} from "../../types/message";
 import User from "../../types/user";
 import {createSnowflake} from "../../utils";
 
-const MAX_TEXTAREA_ROWS = 20;
+export const MAX_TEXTAREA_ROWS = 20;
 
-export default function TextChannelInputPanel() {
-    const [rows, setRows] = useState(1);
-    const [text, setText] = useState("");
+interface InputTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+    placeholder?: string | undefined,
+    initialText?: string | undefined,
+    keyDown?: ((arg0: KeyboardEvent<HTMLTextAreaElement>, arg1: string, arg2: (arg0: string) => void) => void) | undefined,
+}
+
+export function TextChannelInputTextarea({placeholder, initialText, keyDown, ...props}: InputTextareaProps) {
+    const [rows, setRows] = useState((initialText || "").split("\n").length);
+    const [text, setText] = useState(initialText || "");
     const channel = useSelector((state: RootState) => state.channel.selectedChannel);
-    const me = useSelector((state: RootState) => state.app.me);
-    const dispatch = useDispatch();
 
     let channelName = channel?.type === ChannelType.DM ? `@${channel.recipients![0].username}` : `#${channel?.name}`;
 
@@ -32,7 +36,22 @@ export default function TextChannelInputPanel() {
         setRows(rows_l);
     }
 
-    const newLineOrSend = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => keyDown && keyDown(e, text, setText);
+
+    return (
+        <textarea {...props} className={`channel-input ${props.className ? props.className : ""}`}
+                  rows={rows} placeholder={placeholder === undefined ? `Message ${channelName}` : placeholder}
+                  onChange={(e) => setRowsCount(e.target.value)}
+                  onKeyDown={onKeyDown} value={text}/>
+    )
+}
+
+export default function TextChannelInputPanel() {
+    const me = useSelector((state: RootState) => state.app.me);
+    const channel = useSelector((state: RootState) => state.channel.selectedChannel);
+    const dispatch = useDispatch();
+
+    const newLineOrSend = (e: KeyboardEvent<HTMLTextAreaElement>, text: string, setText: (arg0: string) => void) => {
         if(e.keyCode === 13 && !e.shiftKey) {
             e.preventDefault();
             if(!text) return;
@@ -59,9 +78,7 @@ export default function TextChannelInputPanel() {
         <div className="channel-input-container-1">
             <div className="channel-input-container-2">
                 <AddCircleIcon className="channel-input-icon"/>
-                <textarea className="channel-input" rows={rows} placeholder={`Message ${channelName}`}
-                          onChange={(e) => setRowsCount(e.target.value)}
-                          onKeyDown={newLineOrSend} value={text}/>
+                <TextChannelInputTextarea keyDown={newLineOrSend}/>
                 <GifBoxOutlinedIcon className="channel-input-icon"/>
                 <WebAssetIcon className="channel-input-icon"/>
                 <EmojiEmotionsIcon className="channel-input-icon"/>

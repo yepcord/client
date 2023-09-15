@@ -4,6 +4,7 @@
     background-color: var(--theme-2);
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .find-or-start-conversation-container {

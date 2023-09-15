@@ -7,7 +7,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import LinkIcon from '@mui/icons-material/Link';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store";
 import {MessageContext} from "./index";
 import {Message} from "../../../types/message";
@@ -17,6 +17,7 @@ import Tooltip from "@mui/material/Tooltip";
 import SvgIcon from "@mui/material/SvgIcon/SvgIcon";
 import MessageContextMenu from "./MessageContextMenu";
 import ApiClient from "../../../api/client";
+import {setMessageEditing} from "../../../states/messages";
 
 interface MessageWrapperProps {
     messageElement: React.JSX.Element,
@@ -42,6 +43,7 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
     const me = useSelector((state: RootState) => state.app.me);
     const shiftPressed = useSelector((state: RootState) => state.app.pressedKeys.shift);
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+    const dispatch = useDispatch();
     let hovering = false;
 
     const close = () => {
@@ -53,6 +55,7 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
     }
 
     const deleteMessage = () => ApiClient.deleteMessage(message.channel_id, message.id);
+    const editMessage = () => dispatch(setMessageEditing(message.id));
 
     const canDelete = message.author.id === me!.id && checkPermissions(message.channel_id, Permissions.MANAGE_MESSAGES);
     const canEdit = message.author.id === me!.id && checkPermissions(message.channel_id, Permissions.MANAGE_MESSAGES);
@@ -74,7 +77,7 @@ export default function MessageWrapper({messageElement, message}: MessageWrapper
                 ? (
                     <div className="message-menu" onMouseEnter={() => hovering = true} onMouseLeave={close}>
                         {canReply && <Btn name="Reply" component={ReplyIcon}/>}
-                        {canEdit && <Btn name="Edit" component={EditIcon}/>}
+                        {canEdit && <Btn name="Edit" component={EditIcon} onClick={editMessage}/>}
                         <Btn name="Mark Unread" component={MarkChatReadIcon}/>
                         {canPin && <Btn name="Pin Message" component={PushPinIcon}/>}
                         <Btn name="Copy Link" component={LinkIcon}/>

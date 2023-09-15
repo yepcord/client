@@ -44,6 +44,7 @@
 .message-info-content {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 .message-info {
@@ -81,6 +82,7 @@
     visibility: hidden;
     font-size: 12px;
     width: 56px;
+    flex-shrink: 0;
 }
 
 .message:hover > .message-container > .message-timestamp-left {
@@ -144,4 +146,11 @@
 
 .message-spoiler > .spoiler-content {
     visibility: hidden;
+}
+
+.edit-input {
+    border-radius: 7px;
+    background-color: var(--theme-1);
+    padding: 10px;
+    width: 100%;
 }
