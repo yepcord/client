@@ -8,6 +8,7 @@ import React, {useContext} from "react";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import useAuthor from "../../../hooks/use_author";
 import {MessageContext} from "./index";
+import ForumOutlinedIcon from "@mui/icons-material/ForumOutlined";
 
 interface UserJoinMessageProps {
     message: Message,
@@ -31,7 +32,9 @@ export default function UserJoinMessage({message}: UserJoinMessageProps) {
     return (
         <div className={`message ${ctx.forceHover ? "message-hovered" : ""}`}>
             <div className={`message-container message-bigger-margin ${isMention ? "message-container-mention" : ""}`}>
-                <EastOutlinedIcon style={{color: "var(--theme-c-success-h)"}}/>
+                <div className="message-icon-left">
+                    <EastOutlinedIcon style={{color: "var(--theme-c-success-h)"}}/>
+                </div>
                 <div className="message-info-content">
                     <div className="message-info">
                         <span className="message-username cursor-pointer" onClick={openProfileMenu}

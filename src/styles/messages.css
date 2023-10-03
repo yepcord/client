@@ -75,7 +75,7 @@
     color: var(--theme-6);
 }
 
-.message-timestamp-left {
+.message-timestamp-left, .message-icon-left {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,6 +84,10 @@
     font-size: 12px;
     width: 56px;
     flex-shrink: 0;
+}
+
+.message-icon-left {
+    visibility: visible;
 }
 
 .message:hover > .message-container > .message-timestamp-left {

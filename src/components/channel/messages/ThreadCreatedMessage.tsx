@@ -25,7 +25,9 @@ export default function ThreadCreatedMessage({message}: ThreadCreatedMessageProp
     return (
         <div className={`message ${ctx.forceHover ? "message-hovered" : ""}`}>
             <div className={`message-container message-bigger-margin`}>
-                <ForumOutlinedIcon style={{color: "var(--theme-text-secondary)"}}/>
+                <div className="message-icon-left">
+                    <ForumOutlinedIcon style={{color: "var(--theme-text-secondary)"}}/>
+                </div>
                 <div className="message-info-content">
                     <div className="message-info">
                         <span className="message-username cursor-pointer" onClick={openProfileMenu}

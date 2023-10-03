@@ -15,6 +15,7 @@ export interface MessagesState {
     }
     profileMenuElementId: string | null,
     editing: string | null,
+    replying_to: string | null,
 }
 
 export const messageState = createSlice({
@@ -24,6 +25,7 @@ export const messageState = createSlice({
         info: {},
         profileMenuElementId: null,
         editing: null,
+        replying_to: null,
     } as MessagesState,
     reducers: {
         addMessage: (state: MessagesState, action: PayloadAction<Message>) => {
@@ -57,7 +59,10 @@ export const messageState = createSlice({
         setMessageEditing: (state: MessagesState, action: PayloadAction<string | null>) => {
             state.editing = action.payload;
         },
+        setMessageReply: (state: MessagesState, action: PayloadAction<string | null>) => {
+            state.replying_to = action.payload;
+        },
     }
 });
 
-export const {addMessage, removeMessage, setAllLoaded, setProfileMenuElement, setMessageEditing} = messageState.actions;
+export const {addMessage, removeMessage, setAllLoaded, setProfileMenuElement, setMessageEditing, setMessageReply} = messageState.actions;
