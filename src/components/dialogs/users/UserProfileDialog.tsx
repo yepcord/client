@@ -1,7 +1,6 @@
 import "../../../styles/profile_dialog.css";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../../store";
-import {setUserProfileDialog} from "../../../states/app";
 import {Dialog, Divider, Menu} from "@mui/material";
 import Avatar from "../../user/Avatar";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -17,9 +16,12 @@ import TransparentPrimaryButton from "../../ui/TransparentPrimaryButton";
 import Banner from "../../user/Banner";
 import {format} from "date-fns";
 import {addUser} from "../../../states/users";
+import {signal} from "@preact/signals-react";
+
+export const userProfileDialogUserId = signal<string | null>(null);
 
 export default function UserProfileDialog() {
-    const selectedUserId = useSelector((state: RootState) => state.app.profileDialogUserId)
+    const selectedUserId = userProfileDialogUserId.value;
     const user = useSelector((state: RootState) => selectedUserId ? state.users.users[selectedUserId] : null);
     const relationship = useSelector((state: RootState) => selectedUserId ? state.users.relationships[selectedUserId] : null);
     const dispatch = useDispatch();
@@ -33,7 +35,7 @@ export default function UserProfileDialog() {
     };
 
     const close = () => {
-        dispatch(setUserProfileDialog(null));
+        userProfileDialogUserId.value = null;
     }
 
     let buttons = <></>;

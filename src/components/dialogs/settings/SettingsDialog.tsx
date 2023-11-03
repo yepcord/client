@@ -1,33 +1,29 @@
 import "../../../styles/settings.css";
 import "../../../styles/main.css";
 import {Dialog, Divider} from "@mui/material";
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../../store";
-import {closeSettings} from "../../../states/app";
+import React from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import {logOut} from "../../../utils";
 import {useNavigate} from "react-router-dom";
 import {SettingsTab} from "./tabs/SettingsTab";
 import TransparentSecondaryButton from "../../ui/TransparentSecondaryButton";
 import GitInfo from "react-git-info/macro";
+import {signal} from "@preact/signals-react";
 
 export type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
     "accessibility" | "voice_and_video" | "text_and_images" | "notifications" | "keybinds" | "language" |
     "streamer_mode" | "advanced" | "activity_privacy" | "games" | "hypesquad";
 
+export const dialogSettingsTab = signal<SettingsCategories | null>(null);
+
 export default function SettingsDialog() {
-    const open = useSelector((state: RootState) => state.app.settingsDialogOpen);
-    const dispatch = useDispatch();
-    const [selectedCategory, setSelected] = useState("account" as SettingsCategories);
     const navigate = useNavigate();
 
-    const isSelected = (name: SettingsCategories) => {
-        return name === selectedCategory;
-    }
+    const isSelected = (name: SettingsCategories) => name === dialogSettingsTab.value;
+    const setSelected = (tab: SettingsCategories) => dialogSettingsTab.value = tab;
 
     return (
-        <Dialog fullScreen open={open} onClose={() => dispatch(closeSettings())}>
+        <Dialog fullScreen open={dialogSettingsTab.value !== null} onClose={() => dialogSettingsTab.value = null}>
             <div className="settings-dialog">
                 <div className="settings-categories-container">
                     <div className="settings-categories-list">
@@ -116,10 +112,10 @@ export default function SettingsDialog() {
                 </div>
                 <div className="settings-content-container">
                     <div className="settings-content">
-                        <SettingsTab name={selectedCategory}/>
+                        <SettingsTab name={dialogSettingsTab.value!}/>
                     </div>
                     <div>
-                        <div className="settings-close-button-container" onClick={() => dispatch(closeSettings())}>
+                        <div className="settings-close-button-container" onClick={() => dialogSettingsTab.value = null}>
                             <CloseIcon className="settings-close-button"/>
                             <div>ESC</div>
                         </div>

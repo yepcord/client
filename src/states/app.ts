@@ -9,8 +9,6 @@ export interface AppState {
     settings: UserSettings,
     selectedFriendsTab: SelFriendsTab,
     websocketReady: boolean,
-    settingsDialogOpen: boolean,
-    profileDialogUserId: string | null,
     pressedKeys: {
         shift: boolean,
     },
@@ -33,8 +31,6 @@ export const appState = createSlice({
         settings: {},
         selectedFriendsTab: "online",
         websocketReady: false,
-        settingsDialogOpen: false,
-        profileDialogUserId: null,
         pressedKeys: {
             shift: false,
         },
@@ -56,19 +52,10 @@ export const appState = createSlice({
         setSettings: (state: AppState, action: PayloadAction<PartialUserSettings>) => {
             Object.assign(state.settings, action.payload);
         },
-        openSettings: (state: AppState) => {
-            state.settingsDialogOpen = true;
-        },
-        closeSettings: (state: AppState) => {
-            state.settingsDialogOpen = false;
-        },
-        setUserProfileDialog: (state: AppState, action: PayloadAction<string | null>) => {
-            state.profileDialogUserId = action.payload;
-        },
         setKeyPressed: (state: AppState, action: PayloadAction<{key: "shift", pressed: boolean}>) => {
             state.pressedKeys[action.payload.key] = action.payload.pressed;
         },
     }
 });
 
-export const {setToken, setCurrentUser, setFriendsTab, setWsReady, setSettings, openSettings, closeSettings, setUserProfileDialog, setKeyPressed} = appState.actions;
+export const {setToken, setCurrentUser, setFriendsTab, setWsReady, setSettings, setKeyPressed} = appState.actions;

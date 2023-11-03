@@ -2,9 +2,18 @@ import useWebSocket from "react-use-websocket";
 import {REMOTE_AUTH_ENDPOINT} from "../../constants";
 import {SendJsonMessage, WebSocketLike} from "react-use-websocket/src/lib/types";
 import store from "../../store";
-import {setFingerprint, setUserdata} from "../../states/remote_auth";
 import {setToken} from "../../states/app";
+import {signal} from "@preact/signals-react";
 
+interface RemoteAuthUserdata {
+    id: string,
+    username: string,
+    discriminator: string,
+    avatar: string | null,
+}
+
+export const fingerprint = signal<string | null>(null);
+export const userdata = signal<RemoteAuthUserdata | null>(null);
 
 function sendHeartbeat() {
     if (ra_websocketState.sendWebsocketMessage) {
@@ -16,6 +25,8 @@ function handleGwMessage(event: WebSocketEventMap['message']) {
     const data = JSON.parse(event.data);
     switch(data.op) {
         case "hello": {
+            fingerprint.value = null;
+            userdata.value = null;
             ra_websocketState.heartbeatInterval = window.setInterval(() => {sendHeartbeat()}, data.heartbeat_interval);
             break;
         }
@@ -31,19 +42,19 @@ function handleGwMessage(event: WebSocketEventMap['message']) {
             break;
         }
         case "pending_remote_init": {
-            store.dispatch(setFingerprint(data.fingerprint));
+            fingerprint.value = data.fingerprint;
             break;
         }
         case "pending_finish": {
             let encrypted_user = Uint8Array.from(atob(data.encrypted_user_payload), c => c.charCodeAt(0));
             window.crypto.subtle.decrypt({name: "RSA-OAEP"}, ra_websocketState.keyPair!.privateKey, encrypted_user).then((res) => {
-                const userdata = new TextDecoder("utf8").decode(res).split(":");
-                store.dispatch(setUserdata({
-                    id: userdata[0],
-                    username: userdata[3],
-                    discriminator: userdata[1],
-                    avatar: userdata[2] ? userdata[2] : null,
-                }));
+                const userdata_ = new TextDecoder("utf8").decode(res).split(":");
+                userdata.value = {
+                    id: userdata_[0],
+                    username: userdata_[3],
+                    discriminator: userdata_[1],
+                    avatar: userdata_[2] ? userdata_[2] : null,
+                };
             });
             break;
         }
@@ -57,8 +68,8 @@ function handleGwMessage(event: WebSocketEventMap['message']) {
             break;
         }
         case "cancel": {
-            store.dispatch(setFingerprint(null));
-            store.dispatch(setUserdata(null));
+            fingerprint.value = null;
+            userdata.value = null;
             ra_websocketState.getWs && ra_websocketState.getWs()?.close()
             break;
         }
@@ -84,8 +95,8 @@ export const ra_websocketState: RAWebsocketState = {
 export default function RemoteAuthWebsocket() {
     const {sendJsonMessage, getWebSocket} = useWebSocket(REMOTE_AUTH_ENDPOINT + "?v=1", {
         onOpen: () => {
-            store.dispatch(setFingerprint(null));
-            store.dispatch(setUserdata(null));
+            fingerprint.value = null;
+            userdata.value = null;
             ra_websocketState.sendWebsocketMessage = sendJsonMessage;
 
             window.crypto.subtle.generateKey(
@@ -111,7 +122,7 @@ export default function RemoteAuthWebsocket() {
         onMessage: handleGwMessage,
         retryOnError: true,
         reconnectAttempts: Number.MAX_VALUE,
-        reconnectInterval: (attemptNumber) => Math.min(Math.pow(attemptNumber, 2) * 1000, 4),
+        reconnectInterval: (attemptNumber) => Math.min(Math.pow(attemptNumber, 2) * 1000, 4000),
     });
     ra_websocketState.getWs = getWebSocket;
 

@@ -10,7 +10,7 @@ import {setProfileMenuElement} from "../../../states/messages";
 import ApiClient from "../../../api/client";
 import User from "../../../types/user";
 import {addUser} from "../../../states/users";
-import {setUserProfileDialog} from "../../../states/app";
+import {userProfileDialogUserId} from "../../dialogs/users/UserProfileDialog";
 
 // Maybe rewrite so ot will be used in all messages and mentions elements as <UserProfileMenu user={user} ...>??
 export default function UserProfileMenu() {
@@ -60,7 +60,7 @@ export default function UserProfileMenu() {
             <div className="profile-dialog-content">
                 <div className="profile-dialog-badges-btns">
                     <Avatar user={user} size={64} onClick={() => {
-                        dispatch(setUserProfileDialog(user!.id));
+                        userProfileDialogUserId.value = user!.id;
                         close();
                     }}/>
                 </div>

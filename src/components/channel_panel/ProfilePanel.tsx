@@ -1,15 +1,14 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootState} from "../../store";
 import Avatar from "../user/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MicRoundedIcon from "@mui/icons-material/MicRounded";
 import HeadphonesRoundedIcon from "@mui/icons-material/HeadphonesRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import {openSettings} from "../../states/app";
+import {dialogSettingsTab} from "../dialogs/settings/SettingsDialog";
 
 export default function ProfilePanel() {
     const user = useSelector((state: RootState) => state.app.me);
-    const dispatch = useDispatch();
 
     return (
         <div className="profile-panel">
@@ -26,7 +25,7 @@ export default function ProfilePanel() {
             <div className="profile-panel-buttons">
                 <MicRoundedIcon/>
                 <HeadphonesRoundedIcon/>
-                <SettingsRoundedIcon onClick={() => dispatch(openSettings())}/>
+                <SettingsRoundedIcon onClick={() => dialogSettingsTab.value = "account"}/>
             </div>
         </div>
     );

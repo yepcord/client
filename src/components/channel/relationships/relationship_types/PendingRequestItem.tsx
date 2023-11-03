@@ -4,8 +4,7 @@ import User, {RelationshipType} from "../../../../types/user";
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import ApiClient from "../../../../api/client";
-import {setUserProfileDialog} from "../../../../states/app";
-import {useDispatch} from "react-redux";
+import {userProfileDialogUserId} from "../../../dialogs/users/UserProfileDialog";
 
 interface PendingRequestItemProps {
     user: User,
@@ -13,10 +12,8 @@ interface PendingRequestItemProps {
 }
 
 export default function PendingRequestItem({user, type}: PendingRequestItemProps) {
-    const dispatch = useDispatch();
-
     return (
-        <div className="profile-panel bg-transparent" onClick={() => dispatch(setUserProfileDialog(user.id))}>
+        <div className="profile-panel bg-transparent" onClick={() => userProfileDialogUserId.value = user.id}>
             <div className="profile-panel-user">
                 <Avatar user={user} withBadge={false}/>
 

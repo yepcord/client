@@ -3,18 +3,15 @@ import Tooltip from "@mui/material/Tooltip";
 import User from "../../../../types/user";
 import CloseIcon from '@mui/icons-material/Close';
 import ApiClient from "../../../../api/client";
-import {setUserProfileDialog} from "../../../../states/app";
-import {useDispatch} from "react-redux";
+import {userProfileDialogUserId} from "../../../dialogs/users/UserProfileDialog";
 
 interface BlockedItemProps {
     user: User,
 }
 
 export default function BlockedItem({user}: BlockedItemProps) {
-    const dispatch = useDispatch();
-
     return (
-        <div className="profile-panel bg-transparent" onClick={() => dispatch(setUserProfileDialog(user.id))}>
+        <div className="profile-panel bg-transparent" onClick={() => userProfileDialogUserId.value = user.id}>
             <div className="profile-panel-user">
                 <Avatar user={user} withBadge={false}/>
 
