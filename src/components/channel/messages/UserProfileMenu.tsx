@@ -4,7 +4,7 @@ import Banner from "../../user/Banner";
 import Avatar from "../../user/Avatar";
 import {useDispatch, useSelector} from "react-redux";
 import store, {RootState} from "../../../store";
-import {snowflakeToDate} from "../../../utils";
+import {snowflakeToDate, getMessage} from "../../../utils";
 import {format} from "date-fns";
 import {setProfileMenuElement} from "../../../states/messages";
 import ApiClient from "../../../api/client";
@@ -25,8 +25,8 @@ export default function UserProfileMenu() {
     let user: User | null = dpu ? store.getState().users.users[dpu] : null;
     if (dpm) {
         const [channel_id, message_id] = dpm.split("-");
-        const message = store.getState().messages.messages[channel_id][message_id];
-        user = message.author;
+        const message = getMessage(store.getState().messages.messages[channel_id], message_id);
+        user = message!.author;
     }
 
     if(user === null) return <></>;

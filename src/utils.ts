@@ -8,6 +8,7 @@ import Channel, {ChannelType} from "./types/channel";
 import {Area} from "react-easy-crop/types";
 import {PreloadedUserSettings, Theme} from "./proto/discord";
 import {PartialUserSettings, UserSettings, UserStatus} from "./types/user";
+import {Message} from "./types/message";
 
 export function selectChannel(channelId: string | null) {
     const global_state = store.getState();
@@ -235,4 +236,22 @@ export async function updateSettings(old_settings: UserSettings, new_settings: P
 
 export function checkPermissions(channel_id: string, permission: number) {
     return true; // TODO: implement permissions
+}
+
+export function sortedMessageIndex(array: Message[], value: string, key?: (arg0: string) => string) {
+    if(key === undefined) key = (val) => val;
+    let low = 0, high = array.length;
+
+    while (low < high) {
+        let mid = (low + high) >>> 1;
+        if (BigInt(key(array[mid].id)) < BigInt(key(value))) low = mid + 1;
+        else high = mid;
+    }
+    return low;
+}
+
+export function getMessage(array: Message[], id: string) {
+    const idx = sortedMessageIndex(array, id);
+    if(array[idx].id === id)
+        return array[idx];
 }

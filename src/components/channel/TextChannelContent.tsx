@@ -19,10 +19,17 @@ import ThreadCreatedMessage from "./messages/ThreadCreatedMessage";
 import {websocketState} from "../../ws/gateway/GatewayWebsocket";
 import {GatewayOp} from "../../types/gateway";
 import MessageWrapper from "./messages/MessageWrapper";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function TextChannelContent() {
-    const channel = useSelector((state: RootState) => state.channel.selectedChannel);
-    const messages = useSelector((state: RootState) => channel ? state.messages.messages[channel.id] : {});
+    const channel = useSelector((state: RootState) => {
+        console.log(state)
+        return state.channel.selectedChannel
+    });
+    const messages = useSelector((state: RootState) => {
+        const msgs = channel ? state.messages.messages[channel.id] : [];
+        return msgs ? msgs : [];
+    });
     const info = useSelector((state: RootState) => channel ? state.messages.info[channel.id] : {all: false, minimal: null});
     const dispatch = useDispatch();
     const bottomRef = useRef<HTMLDivElement>(null);
@@ -74,80 +81,85 @@ export default function TextChannelContent() {
         });
     }
 
-    const getMessages = () => {
-        const isGuild = Boolean(channel?.guild_id);
-        const member_ids = isGuild ? Object.keys(store.getState().guild.guilds[channel?.guild_id!].members) : [];
-        const request_users: Set<string> = new Set();
-
-        let messages_sorted = Object.values(messages);
-        messages_sorted.sort((a, b) => {
-            let _a = BigInt(a.id);
-            let _b = BigInt(b.id);
-            return _a < _b ? -1 : _a > _b ? 1 : 0;
-        });
-
-        const result = messages_sorted.map((message, idx) => {
-            if(isGuild && !request_users.has(message.author.id) && !member_ids.includes(message.author.id)) request_users.add(message.author.id);
-
-            const prev = idx ? messages_sorted[idx-1] : null;
-            const date = parseISO(message.timestamp);
-            const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
-            const same15Min = prev ? Math.abs(differenceInMinutes(parseISO(prev.timestamp), date)) <= 15 : true;
-            const sameAuthor = same15Min ? prev?.author.id === message.author.id : false;
-            let element: React.JSX.Element;
-            switch (message.type) {
-                case MessageType.DEFAULT: {
-                    element = sameAuthor ? <OnlyContentMessage message={message}/> : <BaseMessage message={message}/>;
-                    break;
-                }
-                case MessageType.USER_JOIN: {
-                    element = <UserJoinMessage message={message}/>;
-                    break;
-                }
-                case MessageType.THREAD_CREATED: {
-                    element = <ThreadCreatedMessage message={message}/>;
-                    break;
-                }
-                default: {
-                    element = <></>;
-                }
-            }
-
-            let ret = <MessageWrapper messageElement={element} message={message}/>
-
-            if(!sameDay) {
-                ret = (<>
-                    {ret}
-                    <Divider flexItem sx={{borderBottomWidth: "2px", color: "#adadad", margin: "0 20px", fontSize: 14}}>
-                        {format(date, "MMMM dd, yyyy")}
-                    </Divider>
-                </>);
-            }
-            return ret;
-        }).reverse();
-
-        isGuild && request_users.size >= 1 && websocketState.sendWebsocketMessage?.({
-            "op": GatewayOp.GUILD_MEMBERS,
-            "d": {
-                "guild_id": [channel?.guild_id!],
-                "user_ids": [...request_users],
-                "presences":false
-            }
-        })
-
-        return result;
-    }
-
     return (
         <div className="channel-content">
             <div className="channel-messages selectable" onScroll={handleScroll} ref={messagesRef}>
-                <div ref={bottomRef}/>
-                {messages && getMessages()}
-                <div ref={loadingRef} className={`${info?.all && "d-none"}`}>
-                    <TextChannelContentSkeleton/>
-                </div>
+                <InfiniteScroll
+                    dataLength={messages.length}
+                    next={fetchMessages}
+                    hasMore={!info?.all}
+                    loader={<h1>Loading type shit</h1>}
+                    inverse={true}
+                    endMessage={
+                        channel?.type === ChannelType.DM
+                            ? <DmChannelBeginning channel={channel!}/>
+                            : <GuildChannelBeginning channel={channel!}/>
+                    }
+                >
+                    {(() => {
+                        const isGuild = Boolean(channel?.guild_id);
+                        const member_ids = isGuild ? Object.keys(store.getState().guild.guilds[channel?.guild_id!].members) : [];
+                        const request_users: Set<string> = new Set();
 
-                {info?.all && channel?.type === ChannelType.DM ? <DmChannelBeginning channel={channel!}/> : <GuildChannelBeginning channel={channel!}/>}
+                        const result = messages.map((message, idx) => {
+                            if (isGuild && !request_users.has(message.author.id) && !member_ids.includes(message.author.id)) request_users.add(message.author.id);
+
+                            const prev = idx ? messages[idx - 1] : null;
+                            const date = parseISO(message.timestamp);
+                            const sameDay = prev ? parseISO(prev.timestamp).getDate() === date.getDate() : true;
+                            const same15Min = prev ? Math.abs(differenceInMinutes(parseISO(prev.timestamp), date)) <= 15 : true;
+                            const sameAuthor = same15Min ? prev?.author.id === message.author.id : false;
+                            let element: React.JSX.Element;
+                            switch (message.type) {
+                                case MessageType.DEFAULT: {
+                                    element = sameAuthor
+                                        ? <OnlyContentMessage message={message}/>
+                                        : <BaseMessage message={message}/>;
+                                    break;
+                                }
+                                case MessageType.USER_JOIN: {
+                                    element = <UserJoinMessage message={message}/>;
+                                    break;
+                                }
+                                case MessageType.THREAD_CREATED: {
+                                    element = <ThreadCreatedMessage message={message}/>;
+                                    break;
+                                }
+                                default: {
+                                    element = <></>;
+                                }
+                            }
+
+                            let ret = <MessageWrapper messageElement={element} message={message}/>
+
+                            if (!sameDay) {
+                                ret = (<>
+                                    <Divider flexItem sx={{
+                                        borderBottomWidth: "2px",
+                                        color: "#adadad",
+                                        margin: "0 20px",
+                                        fontSize: 14
+                                    }}>
+                                        {format(date, "MMMM dd, yyyy")}
+                                    </Divider>
+                                    {ret}
+                                </>);
+                            }
+                            return ret;
+                        });
+
+                        isGuild && request_users.size >= 1 && websocketState.sendWebsocketMessage?.({
+                            "op": GatewayOp.GUILD_MEMBERS,
+                            "d": {
+                                "guild_id": [channel?.guild_id!],
+                                "user_ids": [...request_users],
+                                "presences":false
+                            }
+                        })
+
+                        return result;
+                    })()}
+                </InfiniteScroll>
             </div>
             <TextChannelInputPanel/>
             <UserProfileMenu/>
