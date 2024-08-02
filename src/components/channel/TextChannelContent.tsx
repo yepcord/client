@@ -88,7 +88,7 @@ export default function TextChannelContent() {
                     dataLength={messages.length}
                     next={fetchMessages}
                     hasMore={!info?.all}
-                    loader={<h1>Loading type shit</h1>}
+                    loader={<TextChannelContentSkeleton/>}
                     inverse={true}
                     endMessage={
                         channel?.type === ChannelType.DM

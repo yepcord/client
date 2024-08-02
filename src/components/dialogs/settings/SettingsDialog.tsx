@@ -7,8 +7,8 @@ import {logOut} from "../../../utils";
 import {useNavigate} from "react-router-dom";
 import {SettingsTab} from "./tabs/SettingsTab";
 import TransparentSecondaryButton from "../../ui/TransparentSecondaryButton";
-import GitInfo from "react-git-info/macro";
 import {signal} from "@preact/signals-react";
+import {GIT_INFO} from "../../../constants";
 
 export type SettingsCategories = "account" | "profiles" | "privacy" | "apps" | "connections" | "friends" | "appearance" |
     "accessibility" | "voice_and_video" | "text_and_images" | "notifications" | "keybinds" | "language" |
@@ -101,12 +101,14 @@ export default function SettingsDialog() {
                         <Divider flexItem sx={{backgroundColor: "#757575"}}/>
 
                         <span className="text-primary text-14" style={{textAlign: "center"}}>
-                            YEPCord <a href={`https://github.com/yepcord/client/tree/${GitInfo().commit.hash}`}
-                                       style={{color: "var(--text-main)", textDecoration: "none"}}>
-                            <span title={`Commit: ${GitInfo().commit.hash} \nMessage: ${GitInfo().commit.message} \nDate: ${GitInfo().commit.date}`}>
-                                {GitInfo().commit.shortHash}
-                            </span>
-                        </a>
+                            YEPCord
+                            <a href={`https://github.com/yepcord/client/tree/${GIT_INFO.hash}`}
+                               style={{color: "var(--text-main)", textDecoration: "none"}}>
+                                <span
+                                    title={`Commit: ${GIT_INFO.hash} \nMessage: ${GIT_INFO.message} \nDate: ${GIT_INFO.date}`}>
+                                    {GIT_INFO.shortHash}
+                                </span>
+                            </a>
                         </span>
                     </div>
                 </div>
