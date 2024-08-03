@@ -91,7 +91,9 @@ export default function GatewayWebsocket() {
             if(websocketState.deferedWsNotReadyTimeout !== null) return;
             websocketState.deferedWsNotReadyTimeout = window.setTimeout(() => {
                 dispatch(setWsReady(false));
-            }, 10000)
+            }, 10000);
+            if(websocketState.heartbeatInterval !== null)
+                clearInterval(websocketState.heartbeatInterval);
         },
         shouldReconnect: (e) => {
             if(e.code === 4004) {

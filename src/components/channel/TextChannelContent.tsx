@@ -22,10 +22,8 @@ import MessageWrapper from "./messages/MessageWrapper";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function TextChannelContent() {
-    const channel = useSelector((state: RootState) => {
-        console.log(state)
-        return state.channel.selectedChannel
-    });
+    const channel = useSelector((state: RootState) => state.channel.selectedChannel);
+
     const messages = useSelector((state: RootState) => {
         const msgs = channel ? state.messages.messages[channel.id] : [];
         return msgs ? msgs : [];
@@ -33,30 +31,22 @@ export default function TextChannelContent() {
     const info = useSelector((state: RootState) => channel ? state.messages.info[channel.id] : {all: false, minimal: null});
     const dispatch = useDispatch();
     const bottomRef = useRef<HTMLDivElement>(null);
-    const messagesRef = useRef<HTMLDivElement>(null);
-    const [isLoading, setLoading] = useState(false);
-    const [isInit, setInit] = useState(false);
-    const loadingRef = useRef<HTMLDivElement>(null);
 
     const fetchMessages = (before?: string | null) => {
         if(info?.all) return;
-        setLoading(true);
         return new Promise((resolve) => {
             ApiClient.getMessages(channel!.id, before).then((resp) => {
                 if (resp.status !== 200) return;
                 for (let message of resp.body as Message[])
                     dispatch(addMessage(message));
 
-                setLoading(false);
                 resolve((resp.body as Message[]).length);
             });
         })
     };
 
     useEffect(() => {
-        setInit(false);
         channel && fetchMessages(null)?.then((count) => {
-            setInit(true);
             if(count === 0) {
                 dispatch(setAllLoaded(channel!.id));
             }
@@ -67,23 +57,9 @@ export default function TextChannelContent() {
         messages && bottomRef.current?.scrollIntoView({behavior: "smooth", block: "end"});
     }, [messages]);
 
-    const handleScroll = () => {
-        const t = messagesRef.current;
-
-        if (t?.scrollHeight! + t?.scrollTop! - t?.offsetHeight! - 200 - loadingRef.current?.offsetHeight! > 360
-            || isLoading || !isInit) {
-            return;
-        }
-        fetchMessages(info.minimal)?.then(count => {
-            if(count === 0) {
-                dispatch(setAllLoaded(channel!.id));
-            }
-        });
-    }
-
     return (
         <div className="channel-content">
-            <div className="channel-messages selectable" onScroll={handleScroll} ref={messagesRef}>
+            <div className="channel-messages selectable">
                 <InfiniteScroll
                     dataLength={messages.length}
                     next={fetchMessages}

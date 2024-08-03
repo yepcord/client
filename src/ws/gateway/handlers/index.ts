@@ -31,8 +31,7 @@ interface GatewayMessage {
 }
 
 function handleDispatchMessage(type: string, data: DispatchData) {
-    console.log(type);
-    console.log(data);
+    console.log(type, data);
     switch (type) {
         case "READY": {
             readyHandler(data as ReadyHandlerData);
